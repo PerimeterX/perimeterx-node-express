@@ -1,0 +1,37 @@
+{
+  "name": "perimeterx-node-express",
+  "version": "0.0.1",
+  "description": "NodeJS based web application framework, ExpressJS, middleware",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PerimeterX/pxNodeExpressSDK.git"
+  },
+  "keywords": [
+    "perimeterx",
+    "nodejs",
+    "express",
+    "security",
+    "middleware"
+  ],
+  "author": "Ben Diamant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PerimeterX/pxNodeExpressSDK/issues"
+  },
+  "homepage": "https://github.com/PerimeterX/pxNodeExpressSDK#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.0",
+    "superagent": "1.7.2"
+  }
+}

@@ -1,2 +1,2 @@
 # pxNodeExpressSDK
-NodeJS based web application frameware, ExpressJS, middleware
+NodeJS based web application framework, ExpressJS, middleware
