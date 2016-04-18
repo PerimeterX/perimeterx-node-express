@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/PerimeterX/pxNodeExpressSDK#readme",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "restler": "3.4.0"
   },
   "devDependencies": {
     "mocha": "^2.4.5",
