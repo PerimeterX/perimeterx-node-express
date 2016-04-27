@@ -8,17 +8,16 @@ const pxconfig = require('../lib/pxconfig');
 const should = require('should');
 const pxtestUtil = require('./test.util');
 const SERVER_URL = 'http://localhost:9090';
+
 describe('PX Integration Tests', function () {
     this.timeout(10000);
-    let ip = '1.2.3.4';
+    let ip = '1.2.3.5';
     let ua = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36';
     let server;
     before((done) => {
         server = express();
         server.use(cookieParser());
-        server.get('/', perimeterx.middleware({
-            message: 'px-tests'
-        }), (req, res) => {
+        server.get('/', perimeterx.middleware, (req, res) => {
             res.send('Hello from PX');
         });
 
