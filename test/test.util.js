@@ -12,6 +12,7 @@ const pxconfig = require('../lib/pxconfig');
 
 
 exports.goodValidCookie = buildCookieGoodScoreValid;
+exports.buildCookieGoodScoreInValid = buildCookieGoodScoreInValid;
 exports.badValidCookie = badValidCookie;
 
 const cookieGood = {
@@ -31,6 +32,19 @@ const cookieBad = {
 };
 
 /**
+ * buildCookieGoodScoreValid - generate a good cookie with invalid time
+ *
+ * @param {string} ip - IP address
+ * @param {string} ua - User Agent
+ * @param {string} cookieKey - cookie secret to sign cookie with
+ *
+ */
+function buildCookieGoodScoreInValid(ip, ua, cookieKey) {
+    const ts = moment().add(-10, 'minutes').format('x');
+    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey), cookieKey);
+}
+
+/**
  * buildCookieGoodScoreValid - generate a good and valid cookie for test purposes
  *
  * @param {string} ip - IP address
@@ -42,6 +56,7 @@ function buildCookieGoodScoreValid(ip, ua, cookieKey) {
     const ts = moment().add(10, 'minutes').format('x');
     return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey), cookieKey);
 }
+
 /**
  * buildCookieGoodScoreValid - generate a good and valid cookie for test purposes
  *
@@ -54,7 +69,6 @@ function badValidCookie(ip, ua, cookieKey) {
     const ts = moment().add(10, 'minutes').format('x');
     return encryptCookie(buildCookie(cookieBad, ip, ua, ts, cookieKey), cookieKey);
 }
-
 
 /**
  * buildCookie - util function to generate a decrypted px cookie for a given cookie object
