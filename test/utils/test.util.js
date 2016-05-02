@@ -8,7 +8,7 @@
 const moment = require('moment');
 const crypto = require('crypto');
 const uuid = require('node-uuid');
-const pxconfig = require('../lib/pxconfig').conf();
+const pxconfig = require('../../lib/pxconfig').conf();
 
 
 exports.goodValidCookie = buildCookieGoodScoreValid;
