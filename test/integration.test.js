@@ -2,20 +2,27 @@
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const perimeterx = require('../index');
 const superagent = require('superagent');
+const faker = require('faker');
+const perimeterx = require('../index');
 const pxconfig = require('../lib/pxconfig').conf();
 const should = require('should');
 const pxtestUtil = require('./test.util');
 const SERVER_URL = 'http://localhost:9090';
 
 describe('PX Integration Tests', function () {
-    this.timeout(10000);
+    this.timeout(3000);
     let ip = '1.2.3.5';
     let ua = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36';
     let server;
     before((done) => {
         server = express();
+
+        perimeterx.init({
+            cookieSecretKey: 'VYMugZj32NYG5jtpC+Nd39o4SuVCjm5y3QWH7+4xtY6Zc7uvG3/kk9TvbGuyKBTj',
+            authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhdCI6MTQ2MTA3NzM3MSwic3ViIjoiUFgzdEhxNTMyZyIsImp0aSI6IjRiYzU5ZDNiLWVkNGItNGRjOC1hZWI4LTk5N2UyNjhmNDMxZSJ9.sNS72J_XsHkAIxnwwAJmCVjwCmK77mt4QF2yeXJIqUc'
+        });
+
         server.use(cookieParser());
         server.get('/', perimeterx.middleware, (req, res) => {
             res.send('Hello from PX');
@@ -24,6 +31,11 @@ describe('PX Integration Tests', function () {
         server.listen(9090, () => {
             done();
         });
+    });
+
+    beforeEach((done) => {
+        ip = faker.internet.ip();
+        done();
     });
 
     describe('PX Cookie Evaluation', () => {
