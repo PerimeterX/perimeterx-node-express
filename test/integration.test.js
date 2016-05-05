@@ -22,8 +22,9 @@ describe('PX Integration Tests', function () {
         perimeterx.init({
             pxAppId: 'PX3tHq532g',
             cookieSecretKey: 'VYMugZj32NYG5jtpC+Nd39o4SuVCjm5y3QWH7+4xtY6Zc7uvG3/kk9TvbGuyKBTj',
-            authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhdCI6MTQ2MTA3NzM3MSwic3ViIjoiUFgzdEhxNTMyZyIsImp0aSI6IjRiYzU5ZDNiLWVkNGItNGRjOC1hZWI4LTk5N2UyNjhmNDMxZSJ9.sNS72J_XsHkAIxnwwAJmCVjwCmK77mt4QF2yeXJIqUc',
-            sendPageActivities: true
+            authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhdCI6MTQ2MDYxOTAzMSwic3ViIjoiUFgzdEhxNTMyZyIsImp0aSI6IjZkMzhhM2U1LTRjZjEtNDE1NS05OTVlLTE4YjQ2ZWM5YTRhZCJ9.BHYfH53bI-LtYW5R9dnckzqqbSnJwMNNhbHQIorzrZQ',
+            sendPageActivities: true,
+            blockingScore: 60
         });
 
         /* launch a server with the configured module for assertion */
@@ -33,7 +34,6 @@ describe('PX Integration Tests', function () {
 
 
         server.stdout.on('data', function (msg) {
-            console.log('out', msg);
             srvOut.push(msg);
             if (showSvrOutput) console.log("PX Tests Out: ", msg);
             if (msg.indexOf('test server started') != -1) {
@@ -41,7 +41,6 @@ describe('PX Integration Tests', function () {
             }
         });
         server.stderr.on('data', function (msg) {
-            console.log('err', msg);
             if (showSvrOutput) console.log("PX Tests Error: ", msg);
             srvErr.push(msg);
         });
@@ -75,7 +74,6 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
-                    (res.text).should.be.exactly('BLOCK');
                     (res.status).should.be.exactly(403);
                     return done();
                 });
@@ -103,7 +101,6 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
-                    (res.text).should.be.exactly('BLOCK');
                     (res.status).should.be.exactly(403);
                     return done();
                 });
@@ -129,7 +126,6 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
-                    (res.text).should.be.exactly('BLOCK');
                     (res.status).should.be.exactly(403);
                     return done();
                 });
@@ -151,7 +147,6 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
-                    (res.text).should.be.exactly('BLOCK');
                     (res.status).should.be.exactly(403);
                     return done();
                 });

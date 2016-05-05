@@ -105,6 +105,13 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
     return cookie;
 }
 
+/**
+ * encryptCookie - building encryption cypher and encrypt the cookie
+ *
+ * @param {Object} cookie - cookie object to decrypt
+ * @param {string} cookieKey - cookie secret to sign cookie with
+ *
+ */
 function encryptCookie(cookie, cookieKey) {
     // create cipher
     let result;
