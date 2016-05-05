@@ -3,16 +3,11 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const perimeterx = require('../../index');
+const testUtil = require('../utils/test.util');
 
 const server = express();
 
-perimeterx.init({
-    pxAppId: 'PX3tHq532g',
-    cookieSecretKey: 'VYMugZj32NYG5jtpC+Nd39o4SuVCjm5y3QWH7+4xtY6Zc7uvG3/kk9TvbGuyKBTj',
-    authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhdCI6MTQ2MDYxOTAzMSwic3ViIjoiUFgzdEhxNTMyZyIsImp0aSI6IjZkMzhhM2U1LTRjZjEtNDE1NS05OTVlLTE4YjQ2ZWM5YTRhZCJ9.BHYfH53bI-LtYW5R9dnckzqqbSnJwMNNhbHQIorzrZQ',
-    sendPageActivities: true,
-    blockingScore: 60
-});
+perimeterx.init(testUtil.initConfigurations);
 
 server.use(cookieParser());
 server.get('/', perimeterx.middleware, (req, res) => {

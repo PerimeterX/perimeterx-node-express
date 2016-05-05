@@ -5,7 +5,7 @@ const superagent = require('superagent');
 const faker = require('faker');
 const pxconfig = require('../lib/pxconfig').conf();
 const should = require('should');
-const pxtestUtil = require('./utils/test.util.js');
+const testUtil = require('./utils/test.util.js');
 const SERVER_URL = 'http://localhost:8081';
 const spawn = require('child_process').spawn;
 const perimeterx = require('../index');
@@ -19,13 +19,7 @@ describe('PX Integration Tests', function () {
 
     before(function (done) {
         /* init module */
-        perimeterx.init({
-            pxAppId: 'PX3tHq532g',
-            cookieSecretKey: 'VYMugZj32NYG5jtpC+Nd39o4SuVCjm5y3QWH7+4xtY6Zc7uvG3/kk9TvbGuyKBTj',
-            authToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhdCI6MTQ2MDYxOTAzMSwic3ViIjoiUFgzdEhxNTMyZyIsImp0aSI6IjZkMzhhM2U1LTRjZjEtNDE1NS05OTVlLTE4YjQ2ZWM5YTRhZCJ9.BHYfH53bI-LtYW5R9dnckzqqbSnJwMNNhbHQIorzrZQ',
-            sendPageActivities: true,
-            blockingScore: 60
-        });
+        perimeterx.init(testUtil.initConfigurations);
 
         /* launch a server with the configured module for assertion */
         server = spawn('node', ['./test/utils/server.sample.js']);
@@ -55,7 +49,7 @@ describe('PX Integration Tests', function () {
 
     describe('PX Cookie Evaluation', () => {
         it('PASS - good score cookie, valid time', (done) => {
-            const goodCookie = pxtestUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
+            const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
                 .set(pxconfig.IP_HEADER, ip)
@@ -68,7 +62,7 @@ describe('PX Integration Tests', function () {
         });
 
         it('BLOCK - bad score cookie, valid time', (done) => {
-            const badCookie = pxtestUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
+            const badCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${badCookie};`)
                 .set(pxconfig.IP_HEADER, ip)
@@ -82,7 +76,7 @@ describe('PX Integration Tests', function () {
 
     describe('PX Server 2 Server Evaluation', () => {
         it('PASS - expired cookie. good user', (done) => {
-            const goodCookie = pxtestUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY);
+            const goodCookie = testUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
                 .set(pxconfig.IP_HEADER, ip)
@@ -95,7 +89,7 @@ describe('PX Integration Tests', function () {
         });
 
         it('BLOCK - expired cookie. bad user', (done) => {
-            const goodCookie = pxtestUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY);
+            const goodCookie = testUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
                 .set(pxconfig.IP_HEADER, ip)
