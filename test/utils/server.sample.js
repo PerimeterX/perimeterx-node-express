@@ -13,7 +13,6 @@ server.use(cookieParser());
 server.get('/', perimeterx.middleware, (req, res) => {
     res.send('Hello from PX');
 });
-console.log('try to stast');
 
 server.listen(8081, () => {
     console.log('test server started');
