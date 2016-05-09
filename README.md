@@ -158,8 +158,6 @@ By forking the repository and changing your configurations on `tests/utils/test.
 TEST_VERBOSE=true/false mocha
 ```
 
-
 ## Copyright
 
 Copyright &copy; 2016 [PerimeterX](http://www.perimetrex.com).
-
