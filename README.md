@@ -22,7 +22,7 @@
 npm install --save perimeterx-node-express
 ```
 
-PerimeterX module depend on cookie-parser in order to evaluate risk cookie score
+The PerimeterX module depends on cookie-parser for cookie parsing [COMMENT: can it be abstracted away to an interface in case people use different versions or utils?]
 
 ```bash
 npm instal --save cookie-parser
@@ -39,7 +39,7 @@ const perimeterx = require('perimeterx-node-express');
 
 const server = express();
 
-/* px-module and cookie parser need to be initiated before any route usage */
+/* the px-module and cookie parser need to be initialized before any route usage */
 const pxConfig = {
     pxAppId: 'PX_APP_ID',
     cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
@@ -61,9 +61,9 @@ server.listen(8081, () => {
 
 ## <a name="pxConfig"></a> `pxConfig` options
 
-PerimeterX module comes with a set of default configurable configurations. expect for the manadatories (application id, cookie secret and auth token) every change is optional.
+The PerimeterX module comes with a set of possible configurations settings [TODO: add the list or a link to a wiki page with the list]. Default values are supplied to all setting except for the following required fields: application id, cookie secret and auth token.
 
-#### <a name="blockingScore"></a> Blocking Score 
+#### <a name="blockingScore"></a> Blocking Score
 
 Minimum score for blocking.
 
@@ -75,11 +75,11 @@ const pxConfig = {
 }
 ```
 
-#### <a name="blockHandler"></a> Block Handler 
+#### <a name="blockHandler"></a> Block Handler
 
-Middleware function block handler, to perform a custom logic when an high scored user has been detected.
+The blockHandler config setting can be used to provide custom logic in the case of a request / user with a high score [COMMENT: "high scored" is more of a gaming term, wdyt about "tagged user" or "marked user" or something of the sorts. Do we have an existing semantic for this in other marketing material?]
 
-**default:** pxBlockHandler - return code 403 and serve perimeterx block page.
+**default:** pxBlockHandler - return code 403 and serve the default PerimeterX block page.
 
 ```javascript
 function customBlockHandler(req, res, next) {
@@ -96,7 +96,7 @@ const pxConfig = {
 
 #### <a name="userIp"></a> User IP
 
-In order to evaluate user's score properly, perimeterx module require the real socket ip belong to the user.  user ip can be passed to perimeterx module using an HTTP header or by enriching the request object.
+In order to evaluate the user's score properly, the PerimeterX module requires the real socket ip the user is coming from. This can be passed using an HTTP header or by enriching the request object.
 
 **default with no predefined header:** `req.ip`
 
@@ -107,13 +107,13 @@ In order to evaluate user's score properly, perimeterx module require the real s
 const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
 
 const pxConfig = {
-  ipHeader: 'user-real-ip'
+  ipHeader: 'user-real-ip' [COMMENT: the name here is camel cased while the name above is in caps]
 }
 ```
 
-#### <a name="apiTimeoutMS"></a> API Timeout Milliseconds 
+#### <a name="apiTimeoutMS"></a> API Timeout Milliseconds
 
-Timeout in millisceonds to wait for perimeterx api response (when cookie not exist/expired/invalid).
+The PerimeterX API request timeout (which is called when a cookie does not exist/is expired/is invalid).
 
 **default:** 1000
 
@@ -123,9 +123,10 @@ const pxConfig = {
 }
 ```
 
-#### <a name="sendPageActivities"></a> Send Page Activities 
+#### <a name="sendPageActivities"></a> Send Page Activities
 
-Boolean flag to determine if px module will send activities to px servers on each page request, this will assist perimeterx on identifying attackers.
+A flag which determines whether the module sends activities to the PerimeterX servers on each page request or not. This will assist PerimeterX in identifying attackers.
+[COMMENT: what happens if it is turned off?]
 
 **default:** false
 
@@ -135,7 +136,7 @@ const pxConfig = {
 }
 ```
 
-#### <a name="debugMode"></a> Debug Mode 
+#### <a name="debugMode"></a> Debug Mode
 
 Turns on debug logging.
 
@@ -148,7 +149,7 @@ const pxConfig = {
 ```
 
 ## <a name="contributing"></a> Contributing
-If you wish yo contribute to perimeterx expressjs middlware, we would apriciate your contribution and will take seriously any open issue/pull request submitted. 
+If you wish to contribute to the PerimeterX expressjs middlware, we would appreciate your contribution and will take seriously any open issue/pull request submitted.
 
 By forking the repository and changing your configurations on `tests/utils/test.util.js` you can easily setup a development kit.
 
