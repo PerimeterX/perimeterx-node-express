@@ -22,7 +22,7 @@
 npm install --save perimeterx-node-express
 ```
 
-The PerimeterX module depends on cookie-parser for cookie parsing [COMMENT: can it be abstracted away to an interface in case people use different versions or utils?]
+The PerimeterX module depends on cookie-parser for cookie parsing
 
 ```bash
 npm instal --save cookie-parser
@@ -61,7 +61,8 @@ server.listen(8081, () => {
 
 ## <a name="pxConfig"></a> `pxConfig` options
 
-The PerimeterX module comes with a set of possible configurations settings [TODO: add the list or a link to a wiki page with the list]. Default values are supplied to all setting except for the following required fields: application id, cookie secret and auth token.
+The PerimeterX module comes with a set of possible configurations settings. Default values are supplied to all setting except for the following required fields: application id, cookie secret and auth token.
+The following are the other possible configuration values:
 
 #### <a name="blockingScore"></a> Blocking Score
 
@@ -77,7 +78,7 @@ const pxConfig = {
 
 #### <a name="blockHandler"></a> Block Handler
 
-The blockHandler config setting can be used to provide custom logic in the case of a request / user with a high score [COMMENT: "high scored" is more of a gaming term, wdyt about "tagged user" or "marked user" or something of the sorts. Do we have an existing semantic for this in other marketing material?]
+The blockHandler config setting can be used to provide custom logic in the case of a request / user with a high score
 
 **default:** pxBlockHandler - return code 403 and serve the default PerimeterX block page.
 
@@ -104,10 +105,10 @@ In order to evaluate the user's score properly, the PerimeterX module requires t
 
 ```javascript
 /* user ip retrieved in perimeterx module */
-const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
+const userIp = req.get(pxConfig.ipHeader) || req.px_user_ip || req.ip;
 
 const pxConfig = {
-  ipHeader: 'user-real-ip' [COMMENT: the name here is camel cased while the name above is in caps]
+  ipHeader: 'user-real-ip'
 }
 ```
 
@@ -125,8 +126,7 @@ const pxConfig = {
 
 #### <a name="sendPageActivities"></a> Send Page Activities
 
-A flag which determines whether the module sends activities to the PerimeterX servers on each page request or not. This will assist PerimeterX in identifying attackers.
-[COMMENT: what happens if it is turned off?]
+A flag which determines whether the module sends activities to the PerimeterX servers on each page request or not. This will assist PerimeterX in identifying attackers. It can be turned off for scenarios such as testing or for performance sake.
 
 **default:** false
 
