@@ -118,14 +118,38 @@ The blockHandler config setting can be used to provide custom logic in the case 
 
 **default:** pxBlockHandler - return code 403 and serve the default PerimeterX block page.
 
+monitoring requests:
+
 ```javascript
 function customBlockHandler(req, res, next) {
     const block_score = req.block_score;
     const block_uuid = req.block_uuid;
 
     /* user defined logic comes here */
+    
+    return next()
 }
 
+const pxConfig = {
+    blockHandler: customBlockHandler
+}
+```
+
+serve custom html:
+
+```
+function customBlockHandler(req, res, next) {
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    const pxBlockUuid = req.pxBlockUuid;
+    const pxBlockScore = req.pxBlockScore;
+    const html = `<div>Access to ${fullUrl} has been blocked.</div>
+                  <div>Block reference - ${pxBlockUuid}</div>
+                  <div>Block score - ${pxBlockScore}</div>`;
+
+    res.writeHead(403, {'Content-Type': 'text/html'});
+    res.write(html);
+    res.end();
+}
 const pxConfig = {
     blockHandler: customBlockHandler
 }
