@@ -1,0 +1,43 @@
+{
+  "name": "perimeterx-node-express",
+  "version": "1.0.0",
+  "description": "PerimeterX Express.js middleware to monitor and block traffic according to PerimeterX risk score",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PerimeterX/perimeterx-node-express.git"
+  },
+  "keywords": [
+    "perimeterx",
+    "nodejs",
+    "express",
+    "security",
+    "middleware"
+  ],
+  "author": "Ben Diamant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PerimeterX/perimeterx-node-express/issues"
+  },
+  "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
+  "dependencies": {
+    "cookie-parser": "1.4.1",
+    "express": "4.13.4",
+    "lodash": "4.11.1",
+    "moment": "2.13.0",
+    "node-uuid": "1.4.7",
+    "restler": "3.4.0"
+  },
+  "devDependencies": {
+    "faker": "^3.1.0",
+    "mocha": "^2.4.5",
+    "should": "^8.3.0",
+    "superagent": "1.7.2"
+  }
+}

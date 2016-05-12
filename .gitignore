@@ -1,0 +1,8 @@
+# Dependency directory
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# IDEA metadata files
+.idea
