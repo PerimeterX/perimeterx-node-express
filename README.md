@@ -137,7 +137,7 @@ const pxConfig = {
 
 serve custom html:
 
-```
+```javascript
 function customBlockHandler(req, res, next) {
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     const pxBlockUuid = req.pxBlockUuid;
