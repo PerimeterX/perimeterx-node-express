@@ -1,4 +1,6 @@
-# PerimeterX Express.js Middleware
+![image](https://843a2be0f3083c485676508ff87beaf088a889c0-www.googledrive.com/host/0B_r_WoIa581oY01QMWNVUElyM2M)
+
+# [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
 ## Table of Contents
 
