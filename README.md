@@ -1,39 +1,40 @@
 ![image](https://843a2be0f3083c485676508ff87beaf088a889c0-www.googledrive.com/host/0B_r_WoIa581oY01QMWNVUElyM2M)
 
-# [PerimeterX](http://www.perimeterx.com) Express.js Middleware
+[PerimeterX](http://www.perimeterx.com) Express.js Middleware
+=============================================================
 
-## Table of Contents
+Table of Contents
+-----------------
 
-* [Usage](#usage)
- * [Install](#usage-installation)
- * [Basic Usage Example](#basic-usage)
-* [Configuration](#pxConfig)
- * [Blocking Score](#blockingScore)
- * [Block Handler](#blockHandler)
- * [User IP](#userIp)
- * [API Timeout Milliseconds](#apiTimeoutMS)
- * [Send Page Activities](#sendPageActivities)
- * [Debug Mode](#debugMode)
-* [Contributing](#contributing)
+-   [Usage](#usage)
+  *   [Dependencies](#dependencies)
+  *   [Installation](#installation)
+  *   [Basic Usage Example](#basic-usage)
+-   [Configuration](#configuration)
+  *   [Blocking Score](#blocking-score)
+  *   [Custom Block Action](#custom-block)
+  *   [Extracting Real IP Address](#real-ip)
+  *   [API Timeout Milliseconds](#api-timeout)
+  *   [Send Page Activities](#send-page-activities)
+  *   [Debug Mode](#debug-mode)
+  *   [Unit Tests](#unit-tests)
+-   [Contributing](#contributing)
 
-## <a name="usage"></a> Usage
+<a name="Usage"></a>
 
-#### <a name="usage-installation"></a> Install
+<a name="dependencies"></a> Dependencies
+----------------------------------------
 
-```bash
-npm install --save perimeterx-node-express
-```
+-   [cookie-parser](https://github.com/expressjs/cookie-parser)
 
-The PerimeterX module depends on cookie-parser for cookie parsing
+`    $ npm install --save cookie-parser`
 
-```bash
-npm install --save cookie-parser
-```
+<a name="installation"></a> Installation
+----------------------------------------
 
-#### <a name="basic-usage"></a> Basic Usage Example:
+`    $ npm install --save perimeterx-node-express`
 
-set middleware on spsesific routes:
-
+### <a name="basic-usage"></a> Basic Usage Example
 ```javascript
 "use strict";
 
@@ -43,7 +44,7 @@ const perimeterx = require('perimeterx-node-express');
 
 const server = express();
 
-/* the px-module and cookie parser need to be initialized before any route usage */
+/* px-module and cookie parser need to be initiated before any route usage */
 const pxConfig = {
     pxAppId: 'PX_APP_ID',
     cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
@@ -53,7 +54,7 @@ const pxConfig = {
 perimeterx.init(pxConfig);
 server.use(cookieParser());
 
-/* block high scored users using px-module for route /helloWorld */
+/*  block users with high bot scores using px-module for the route /helloWorld */
 server.get('/helloWorld', perimeterx.middleware, (req, res) => {
     res.send('Hello from PX');
 });
@@ -62,47 +63,20 @@ server.listen(8081, () => {
     console.log('server started');
 });
 ```
-set middleware on all server's routes:
-> note: by setting up perimeterx middleware on all server's routes, you will have a score evaluation on each incoming request. the recommended pattern is to use on top of page views routes.
 
-```javascript
-"use strict";
+#### <a name="configuration"></a> Configuration Options
 
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const perimeterx = require('perimeterx-node-express');
+##### Configuring Required Parameters
 
-const server = express();
+Configuration options are set in `pxConfig`
 
-/* the px-module and cookie parser need to be initialized before any route usage */
-const pxConfig = {
-    pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
-    authToken: 'PX_TOKEN',
-    blockingScore: 60
-};
-perimeterx.init(pxConfig);
-server.use(cookieParser());
-server.use(perimeterx.middleware);
+Required parameters:
 
-/* block high scored users using px-module for route /helloWorld */
-server.get('/helloWorld', (req, res) => {
-    res.send('Hello from PX');
-});
+-   pxAppid
+-   cookieSecretKey
+-   authToken
 
-server.listen(8081, () => {
-    console.log('server started');
-});
-```
-
-## <a name="pxConfig"></a> `pxConfig` options
-
-The PerimeterX module comes with a set of possible configurations settings. Default values are supplied to all setting except for the following required fields: application id, cookie secret and auth token.
-The following are the other possible configuration values:
-
-#### <a name="blockingScore"></a> Blocking Score
-
-Minimum score for blocking.
+##### <a name="blocking-score"></a> Changing the Minimum Score for Blocking
 
 **default:** 70
 
@@ -112,30 +86,32 @@ const pxConfig = {
 }
 ```
 
-#### <a name="blockHandler"></a> Block Handler
+##### <a name="custom-block"></a> Custom Blocking Actions
 
-The blockHandler config setting can be used to provide custom logic in the case of a request / user with a high score
+Setting a custom block handler customizes the action that is taken when
+a user visits with a high score. Common customizations are to present a
+reCAPTHA or custom branded block page.
 
-**default:** pxBlockHandler - return code 403 and serve the default PerimeterX block page.
-
-monitoring requests:
+**default:** pxBlockHandler - return HTTP status code 403 and serve the
+Perimeterx block page.
 
 ```javascript
-function customBlockHandler(req, res, next) {
+function customBlockHandler(req, res, next)
+{
     const block_score = req.block_score;
     const block_uuid = req.block_uuid;
-
-    /* user defined logic comes here */
     
-    return next()
+    /* user defined logic comes here */
 }
 
 const pxConfig = {
     blockHandler: customBlockHandler
 }
-```
+```      
 
-serve custom html:
+###### Examples
+
+**Serve a Custom HTML Page**
 
 ```javascript
 function customBlockHandler(req, res, next) {
@@ -155,78 +131,94 @@ const pxConfig = {
 }
 ```
 
-#### <a name="proxy"></a> Proxy
+**Do Not Block, Monitor Only**
 
-The `proxy` config setting can be set if you need to proxy the request from an internal network.
+```javascript
+function customBlockHandler(req, res, next) {
+    const block_score = req.block_score;
+    const block_uuid = req.block_uuid;
 
-**default** proxy - empty string
+    /* user defined logic comes here */
+    
+    return next()
+}
 
-#### <a name="userIp"></a> User IP
+const pxConfig = {
+    blockHandler: customBlockHandler
+}
+```
 
-In order to evaluate the user's score properly, the PerimeterX module requires the real socket ip the user is coming from. This can be passed using an HTTP header or by enriching the request object.
+##### <a name="real-ip"></a>Extracting the Real User IP Address From HTTP Headers
+
+In order to evaluate user's score properly, the PerimeterX module
+requires the real socket ip (client IP address that created the HTTP
+request). The user ip can be passed to the PerimeterX module using an
+HTTP header or by enriching the request object.
 
 **default with no predefined header:** `req.ip`
 
 **default header**: `px-user-ip`
 
 ```javascript
-/* user ip retrieved in perimeterx module */
-const userIp = req.get(pxConfig.ipHeader) || req.px_user_ip || req.ip;
+/* user ip retrieved in PerimeterX module */
+const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
 
 const pxConfig = {
-  ipHeader: 'user-real-ip'
+    ipHeader: 'X-Forwarded-For'
 }
 ```
 
-#### <a name="apiTimeoutMS"></a> API Timeout Milliseconds
+##### <a name="api-timeout"></a>API Timeout Milliseconds
 
-The PerimeterX API request timeout (which is called when a cookie does not exist/is expired/is invalid).
+Timeout in millisceonds to wait for the PerimeterX server API response.
+The API is called when the risk cookie does not exist, or is expired or
+invalid.
 
 **default:** 1000
 
 ```javascript
 const pxConfig = {
-  apiTimeoutMS: 1500
+    apiTimeoutMS: 1500
 }
 ```
 
-#### <a name="sendPageActivities"></a> Send Page Activities
+##### <a name="send-page-activities"></a> Send Page Activities
 
-A flag which determines whether the module sends activities to the PerimeterX servers on each page request or not. This will assist PerimeterX in identifying attackers. It can be turned off for scenarios such as testing or for performance sake.
+Boolean flag to enable or disable sending activities and metrics to
+PerimeterX on each page request. Enabling this feature will provide data
+that populates the PerimeterX portal with valuable information such as
+amount requests blocked and API usage statistics.
 
 **default:** false
 
 ```javascript
 const pxConfig = {
-  sendPageActivities: true
+    sendPageActivities: true
 }
 ```
 
-#### <a name="debugMode"></a> Debug Mode
+##### <a name="debug-mode"></a> Debug Mode
 
-Turns on debug logging.
+Enables debug logging
 
 **default:** false
 
 ```javascript
 const pxConfig = {
-  debugMode: true
+    debugMode: true
 }
 ```
+##### <a name="unit-tests"></a> Unit Tests
 
-## <a name="contributing"></a> Contributing
-If you wish to contribute to the PerimeterX expressjs middlware, we would appreciate your contribution and will take seriously any open issue/pull request submitted.
-
-By forking the repository and changing your configurations on `tests/utils/test.util.js` you can easily setup a development kit.
-
-> note: running tests without a valid perimeterx app id, auth token and cookie key will not work.
-
-**Run Tests**:
-
-```bash
-TEST_VERBOSE=true/false mocha
+```
+$ TEST_VERBOSE=true/false mocha
 ```
 
-## Copyright
+> Note: running tests without a valid PerimeterX app id, auth token and
+> cookie key will not work.
 
-Copyright &copy; 2016 [PerimeterX](http://www.perimetrex.com).
+<a name="contributing"></a> Contributing
+----------------------------------------
+
+By forking the repository and changing your configurations on
+`tests/utils/test.util.js` you can easily setup a development kit.
