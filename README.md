@@ -155,6 +155,12 @@ const pxConfig = {
 }
 ```
 
+#### <a name="proxy"></a> Proxy
+
+The `proxy` config setting can be set if you need to proxy the request from an internal network.
+
+**default** proxy - empty string
+
 #### <a name="userIp"></a> User IP
 
 In order to evaluate the user's score properly, the PerimeterX module requires the real socket ip the user is coming from. This can be passed using an HTTP header or by enriching the request object.
