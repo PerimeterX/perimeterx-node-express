@@ -27,17 +27,15 @@ Table of Contents
 
 -   [cookie-parser](https://github.com/expressjs/cookie-parser)
 
-<!-- -->
-
-    $ npm install --save cookie-parser
+`    $ npm install --save cookie-parser`
 
 <a name="installation"></a> Installation
 ----------------------------------------
 
-    $ npm install --save perimeterx-node-express
+`    $ npm install --save perimeterx-node-express`
 
 ### <a name="basic-usage"></a> Basic Usage Example
-
+```javascript
       "use strict";
 
       const express = require('express');
@@ -64,6 +62,7 @@ Table of Contents
       server.listen(8081, () => {
           console.log('server started');
       });
+```
 
 #### <a name="configuration"></a> Configuration Options
 
@@ -81,9 +80,11 @@ Required parameters:
 
 **default:** 70
 
+```javascript
       const pxConfig = {
           blockingScore: 75
       }
+```
 
 ##### <a name="custom-block"></a> Custom Blocking Actions
 
@@ -94,6 +95,7 @@ reCAPTHA or custom branded block page.
 **default:** pxBlockHandler - return HTTP status code 403 and serve the
 Perimeterx block page.
 
+```javascript
       function customBlockHandler(req, res, next)
       {
           const block_score = req.block_score;
@@ -105,11 +107,13 @@ Perimeterx block page.
       const pxConfig = {
           blockHandler: customBlockHandler
       }
+```      
 
 ###### Examples
 
 **Serve a Custom HTML Page**
 
+```javascript
     function customBlockHandler(req, res, next) {
         const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
         const pxBlockUuid = req.pxBlockUuid;
@@ -125,9 +129,11 @@ Perimeterx block page.
     const pxConfig = {
         blockHandler: customBlockHandler
     }
+```
 
 **Do Not Block, Monitor Only**
 
+```javascript
     function customBlockHandler(req, res, next) {
         const block_score = req.block_score;
         const block_uuid = req.block_uuid;
@@ -140,6 +146,7 @@ Perimeterx block page.
     const pxConfig = {
         blockHandler: customBlockHandler
     }
+```
 
 ##### <a name="real-ip"></a>Extracting the Real User IP Address From HTTP Headers
 
@@ -152,12 +159,14 @@ HTTP header or by enriching the request object.
 
 **default header**: `px-user-ip`
 
+```javascript
       /* user ip retrieved in PerimeterX module */
       const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
 
       const pxConfig = {
         ipHeader: 'X-Forwarded-For'
       }
+```
 
 ##### <a name="api-timeout"></a>API Timeout Milliseconds
 
@@ -167,9 +176,11 @@ invalid.
 
 **default:** 1000
 
+```javascript
       const pxConfig = {
         apiTimeoutMS: 1500
       }
+```
 
 ##### <a name="send-page-activities"></a> Send Page Activities
 
@@ -180,9 +191,11 @@ amount requests blocked and API usage statistics.
 
 **default:** false
 
+```javascript
       const pxConfig = {
         sendPageActivities: true
       }
+```
 
 ##### <a name="debug-mode"></a> Debug Mode
 
@@ -190,13 +203,16 @@ Enables debug logging
 
 **default:** false
 
+```javascript
       const pxConfig = {
         debugMode: true
       }
-
+```
 ##### <a name="unit-tests"></a> Unit Tests
 
+```
     $ TEST_VERBOSE=true/false mocha
+```
 
 > Note: running tests without a valid PerimeterX app id, auth token and
 > cookie key will not work.
