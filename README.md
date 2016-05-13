@@ -27,7 +27,7 @@ npm install --save perimeterx-node-express
 The PerimeterX module depends on cookie-parser for cookie parsing
 
 ```bash
-npm instal --save cookie-parser
+npm install --save cookie-parser
 ```
 
 #### <a name="basic-usage"></a> Basic Usage Example:
