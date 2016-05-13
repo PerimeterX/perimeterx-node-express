@@ -2,7 +2,7 @@
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const perimeterx = require('../../index');
+const perimeterx = require('../../');
 const testUtil = require('../utils/test.util');
 
 const server = express();
