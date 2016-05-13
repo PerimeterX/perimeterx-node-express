@@ -36,32 +36,32 @@ Table of Contents
 
 ### <a name="basic-usage"></a> Basic Usage Example
 ```javascript
-      "use strict";
+"use strict";
 
-      const express = require('express');
-      const cookieParser = require('cookie-parser');
-      const perimeterx = require('perimeterx-node-express');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const perimeterx = require('perimeterx-node-express');
 
-      const server = express();
+const server = express();
 
-      /* px-module and cookie parser need to be initiated before any route usage */
-      const pxConfig = {
-          pxAppId: 'PX_APP_ID',
-          cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
-          authToken: 'PX_TOKEN',
-          blockingScore: 60
-      };
-      perimeterx.init(pxConfig);
-      server.use(cookieParser());
+/* px-module and cookie parser need to be initiated before any route usage */
+const pxConfig = {
+    pxAppId: 'PX_APP_ID',
+    cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
+    authToken: 'PX_TOKEN',
+    blockingScore: 60
+};
+perimeterx.init(pxConfig);
+server.use(cookieParser());
 
-      /*  block users with high bot scores using px-module for the route /helloWorld */
-      server.get('/helloWorld', perimeterx.middleware, (req, res) => {
-          res.send('Hello from PX');
-      });
+/*  block users with high bot scores using px-module for the route /helloWorld */
+server.get('/helloWorld', perimeterx.middleware, (req, res) => {
+    res.send('Hello from PX');
+});
 
-      server.listen(8081, () => {
-          console.log('server started');
-      });
+server.listen(8081, () => {
+    console.log('server started');
+});
 ```
 
 #### <a name="configuration"></a> Configuration Options
@@ -81,9 +81,9 @@ Required parameters:
 **default:** 70
 
 ```javascript
-      const pxConfig = {
-          blockingScore: 75
-      }
+const pxConfig = {
+    blockingScore: 75
+}
 ```
 
 ##### <a name="custom-block"></a> Custom Blocking Actions
@@ -96,17 +96,17 @@ reCAPTHA or custom branded block page.
 Perimeterx block page.
 
 ```javascript
-      function customBlockHandler(req, res, next)
-      {
-          const block_score = req.block_score;
-          const block_uuid = req.block_uuid;
+function customBlockHandler(req, res, next)
+{
+    const block_score = req.block_score;
+    const block_uuid = req.block_uuid;
+    
+    /* user defined logic comes here */
+}
 
-          /* user defined logic comes here */
-      }
-
-      const pxConfig = {
-          blockHandler: customBlockHandler
-      }
+const pxConfig = {
+    blockHandler: customBlockHandler
+}
 ```      
 
 ###### Examples
@@ -114,38 +114,38 @@ Perimeterx block page.
 **Serve a Custom HTML Page**
 
 ```javascript
-    function customBlockHandler(req, res, next) {
-        const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-        const pxBlockUuid = req.pxBlockUuid;
-        const pxBlockScore = req.pxBlockScore;
-        const html = `<div>Access to ${fullUrl} has been blocked.</div>
-                      <div>Block reference - ${pxBlockUuid}</div>
-                      <div>Block score - ${pxBlockScore}</div>`;
+function customBlockHandler(req, res, next) {
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    const pxBlockUuid = req.pxBlockUuid;
+    const pxBlockScore = req.pxBlockScore;
+    const html = `<div>Access to ${fullUrl} has been blocked.</div>
+                  <div>Block reference - ${pxBlockUuid}</div>
+                  <div>Block score - ${pxBlockScore}</div>`;
 
-        res.writeHead(403, {'Content-Type': 'text/html'});
-        res.write(html);
-        res.end();
-    }
-    const pxConfig = {
-        blockHandler: customBlockHandler
-    }
+    res.writeHead(403, {'Content-Type': 'text/html'});
+    res.write(html);
+    res.end();
+}
+const pxConfig = {
+    blockHandler: customBlockHandler
+}
 ```
 
 **Do Not Block, Monitor Only**
 
 ```javascript
-    function customBlockHandler(req, res, next) {
-        const block_score = req.block_score;
-        const block_uuid = req.block_uuid;
+function customBlockHandler(req, res, next) {
+    const block_score = req.block_score;
+    const block_uuid = req.block_uuid;
 
-        /* user defined logic comes here */
-        
-        return next()
-    }
+    /* user defined logic comes here */
+    
+    return next()
+}
 
-    const pxConfig = {
-        blockHandler: customBlockHandler
-    }
+const pxConfig = {
+    blockHandler: customBlockHandler
+}
 ```
 
 ##### <a name="real-ip"></a>Extracting the Real User IP Address From HTTP Headers
@@ -160,12 +160,12 @@ HTTP header or by enriching the request object.
 **default header**: `px-user-ip`
 
 ```javascript
-      /* user ip retrieved in PerimeterX module */
-      const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
+/* user ip retrieved in PerimeterX module */
+const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
 
-      const pxConfig = {
-        ipHeader: 'X-Forwarded-For'
-      }
+const pxConfig = {
+    ipHeader: 'X-Forwarded-For'
+}
 ```
 
 ##### <a name="api-timeout"></a>API Timeout Milliseconds
@@ -177,9 +177,9 @@ invalid.
 **default:** 1000
 
 ```javascript
-      const pxConfig = {
-        apiTimeoutMS: 1500
-      }
+const pxConfig = {
+    apiTimeoutMS: 1500
+}
 ```
 
 ##### <a name="send-page-activities"></a> Send Page Activities
@@ -192,9 +192,9 @@ amount requests blocked and API usage statistics.
 **default:** false
 
 ```javascript
-      const pxConfig = {
-        sendPageActivities: true
-      }
+const pxConfig = {
+    sendPageActivities: true
+}
 ```
 
 ##### <a name="debug-mode"></a> Debug Mode
@@ -204,14 +204,14 @@ Enables debug logging
 **default:** false
 
 ```javascript
-      const pxConfig = {
-        debugMode: true
-      }
+const pxConfig = {
+    debugMode: true
+}
 ```
 ##### <a name="unit-tests"></a> Unit Tests
 
 ```
-    $ TEST_VERBOSE=true/false mocha
+$ TEST_VERBOSE=true/false mocha
 ```
 
 > Note: running tests without a valid PerimeterX app id, auth token and
