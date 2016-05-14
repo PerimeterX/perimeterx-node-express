@@ -71,47 +71,46 @@ Set the PerimeterX middleware on all server's routes:
 > on top of page views routes.
 
 ```javascript
+"use strict";
 
-	"use strict";
-	
-	const express = require('express');
-	const cookieParser = require('cookie-parser');
-	const perimeterx = require('perimeterx-node-express');
-	
-	const server = express();
-	
-	/* the px-module and cookie parser need to be initialized before any route usage */
-	const pxConfig = {
-	    pxAppId: 'PX_APP_ID',
-	    cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
-	    authToken: 'PX_TOKEN',
-	    blockingScore: 60
-	};
-	perimeterx.init(pxConfig);
-	server.use(cookieParser());
-	server.use(perimeterx.middleware);
-	
-	/* block high scored users using px-module for route /helloWorld */
-	server.get('/helloWorld', (req, res) => {
-	    res.send('Hello from PX');
-	});
-	
-	server.listen(8081, () => {
-	    console.log('server started');
-	});
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const perimeterx = require('perimeterx-node-express');
+
+const server = express();
+
+/* the px-module and cookie parser need to be initialized before any route usage */
+const pxConfig = {
+    pxAppId: 'PX_APP_ID',
+    cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
+    authToken: 'PX_TOKEN',
+    blockingScore: 60
+};
+perimeterx.init(pxConfig);
+server.use(cookieParser());
+server.use(perimeterx.middleware);
+
+/* block high scored users using px-module for route /helloWorld */
+server.get('/helloWorld', (req, res) => {
+    res.send('Hello from PX');
+});
+
+server.listen(8081, () => {
+    console.log('server started');
+});
 ```
 
-#### <a name="configuration"></a> Configuration Options
+### <a name="configuration"></a> Configuration Options
 
-##### Configuring Required Parameters
+#### Configuring Required Parameters
 
 Configuration options are set in `pxConfig`
 
-Required parameters:
+#### Required parameters:
 
--   pxAppid
--   cookieSecretKey
--   authToken
+- pxAppid
+- cookieSecretKey
+- authToken
 
 ##### <a name="blocking-score"></a> Changing the Minimum Score for Blocking
 
