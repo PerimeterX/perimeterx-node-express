@@ -14,12 +14,15 @@ const pxconfig = require('../../lib/pxconfig').conf();
 exports.goodValidCookie = buildCookieGoodScoreValid;
 exports.buildCookieGoodScoreInValid = buildCookieGoodScoreInValid;
 exports.badValidCookie = badValidCookie;
+exports.assertLogString = assertLogString;
+
 exports.initConfigurations = {
     pxAppId: 'PX_APP_ID',
     cookieSecretKey: 'PX_COOKIE_SECRET',
     authToken: 'PX_AUTH_TOKEN',
     sendPageActivities: true,
-    blockingScore: 60
+    blockingScore: 60,
+    debugMode: true
 };
 
 const cookieGood = {
@@ -133,4 +136,15 @@ function encryptCookie(cookie, cookieKey) {
     result += cipher.update(JSON.stringify(cookie), 'utf8', 'base64');
     result += cipher.final('base64');
     return result;
+}
+
+
+function assertLogString(str, logs) {
+    for (let i = 0; i < logs.length; i++) {
+        if (logs[i].indexOf(str) > -1) {
+            return true;
+        }
+    }
+
+    return false;
 }

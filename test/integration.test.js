@@ -167,6 +167,32 @@ describe('PX Integration Tests', function () {
                 });
         });
     });
+    describe('Sending Activities', () => {
+        it('send page_requested activity, dont send block activity', (done) => {
+            const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
+            superagent.get(SERVER_URL)
+                .set('Cookie', `_px=${goodCookie};`)
+                .set(pxconfig.IP_HEADER, ip)
+                .set('User-Agent', ua)
+                .end((e, res) => {
+                    testUtil.assertLogString('sending page requested activity', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString('sending block activity', srvOut).should.be.exactly(false);
+                    return done();
+                });
+        });
+        it('send block activity, dont send page_requested activity', (done) => {
+            const goodCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
+            superagent.get(SERVER_URL)
+                .set('Cookie', `_px=${goodCookie};`)
+                .set(pxconfig.IP_HEADER, ip)
+                .set('User-Agent', ua)
+                .end((e, res) => {
+                    testUtil.assertLogString('sending page requested activity', srvOut).should.be.exactly(false);
+                    testUtil.assertLogString('sending block activity', srvOut).should.be.exactly(true);
+                    return done();
+                });
+        });
+    });
 
 
     after(function (done) {
