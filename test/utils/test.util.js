@@ -22,7 +22,8 @@ exports.initConfigurations = {
     authToken: 'PX_AUTH_TOKEN',
     sendPageActivities: true,
     blockingScore: 60,
-    debugMode: true
+    debugMode: true,
+    maxBufferLength: 1
 };
 
 const cookieGood = {
