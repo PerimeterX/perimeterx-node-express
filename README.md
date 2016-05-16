@@ -17,8 +17,8 @@ Table of Contents
   *   [API Timeout Milliseconds](#api-timeout)
   *   [Send Page Activities](#send-page-activities)
   *   [Debug Mode](#debug-mode)
-  *   [Unit Tests](#unit-tests)
 -   [Contributing](#contributing)
+  *   [Tests](#tests)
 
 <a name="Usage"></a>
 
@@ -244,7 +244,13 @@ const pxConfig = {
     debugMode: true
 }
 ```
-##### <a name="unit-tests"></a> Unit Tests
+<a name="contributing"></a> Contributing
+----------------------------------------
+
+By forking the repository and changing your configurations on
+`tests/utils/test.util.js` you can easily setup a development kit.
+
+##### <a name="tests"></a> Running tests
 
 ```
 $ TEST_VERBOSE=true/false mocha
@@ -253,8 +259,3 @@ $ TEST_VERBOSE=true/false mocha
 > Note: running tests without a valid PerimeterX app id, auth token and
 > cookie key will not work.
 
-<a name="contributing"></a> Contributing
-----------------------------------------
-
-By forking the repository and changing your configurations on
-`tests/utils/test.util.js` you can easily setup a development kit.
