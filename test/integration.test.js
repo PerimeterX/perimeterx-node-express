@@ -56,6 +56,7 @@ describe('PX Integration Tests', function () {
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     (res.text).should.be.exactly('Hello from PX');
+                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
                     (res.status).should.be.exactly(200);
                     return done();
                 });
@@ -69,6 +70,7 @@ describe('PX Integration Tests', function () {
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     (res.status).should.be.exactly(403);
+                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
                     return done();
                 });
         });
@@ -82,6 +84,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
+                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(true);
                     (res.text).should.be.exactly('Hello from PX');
                     (res.status).should.be.exactly(200);
                     return done();
@@ -95,6 +98,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
+                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(true);
                     (res.status).should.be.exactly(403);
                     return done();
                 });
@@ -107,6 +111,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
+                    testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
                     (res.text).should.be.exactly('Hello from PX');
                     (res.status).should.be.exactly(200);
                     return done();
@@ -120,6 +125,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
+                    testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
                     (res.status).should.be.exactly(403);
                     return done();
                 });
@@ -130,6 +136,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
+                    testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
                     (res.text).should.be.exactly('Hello from PX');
                     (res.status).should.be.exactly(200);
                     return done();
@@ -141,6 +148,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADER, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
+                    testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
                     (res.status).should.be.exactly(403);
                     return done();
                 });

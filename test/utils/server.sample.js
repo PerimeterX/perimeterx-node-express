@@ -1,5 +1,5 @@
 "use strict";
-
+process.env.NODE_ENV = 'test';
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const perimeterx = require('../../index');
