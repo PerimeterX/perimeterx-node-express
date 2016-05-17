@@ -1,7 +1,7 @@
 'use strict';
 
 const should = require('should');
-const pxutil = require('../lib/utils/pxutil');
+const pxutil = require('../dist/utils/pxutil');
 
 describe('PX Utils - pxutils.js', () => {
     it('should generate headers array from headers object', (done) => {

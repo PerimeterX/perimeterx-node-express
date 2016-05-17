@@ -3,12 +3,12 @@
 const express = require('express');
 const superagent = require('superagent');
 const faker = require('faker');
-const pxconfig = require('../lib/pxconfig').conf();
+const pxconfig = require('../dist/pxconfig').conf();
 const should = require('should');
 const testUtil = require('./utils/test.util.js');
 const SERVER_URL = 'http://localhost:8081';
 const spawn = require('child_process').spawn;
-const perimeterx = require('../index');
+const perimeterx = require('../');
 
 describe('PX Integration Tests', function () {
     this.timeout(3000);

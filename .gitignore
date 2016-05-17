@@ -6,3 +6,6 @@ node_modules
 
 # IDEA metadata files
 .idea
+
+# Transpiled code from babel
+dist/
