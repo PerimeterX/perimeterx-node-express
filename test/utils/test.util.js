@@ -23,11 +23,13 @@ exports.initConfigurations = {
     sendPageActivities: true,
     blockingScore: 60,
     debugMode: true,
+    ipHeader: 'x-px-true-ip',
     maxBufferLength: 1
 };
 
 const cookieGood = {
     u: uuid.v1(),
+    v: uuid.v1(),
     s: {
         b: 0,
         a: 0
@@ -36,6 +38,7 @@ const cookieGood = {
 
 const cookieBad = {
     u: uuid.v1(),
+    v: uuid.v1(),
     s: {
         b: 100,
         a: 0
@@ -107,6 +110,9 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
 
     /* update ip */
     cksum.update(ip);
+
+    /* visitor id */
+    cksum.update(cookie.v);
 
     /* update ua */
     cksum.update(ua);
