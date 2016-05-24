@@ -56,6 +56,8 @@ describe('PX Integration Tests', function () {
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     (res.text).should.be.exactly('Hello from PX');
+                    console.log(srvOut);
+                    
                     testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
                     (res.status).should.be.exactly(200);
                     return done();

@@ -108,11 +108,11 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
     /* update uuid */
     cksum.update(cookie.u);
 
-    /* update ip */
-    cksum.update(ip);
-
     /* visitor id */
     cksum.update(cookie.v);
+
+    /* update ip */
+    cksum.update(ip);
 
     /* update ua */
     cksum.update(ua);
