@@ -28,6 +28,7 @@ exports.initConfigurations = {
 
 const cookieGood = {
     u: uuid.v1(),
+    v: uuid.v1(),
     s: {
         b: 0,
         a: 0
@@ -36,6 +37,7 @@ const cookieGood = {
 
 const cookieBad = {
     u: uuid.v1(),
+    v: uuid.v1(),
     s: {
         b: 100,
         a: 0
@@ -104,6 +106,9 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
 
     /* update uuid */
     cksum.update(cookie.u);
+
+    /* visitor id */
+    cksum.update(cookie.v);
 
     /* update ip */
     cksum.update(ip);
