@@ -13,7 +13,9 @@ Table of Contents
 -   [Configuration](#configuration)
   *   [Blocking Score](#blocking-score)
   *   [Custom Block Action](#custom-block)
+  *   [Enable/Disable Captcha](#captcha-support)
   *   [Extracting Real IP Address](#real-ip)
+  *   [Filter Sensitive Headers](#sensitive-headers)
   *   [API Timeout Milliseconds](#api-timeout)
   *   [Send Page Activities](#send-page-activities)
   *   [Debug Mode](#debug-mode)
@@ -122,7 +124,7 @@ const pxConfig = {
 }
 ```
 
-##### <a name="custom-block"></a> Custom Blocking Actions
+#### <a name="custom-block"></a> Custom Blocking Actions
 
 Setting a custom block handler customizes the action that is taken when
 a user visits with a high score. Common customizations are to present a
@@ -184,7 +186,20 @@ const pxConfig = {
 }
 ```
 
-##### <a name="real-ip"></a>Extracting the Real User IP Address From HTTP Headers
+#### <a name="captcha-support"></a>Enable/disable captcha in the block page
+
+By enabling captcha support, a captcha will be served as part of the block page giving real users the ability to answer, get score clean up and passed to the requested page.
+
+**default: true**
+
+```javascript
+
+const pxConfig = {
+    captchaEnabled: true/false
+}
+```
+
+##### <a name="real-ip"></a>Extracting the Real User IP Address From HTTP Headers or by defining a function
 
 In order to evaluate user's score properly, the PerimeterX module
 requires the real socket ip (client IP address that created the HTTP
@@ -195,16 +210,46 @@ HTTP header or by enriching the request object.
 
 **default header**: `px-user-ip`
 
+
 ```javascript
 /* user ip retrieved in PerimeterX module */
 const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
+```
 
+**Extract by header**
+
+```javascript
 const pxConfig = {
     ipHeader: 'X-Forwarded-For'
 }
 ```
+**Extract by function**
 
-##### <a name="api-timeout"></a>API Timeout Milliseconds
+```javascript
+function getUserIp(req) {
+    const ipsHeader = req.get('user-true-ip');
+    return ipsHeader.split(',')[0];
+}
+
+const pxConfig = {
+    getUserIp: getUserIp
+}
+```
+
+#### <a name="sensitive-headers"></a> Filter sensitive headers
+
+A user can define a list of sensitive header he want to prevent from being send to perimeterx servers, filtering cookie header for privacy is set by default and will be overriden if a user set the configuration
+
+**default: cookie, cookies**
+
+```javascript
+
+const pxConfig = {
+    sensitiveHeaders: ['cookie', 'cookies', 'secret-header']
+}
+```
+
+#### <a name="api-timeout"></a>API Timeout Milliseconds
 
 Timeout in millisceonds to wait for the PerimeterX server API response.
 The API is called when the risk cookie does not exist, or is expired or
@@ -218,7 +263,7 @@ const pxConfig = {
 }
 ```
 
-##### <a name="send-page-activities"></a> Send Page Activities
+#### <a name="send-page-activities"></a> Send Page Activities
 
 Boolean flag to enable or disable sending activities and metrics to
 PerimeterX on each page request. Enabling this feature will provide data
@@ -233,7 +278,7 @@ const pxConfig = {
 }
 ```
 
-##### <a name="debug-mode"></a> Debug Mode
+#### <a name="debug-mode"></a> Debug Mode
 
 Enables debug logging
 
