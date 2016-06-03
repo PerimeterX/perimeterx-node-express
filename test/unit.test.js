@@ -29,7 +29,6 @@ describe('PX Configurations - pxconfig.js', () => {
         pxconfig = require('../lib/pxconfig');
     });
 
-
     it('blocking score should be 80', (done) => {
         params.blockingScore = 80;
         pxconfig.init(params);
