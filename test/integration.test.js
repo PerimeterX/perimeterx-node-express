@@ -26,7 +26,6 @@ describe('PX Integration Tests', function () {
         server.stdout.setEncoding('utf8');
         server.stderr.setEncoding('utf8');
 
-
         server.stdout.on('data', function (msg) {
             srvOut.push(msg);
             if (showSvrOutput) console.log("PX Tests Out: ", msg);
@@ -47,6 +46,14 @@ describe('PX Integration Tests', function () {
         done();
     });
 
+    after(function (done) {
+        server.once('exit', () => {
+            done();
+        });
+
+        server.kill('SIGINT');
+        server = undefined;
+    });
     describe('PX Cookie Evaluation', () => {
         it('PASS - good score cookie, valid time', (done) => {
             const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
@@ -166,16 +173,6 @@ describe('PX Integration Tests', function () {
                     return done();
                 });
         });
-
-        it('PASS - method is not get. bad user', (done) => {
-            superagent.post(SERVER_URL)
-                .set(pxconfig.IP_HEADER, ip)
-                .set('User-Agent', 'curl')
-                .end((e, res) => {
-                    (res.status).should.be.exactly(200);
-                    return done();
-                });
-        });
     });
     describe('Sending Activities', () => {
         it('send page_requested activity, dont send block activity', (done) => {
@@ -204,13 +201,4 @@ describe('PX Integration Tests', function () {
         });
     });
 
-
-    after(function (done) {
-        server.once('exit', () => {
-            done();
-        });
-
-        server.kill('SIGINT');
-        server = undefined;
-    });
 });
