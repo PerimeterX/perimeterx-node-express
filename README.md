@@ -292,7 +292,7 @@ const pxConfig = {
 <a name="contributing"></a> Contributing
 ----------------------------------------
 
-By forking the repository and changing your configurations on
+By forking the repository, renaming `tests/utils/test.util.js.dist` into `tests/utils/test.util.js` and changing your configurations on
 `tests/utils/test.util.js` you can easily setup a development kit.
 
 ##### <a name="tests"></a> Running tests

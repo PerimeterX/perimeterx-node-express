@@ -18,7 +18,7 @@ exports.assertLogString = assertLogString;
 
 exports.initConfigurations = {
     pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_COOKIE_SECRET',
+    cookieSecretKey: 'PX_COOKIE_KEY',
     authToken: 'PX_AUTH_TOKEN',
     sendPageActivities: true,
     blockingScore: 60,
