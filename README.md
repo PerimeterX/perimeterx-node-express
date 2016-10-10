@@ -201,29 +201,13 @@ const pxConfig = {
 
 ##### <a name="real-ip"></a>Extracting the Real User IP Address From HTTP Headers or by defining a function
 
-In order to evaluate user's score properly, the PerimeterX module
-requires the real socket ip (client IP address that created the HTTP
-request). The user ip can be passed to the PerimeterX module using an
-HTTP header or by enriching the request object.
+> Note: IP extraction according to your network setup is important. It is common to have a load balancer/proxy on top of your applications, in this case the PerimeterX module will send an internal IP as the user's. In order to perform processing and detection for server-to-server calls, PerimeterX module need the real user ip.
+
+The user ip can be passed to the PerimeterX module using a custom IP extraction function.
 
 **default with no predefined header:** `req.ip`
 
-**default header**: `px-user-ip`
-
-
-```javascript
-/* user ip retrieved in PerimeterX module */
-const userIp = req.get(pxConfig.IP_HEADER) || req.px_user_ip || req.ip;
-```
-
-**Extract by header**
-
-```javascript
-const pxConfig = {
-    ipHeader: 'X-Forwarded-For'
-}
-```
-**Extract by function**
+**Extract real IP**
 
 ```javascript
 function getUserIp(req) {
