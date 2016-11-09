@@ -66,7 +66,7 @@ server.listen(8081, () => {
 });
 ```
 
-Set the PerimeterX middleware on all server's routes:
+Setting the PerimeterX middleware on all server's routes:
 
 > When configuring the Perimeterx middleware on all the server's routes, you will have a
 > score evaluation on each incoming request. The recommended pattern is to use
@@ -106,9 +106,10 @@ server.listen(8081, () => {
 
 #### Configuring Required Parameters
 
-Configuration options are set in `pxConfig`
+Configuration options are set in the `pxConfig` variable.
 
 #### Required parameters:
+> All parameters are obtainable via the PerimeterX Portal. (Applications page)
 
 - pxAppid
 - cookieSecretKey
@@ -116,7 +117,7 @@ Configuration options are set in `pxConfig`
 
 ##### <a name="blocking-score"></a> Changing the Minimum Score for Blocking
 
-**default:** 70
+**Default blocking value:** 70
 
 ```javascript
 const pxConfig = {
@@ -126,12 +127,11 @@ const pxConfig = {
 
 #### <a name="custom-block"></a> Custom Blocking Actions
 
-Setting a custom block handler customizes the action that is taken when
-a user visits with a high score. Common customizations are to present a
-reCAPTHA or custom branded block page.
+In order to customize the action performed on a valid block value, supply a user-defined customBlockHandler function.
 
-**default:** pxBlockHandler - return HTTP status code 403 and serve the
-Perimeterx block page.
+The custom handler would contain the action to be taken when a visitor receives a score higher than the 'blockingScore' value. Common customization options are presenting of a reCAPTCHA, or supplying a custom branded block page.
+
+**Default block behaviour:** pxBlockHandler - return an HTTP status code of 403 and serve the PerimeterX block page.
 
 ```javascript
 function customBlockHandler(req, res, next)
@@ -149,7 +149,7 @@ const pxConfig = {
 
 ###### Examples
 
-**Serve a Custom HTML Page**
+**Serving a Custom HTML Page**
 
 ```javascript
 function customBlockHandler(req, res, next) {
@@ -169,7 +169,7 @@ const pxConfig = {
 }
 ```
 
-**Do Not Block, Monitor Only**
+**No Blocking, Monitor Only**
 
 ```javascript
 function customBlockHandler(req, res, next) {
@@ -186,28 +186,27 @@ const pxConfig = {
 }
 ```
 
-#### <a name="captcha-support"></a>Enable/disable captcha in the block page
+#### <a name="captcha-support"></a>Enable/Disable CAPTCHA on the block page
 
-By enabling captcha support, a captcha will be served as part of the block page giving real users the ability to answer, get score clean up and passed to the requested page.
+By enabling CAPTCHA support, a CAPTCHA will be served as part of the block page, giving real users the ability to identify as a human. By solving the CAPTCHA, the user's score is then cleaned up and the user is allowed to continue.
 
-**default: true**
+**Default: true**
 
 ```javascript
-
 const pxConfig = {
-    captchaEnabled: true/false
+    captchaEnabled: false
 }
 ```
 
-##### <a name="real-ip"></a>Extracting the Real User IP Address From HTTP Headers or by defining a function
+##### <a name="real-ip"></a>Extracting the Real User's IP Address
 
-> Note: IP extraction according to your network setup is important. It is common to have a load balancer/proxy on top of your applications, in this case the PerimeterX module will send an internal IP as the user's. In order to perform processing and detection for server-to-server calls, PerimeterX module need the real user ip.
+>Note: IP extraction, according to your network setup, is very important. It is common to have a load balancer/proxy on top of your applications, in which case the PerimeterX module will send the system's internal IP as the user's. In order to properly perform processing and detection on server-to-server calls, PerimeterX module needs the real user's IP.
 
-The user ip can be passed to the PerimeterX module using a custom IP extraction function.
+The user's IP can be passed to the PerimeterX module using a custom user defined function on the `pxConfig` variable.
 
-**default with no predefined header:** `req.ip`
+**Default with no predefined header:** `req.ip`
 
-**Extract real IP**
+**Extract real IP from a custom header**
 
 ```javascript
 function getUserIp(req) {
@@ -221,13 +220,11 @@ const pxConfig = {
 ```
 
 #### <a name="sensitive-headers"></a> Filter sensitive headers
+A list of sensitive headers can be configured to prevent specific headers from being sent to PerimeterX servers (lower case header names). Filtering cookie headers for privacy is set by default, and can be overridden on the `pxConfig` variable.
 
-A user can define a list of sensitive header he want to prevent from being send to perimeterx servers, filtering cookie header for privacy is set by default and will be overriden if a user set the configuration
-
-**default: cookie, cookies**
+**Default: cookie, cookies**
 
 ```javascript
-
 const pxConfig = {
     sensitiveHeaders: ['cookie', 'cookies', 'secret-header']
 }
@@ -235,26 +232,22 @@ const pxConfig = {
 
 #### <a name="api-timeout"></a>API Timeout Milliseconds
 
-Timeout in millisceonds to wait for the PerimeterX server API response.
-The API is called when the risk cookie does not exist, or is expired or
-invalid.
+> Note: Controls the timeouts for PerimeterX requests. The API is called when a Risk Cookie does not exist, or is expired or invalid.
+API Timeout in Milliseconds to wait for the PerimeterX server API response.
 
-**default:** 1000
+**Default:** 1000
 
 ```javascript
 const pxConfig = {
-    apiTimeoutMS: 1500
+    apiTimeoutMS: 1500 
 }
 ```
 
 #### <a name="send-page-activities"></a> Send Page Activities
 
-Boolean flag to enable or disable sending activities and metrics to
-PerimeterX on each page request. Enabling this feature will provide data
-that populates the PerimeterX portal with valuable information such as
-amount requests blocked and API usage statistics.
+Boolean flag to enable or disable sending of activities and metrics to PerimeterX on each page request. Enabling this feature will provide data that populates the PerimeterX portal with valuable information such as the amount of requests blocked and additional API usage statistics.
 
-**default:** false
+**Default:** false
 
 ```javascript
 const pxConfig = {
@@ -264,9 +257,9 @@ const pxConfig = {
 
 #### <a name="debug-mode"></a> Debug Mode
 
-Enables debug logging
+Enables debug logging mode
 
-**default:** false
+**Default:** false
 
 ```javascript
 const pxConfig = {
@@ -275,6 +268,24 @@ const pxConfig = {
 ```
 <a name="contributing"></a> Contributing
 ----------------------------------------
+
+The following steps are welcome when contributing to our project.
+### Fork/Clone
+First and foremost, [Create a fork](https://guides.github.com/activities/forking/) of the repository, and clone it locally.
+Create a branch on your fork, preferably using a self descriptive branch name.
+
+### Code/Run
+Code your way out of your mess, and help improve our project by implementing missing features, adding capabilites or fixing bugs.
+
+To run the code, simply follow the steps in the [installation guide](#installation). Grab the keys from the PerimeterX Portal, and try refreshing your page several times continously. If no default behaviours have been overriden, you should see the PerimeterX block page. Solve the CAPTCHA to clean yourself and start fresh again.
+
+Feel free to check out the [Example App](https://nodejs-smaple-app.perimeterx.com), to have a feel of the project.
+
+### Test
+> Tests for this project are written using [Mocha](https://mochajs.org/).
+
+**Dont forget to test**. The project relies heavily on tests, thus ensuring each user has the same experience, and no new features break the code.
+Before you create any pull request, make sure your project has passed all tests, and if any new features require it, write your own.
 
 By forking the repository, renaming `tests/utils/test.util.js.dist` into `tests/utils/test.util.js` and changing your configurations on
 `tests/utils/test.util.js` you can easily setup a development kit.
@@ -288,3 +299,9 @@ $ TEST_VERBOSE=true/false mocha
 > Note: running tests without a valid PerimeterX app id, auth token and
 > cookie key will not work.
 
+### Pull Request
+After you have completed the process, create a pull request to the Upstream repository. Please provide a complete and thorough description explaining the changes. Remember this code has to be read by our maintainers, so keep it simple, smart and accurate.
+
+### Thanks
+After all, you are helping us by contributing to this project, and we want to thank you for it.
+We highly appreciate your time invested in contributing to our project, and are glad to have people like you - kind helpers.
