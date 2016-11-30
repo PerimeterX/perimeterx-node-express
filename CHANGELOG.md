@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.0] - 2016-11-30
+### Added
+- Page UUID added to Risk API requests
+
+### Modified
+- Cookie to store page UUID
+
 ## [1.6.3] - 2016-09-20
 ### Added
 - Module version added to risk calls.
