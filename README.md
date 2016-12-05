@@ -68,7 +68,7 @@ server.listen(8081, () => {
 
 Setting the PerimeterX middleware on all server's routes:
 
-> When configuring the Perimeterx middleware on all the server's routes, you will have a
+> When configuring the PerimeterX middleware on all the server's routes, you will have a
 > score evaluation on each incoming request. The recommended pattern is to use
 > on top of page views routes.
 
@@ -131,7 +131,7 @@ In order to customize the action performed on a valid block value, supply a user
 
 The custom handler would contain the action to be taken when a visitor receives a score higher than the 'blockingScore' value. Common customization options are presenting of a reCAPTCHA, or supplying a custom branded block page.
 
-**Default block behaviour:** pxBlockHandler - return an HTTP status code of 403 and serve the PerimeterX block page.
+**Default block behaviour:** pxBlockHandler - returns an HTTP status code of 403 and serves the PerimeterX block page.
 
 ```javascript
 function customBlockHandler(req, res, next)
@@ -206,7 +206,7 @@ The user's IP can be passed to the PerimeterX module using a custom user defined
 
 **Default with no predefined header:** `req.ip`
 
-**Extract real IP from a custom header**
+**Extract the real IP from a custom header**
 
 ```javascript
 function getUserIp(req) {
@@ -245,7 +245,7 @@ const pxConfig = {
 
 #### <a name="send-page-activities"></a> Send Page Activities
 
-Boolean flag to enable or disable sending of activities and metrics to PerimeterX on each page request. Enabling this feature will provide data that populates the PerimeterX portal with valuable information such as the amount of requests blocked and additional API usage statistics.
+A boolean flag to enable or disable sending of activities and metrics to PerimeterX on each page request. Enabling this feature will provide data that populates the PerimeterX portal with valuable information such as the amount of requests blocked and additional API usage statistics.
 
 **Default:** false
 
@@ -257,7 +257,7 @@ const pxConfig = {
 
 #### <a name="debug-mode"></a> Debug Mode
 
-Enables debug logging mode
+Enables debug logging mode.
 
 **Default:** false
 
@@ -269,13 +269,13 @@ const pxConfig = {
 <a name="contributing"></a> Contributing
 ----------------------------------------
 
-The following steps are welcome when contributing to our project.
+The following steps are welcome when contributing to our project:
 ### Fork/Clone
 First and foremost, [Create a fork](https://guides.github.com/activities/forking/) of the repository, and clone it locally.
 Create a branch on your fork, preferably using a self descriptive branch name.
 
 ### Code/Run
-Code your way out of your mess, and help improve our project by implementing missing features, adding capabilites or fixing bugs.
+Help improve our project by implementing missing features, adding capabilites or fixing bugs.
 
 To run the code, simply follow the steps in the [installation guide](#installation). Grab the keys from the PerimeterX Portal, and try refreshing your page several times continously. If no default behaviours have been overriden, you should see the PerimeterX block page. Solve the CAPTCHA to clean yourself and start fresh again.
 
