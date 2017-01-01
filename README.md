@@ -172,17 +172,8 @@ const pxConfig = {
 **No Blocking, Monitor Only**
 
 ```javascript
-function customBlockHandler(req, res, next) {
-    const block_score = req.block_score;
-    const block_uuid = req.block_uuid;
-
-    /* user defined logic comes here */
-    
-    return next()
-}
-
 const pxConfig = {
-    blockHandler: customBlockHandler
+    enableBlocking: false
 }
 ```
 
