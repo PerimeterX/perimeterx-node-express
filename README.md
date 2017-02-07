@@ -287,8 +287,8 @@ Feel free to check out the [Example App](https://nodejs-smaple-app.perimeterx.co
 **Dont forget to test**. The project relies heavily on tests, thus ensuring each user has the same experience, and no new features break the code.
 Before you create any pull request, make sure your project has passed all tests, and if any new features require it, write your own.
 
-By forking the repository, renaming `tests/utils/test.util.js.dist` into `tests/utils/test.util.js` and changing your configurations on
-`tests/utils/test.util.js` you can easily setup a development kit.
+By forking the repository, renaming `test/utils/test.util.js.dist` into `test/utils/test.util.js` and changing your configurations on
+`test/utils/test.util.js` you can easily setup a development kit.
 
 ##### <a name="tests"></a> Running tests
 
