@@ -29,6 +29,14 @@ describe('PX Configurations - pxconfig.js', () => {
         pxconfig = require('../lib/pxconfig');
     });
 
+    it('should set baseUrl to sapi-<appid>.perimeterx.net', (done)=> {
+      params.pxAppId = 'PXJWbMQarF';
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.SERVER_HOST.should.be.exactly(`https://sapi-${params.pxAppId.toLowerCase()}.perimeterx.net`)
+      done();
+    });
+
     it('blocking score should be 80', (done) => {
         params.blockingScore = 80;
         pxconfig.init(params);
