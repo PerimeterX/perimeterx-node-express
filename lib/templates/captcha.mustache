@@ -84,9 +84,9 @@
   }
     </style>
     <!-- Custom CSS -->
-    {{# cssRef }}
-      <link rel="stylesheet" type="text/css" href="{{ . }}" />
-    {{/ cssRef }}
+    {{#cssRef}}
+      <link rel="stylesheet" type="text/css" href="{{cssRef}}" />
+    {{/cssRef}}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
 
@@ -178,8 +178,8 @@
       }
     </script>
     <!-- Custom Script -->
-    {{# jsRef }}
-      <script src="{{ . }}"></script>
-    {{/ jsRef }}
+    {{#jsRef}}
+      <script src="{{jsRef}}"></script>
+    {{/jsRef}}
   </body>
 </html>

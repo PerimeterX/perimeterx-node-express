@@ -89,4 +89,26 @@ describe('PX Configurations - pxconfig.js', () => {
       const conf = pxconfig.conf();
       conf.DEBUG_MODE.should.be.exactly(true);
     });
+
+    it('customLogo should be overridden',() => {
+      params.customLogo = 'http://www.google.com/logo.jpg';
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.CUSTOM_LOGO.should.be.exactly('http://www.google.com/logo.jpg');
+    });
+
+    it('jsRef should be overridden',() => {
+      params.jsRef = ['http://www.google.com/script.js'];
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.JS_REF[0].should.equal('http://www.google.com/script.js');
+    });
+
+    it('cssRef should be overridden',() => {
+      params.cssRef = ['http://www.google.com/stylesheet.css'];
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.CSS_REF[0].should.equal('http://www.google.com/stylesheet.css');
+    });
+
 });

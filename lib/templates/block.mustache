@@ -84,7 +84,7 @@
   </style>
   <!-- Custom CSS -->
   {{# cssRef }}
-    <link rel="stylesheet" type="text/css" href="{{ . }}" />
+    <link rel="stylesheet" type="text/css" href="{{cssRef}}" />
   {{/ cssRef }}
   </head>
   <body>
@@ -140,7 +140,7 @@
     </script>
     <!-- Custom Script -->
     {{# jsRef }}
-      <script src="{{ . }}"></script>
+      <script src="{{jsRef}}"></script>
     {{/ jsRef }}
   </body>
 </html>
