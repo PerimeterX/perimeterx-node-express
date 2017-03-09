@@ -12,6 +12,7 @@ Table of Contents
   *   [Basic Usage Example](#basic-usage)
 -   [Configuration](#configuration)
   *   [Blocking Score](#blocking-score)
+  *   [Customizing Block Page](#custom-block-page)
   *   [Custom Block Action](#custom-block)
   *   [Enable/Disable Captcha](#captcha-support)
   *   [Extracting Real IP Address](#real-ip)
@@ -125,6 +126,38 @@ const pxConfig = {
 }
 ```
 
+### <a name="custom-block"></a> Customizing Block Page
+#### Customizing Logo
+Adding a custom logo to the blocking page is by providing the pxConfig a key ```customLogo``` , the logo will be displayed at the top div of the the block page
+The logo's ```max-heigh``` property would be 150px and width would be set to ```auto```
+
+The key customLogo expects a valid URL address such as https://s.perimeterx.net/logo.png
+Example below:
+```javascript
+const pxConfig = {
+  ...
+  customLogo: 'https://s.perimeterx.net/logo.png'
+  ...
+}
+```
+
+#### Customizing CSS/JS
+Custom JS/CSS
+
+The block page can be modified with a custom CSS by adding to the pxConfig the key ```cssRef``` and providing a valid URL to the css In addition there is also the option to add a custom JS file by adding ```jsRef``` key to the pxConfig and providing the JS file that will be loaded with the block page, this key also expects a valid URL
+
+On both cases if the URL is not a valid format an exception will be thrown
+
+Example below:
+```javascript
+const pxConfig = {
+  ...
+  cssRef: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+  jsRef: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+  ...
+}
+```
+
 #### <a name="custom-block"></a> Custom Blocking Actions
 
 In order to customize the action performed on a valid block value, supply a user-defined customBlockHandler function.
@@ -138,7 +171,8 @@ function customBlockHandler(req, res, next)
 {
     const block_score = req.block_score;
     const block_uuid = req.block_uuid;
-    
+
+    #### <a name="custom-block"></a> Custom Blocking Actions
     /* user defined logic comes here */
 }
 
@@ -177,7 +211,7 @@ function customBlockHandler(req, res, next) {
     const block_uuid = req.block_uuid;
 
     /* user defined logic comes here */
-    
+
     return next()
 }
 
@@ -239,7 +273,7 @@ API Timeout in Milliseconds to wait for the PerimeterX server API response.
 
 ```javascript
 const pxConfig = {
-    apiTimeoutMS: 1500 
+    apiTimeoutMS: 1500
 }
 ```
 
