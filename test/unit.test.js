@@ -15,7 +15,10 @@ describe('PX Utils - pxutils.js', () => {
 
 describe('PX Configurations - pxconfig.js', () => {
     let pxconfig;
-    let params = {
+    let params;
+
+    beforeEach(()=> {
+      params = {
         pxAppId: 'PX_APP_ID',
         cookieSecretKey: 'PX_COOKIE_SECRET',
         authToken: 'PX_AUTH_TOKEN',
@@ -24,8 +27,8 @@ describe('PX Configurations - pxconfig.js', () => {
         debugMode: true,
         ipHeader: 'x-px-true-ip',
         maxBufferLength: 1
-    };
-    beforeEach(()=> {
+      };
+
         pxconfig = require('../lib/pxconfig');
     });
 
@@ -65,5 +68,33 @@ describe('PX Configurations - pxconfig.js', () => {
         const conf = pxconfig.conf();
         conf.BLOCK_HANDLER().should.be.exactly('Blocked');
         done();
+    });
+
+    it('should set captchaEnabled to false',() => {
+      params.captchaEnabled = false;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.CAPTCHA_ENABLED.should.be.exactly(false);
+    });
+
+    it('should set enableModule to false',() => {
+      params.enableModule = false;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.ENABLE_MODULE.should.be.exactly(false);
+    });
+
+    it('should set sendPageActivities to false',() => {
+      params.sendPageActivities = false;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.SEND_PAGE_ACTIVITIES.should.be.exactly(false);
+    });
+
+    it('should set debugMode to true',() => {
+      params.sendPageActivities = true;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.DEBUG_MODE.should.be.exactly(true);
     });
 });
