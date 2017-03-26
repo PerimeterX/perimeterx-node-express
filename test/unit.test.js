@@ -15,7 +15,10 @@ describe('PX Utils - pxutils.js', () => {
 
 describe('PX Configurations - pxconfig.js', () => {
     let pxconfig;
-    let params = {
+    let params;
+
+    beforeEach(()=> {
+      params = {
         pxAppId: 'PX_APP_ID',
         cookieSecretKey: 'PX_COOKIE_SECRET',
         authToken: 'PX_AUTH_TOKEN',
@@ -24,9 +27,17 @@ describe('PX Configurations - pxconfig.js', () => {
         debugMode: true,
         ipHeader: 'x-px-true-ip',
         maxBufferLength: 1
-    };
-    beforeEach(()=> {
+      };
+
         pxconfig = require('../lib/pxconfig');
+    });
+
+    it('should set baseUrl to sapi-<appid>.perimeterx.net', (done)=> {
+      params.pxAppId = 'PXJWbMQarF';
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.SERVER_HOST.should.be.exactly(`https://sapi-${params.pxAppId.toLowerCase()}.perimeterx.net`)
+      done();
     });
 
     it('blocking score should be 80', (done) => {
@@ -58,4 +69,54 @@ describe('PX Configurations - pxconfig.js', () => {
         conf.BLOCK_HANDLER().should.be.exactly('Blocked');
         done();
     });
+
+    it('should set captchaEnabled to false',() => {
+      params.captchaEnabled = false;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.CAPTCHA_ENABLED.should.be.exactly(false);
+    });
+
+    it('should set enableModule to false',() => {
+      params.enableModule = false;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.ENABLE_MODULE.should.be.exactly(false);
+    });
+
+    it('should set sendPageActivities to false',() => {
+      params.sendPageActivities = false;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.SEND_PAGE_ACTIVITIES.should.be.exactly(false);
+    });
+
+    it('should set debugMode to true',() => {
+      params.sendPageActivities = true;
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.DEBUG_MODE.should.be.exactly(true);
+    });
+
+    it('customLogo should be overridden',() => {
+      params.customLogo = 'http://www.google.com/logo.jpg';
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.CUSTOM_LOGO.should.be.exactly('http://www.google.com/logo.jpg');
+    });
+
+    it('jsRef should be overridden',() => {
+      params.jsRef = ['http://www.google.com/script.js'];
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.JS_REF[0].should.equal('http://www.google.com/script.js');
+    });
+
+    it('cssRef should be overridden',() => {
+      params.cssRef = ['http://www.google.com/stylesheet.css'];
+      pxconfig.init(params);
+      const conf = pxconfig.conf();
+      conf.CSS_REF[0].should.equal('http://www.google.com/stylesheet.css');
+    });
+
 });
