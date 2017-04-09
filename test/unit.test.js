@@ -1,7 +1,11 @@
 'use strict';
 
 const should = require('should');
+const sinon = require('sinon');
+const rewire = require("rewire");
 const pxutil = require('../lib/utils/pxutil');
+const pxhttpc = require('../lib/utils/pxhttpc');
+var pxapi = rewire('../lib/utils/pxapi');
 
 describe('PX Utils - pxutils.js', () => {
     it('should generate headers array from headers object', (done) => {
@@ -119,4 +123,36 @@ describe('PX Configurations - pxconfig.js', () => {
       conf.CSS_REF[0].should.equal('http://www.google.com/stylesheet.css');
     });
 
+});
+
+describe('PX API - pxapi.js', () => {
+    it('should add px_orig_cookie to risk_api when decryption fails', (done) => {
+      //Stubbing the pxhttpc callServer functions
+      sinon.stub(pxhttpc,'callServer').callsFake( (data, headers, uri, callType, callback) => {
+        return callback(data)
+      });
+
+      //Using rewire to get callServer function
+      var pxApiCallServerFunc = pxapi.__get__('callServer');
+
+      // Prepare pxCtx
+      var pxCtx = {
+        ip : '1.2.3.4',
+        full_url : 'stub',
+        px_vid : 'stub',
+        block_uuid : 'stub',
+        uri : 'stub',
+        headers : 'stub',
+        http_version : 'stub',
+        s2s_call_reason : 'cookie_decryption_failed',
+        http_method : 'stub',
+        px_orig_cookie : 'abc'
+      }
+
+      pxApiCallServerFunc(pxCtx, data => {
+        data.additional.px_orig_cookie.should.equal('abc')
+        done();
+      });
+
+    });
 });
