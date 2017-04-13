@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 2017-03-24
+### Added
+- Sending px cookie on page requested activities
+- Redesigned block pages
+- Change perimeterx servers url to be per app id
+
 ## [1.7.0] - 2016-11-30
 ### Added
 - Page UUID added to Risk API requests
