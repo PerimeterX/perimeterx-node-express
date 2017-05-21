@@ -200,5 +200,18 @@ describe('PX Integration Tests', function () {
                 });
         });
     });
+	describe('Sensitive routes', () => {
+		it("should trigger s2s activity on sensitive_route", (done) => {
+	        const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY)
+			superagent.get(`${SERVER_URL}/login`)
+			    .set('Cookie', `_px=${goodCookie};`)
+                .set(pxconfig.IP_HEADER, ip)
+                .set('User-Agent', ua)
+                .end((e, res) => {
+                    testUtil.assertLogString('cookie validation passed but uri is a sensitive route', srvOut).should.be.exactly(true);
+                    return done();
+                });	
+		});
+	});
 
 });
