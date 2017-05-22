@@ -113,7 +113,7 @@ describe('PX Integration Tests', function () {
                 });
         });
 
-        it('PASS - invalid cookie. good user', (done) => {
+        it('BLOCK - invalid cookie. good user', (done) => {
             const pxCookie = 'bad_cookie';
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${pxCookie};`)
@@ -121,8 +121,7 @@ describe('PX Integration Tests', function () {
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
-                    (res.text).should.be.exactly('Hello from PX');
-                    (res.status).should.be.exactly(200);
+                    (res.status).should.be.exactly(403);
                     return done();
                 });
         });
