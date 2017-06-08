@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.9.0] - 2017-06-08
+### Added
+- Support for cookie v3 & risk v2
+- Sending orig_px_cookie when decrypt fails
+- Added support JS challenge
+- Sensitive routes, triggers risk_api
+
 ## [1.8.0] - 2017-03-24
 ### Added
 - Sending px cookie on page requested activities
