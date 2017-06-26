@@ -91,9 +91,9 @@ const pxConfig = {
 };
 perimeterx.init(pxConfig);
 server.use(cookieParser());
+/* block high scored users using px-module for all routes */
 server.use(perimeterx.middleware);
 
-/* block high scored users using px-module for route /helloWorld */
 server.get('/helloWorld', (req, res) => {
     res.send('Hello from PX');
 });
