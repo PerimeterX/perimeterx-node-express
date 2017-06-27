@@ -3,7 +3,7 @@
 const express = require('express');
 const superagent = require('superagent');
 const faker = require('faker');
-const pxconfig = require('../lib/pxconfig').conf();
+const pxConfig = require('../lib/pxconfig');
 const should = require('should');
 const testUtil = require('./utils/test.util.js');
 const SERVER_URL = 'http://localhost:8081';
@@ -16,6 +16,7 @@ describe('PX Integration Tests', function () {
     let ua = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36';
     let server, srvOut = [], srvErr = [];
     let showSvrOutput = process.env.TEST_VERBOSE || false;
+    let pxconfig;
 
     before(function (done) {
         /* init module */
@@ -27,6 +28,7 @@ describe('PX Integration Tests', function () {
         server.stderr.setEncoding('utf8');
 
         server.stdout.on('data', function (msg) {
+            pxconfig = pxConfig.conf;
             srvOut.push(msg);
             if (showSvrOutput) console.log("PX Tests Out: ", msg);
             if (msg.indexOf('test server started') != -1) {

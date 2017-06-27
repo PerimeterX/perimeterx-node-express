@@ -8,7 +8,7 @@
 const moment = require('moment');
 const crypto = require('crypto');
 const uuid = require('uuid');
-const pxconfig = require('../../lib/pxconfig').conf();
+const pxconfig = require('../../lib/pxconfig');
 
 
 exports.goodValidCookie = buildCookieGoodScoreValid;
@@ -24,7 +24,8 @@ exports.initConfigurations = {
     blockingScore: 60,
     debugMode: true,
     ipHeader: 'x-px-true-ip',
-    maxBufferLength: 1
+    maxBufferLength: 1,
+    dynamicConfigurations: false
 };
 
 const cookieGood = {
@@ -95,7 +96,7 @@ function badValidCookie(ip, ua, cookieKey) {
  *
  */
 function buildCookie(cookie, ip, ua, ts, cookieKey) {
-    const cksum = crypto.createHmac(pxconfig.CE_DIGEST, cookieKey);
+    const cksum = crypto.createHmac(pxconfig.conf.CE_DIGEST, cookieKey);
 
     /* add validity time */
     cookie.t = Number(ts);
@@ -134,10 +135,10 @@ function encryptCookie(cookie, cookieKey) {
     let result;
     let cipher;
     const salt = crypto.randomBytes(64);
-    const derivation = crypto.pbkdf2Sync(cookieKey, salt, pxconfig.CE_ITERATIONS, pxconfig.CE_IVLEN + pxconfig.CE_KEYLEN, pxconfig.CE_DIGEST);
+    const derivation = crypto.pbkdf2Sync(cookieKey, salt, pxconfig.conf.CE_ITERATIONS, pxconfig.conf.CE_IVLEN + pxconfig.conf.CE_KEYLEN, pxconfig.conf.CE_DIGEST);
     const key = derivation.slice(0, 32);
     const iv = derivation.slice(32);
-    cipher = crypto.createCipheriv(pxconfig.CE_ALGO, key, iv);
+    cipher = crypto.createCipheriv(pxconfig.conf.CE_ALGO, key, iv);
     result = salt.toString('base64') + ':1000:';
     // encrypt data
     result += cipher.update(JSON.stringify(cookie), 'utf8', 'base64');
