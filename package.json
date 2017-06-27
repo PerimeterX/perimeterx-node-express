@@ -30,7 +30,6 @@
     "agentkeepalive": "^2.1.1",
     "cookie-parser": "1.4.1",
     "express": "4.15.2",
-    "htmlencode": "0.0.4",
     "lodash": "4.11.1",
     "moment": "2.17.1",
     "mu2": "^0.5.21",
