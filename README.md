@@ -15,6 +15,7 @@ Table of Contents
   *   [Customizing Block Page](#custom-block-page)
   *   [Custom Block Action](#custom-block)
   *   [Enable/Disable Captcha](#captcha-support)
+  *   [Module Mode](#modulemode-support)
   *   [Extracting Real IP Address](#real-ip)
   *   [Filter Sensitive Headers](#sensitive-headers)
   *   [API Timeout Milliseconds](#api-timeout)
@@ -229,6 +230,21 @@ By enabling CAPTCHA support, a CAPTCHA will be served as part of the block page,
 ```javascript
 const pxConfig = {
     captchaEnabled: false
+}
+```
+
+#### <a name="modulemode-support"></a>Module Mode
+
+**Default: 0**
+
+**Possible Values:**
+
+- `0` - Module does not block users crossing the predefined block threshold. The pxCustomBlockHandler function will be eval'd in case one is supplied, upon crossing the defined block threshold.
+- `1` - Module blocks users crossing the predefined block threshold. Server-to-server requests are sent synchronously.
+
+```javascript
+const pxConfig = {
+    moduleMode: 1
 }
 ```
 
