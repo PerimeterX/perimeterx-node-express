@@ -239,7 +239,7 @@ const pxConfig = {
 
 **Possible Values:**
 
-- `0` - Module does not block users crossing the predefined block threshold. The custom blocking action function will be eval'd in case one is supplied, upon crossing the defined block threshold.
+- `0` - Module does not block users crossing the predefined block threshold. The custom blocking action function will be evaluated in case one is supplied, upon crossing the defined block threshold.
 - `1` - Module blocks users crossing the predefined block threshold. Server-to-server requests are sent synchronously.
 
 ```javascript
