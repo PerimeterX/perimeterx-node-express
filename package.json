@@ -1,6 +1,6 @@
 {
   "name": "perimeterx-node-express",
-  "version": "1.9.0",
+  "version": "3.0.0-rc1",
   "description": "PerimeterX Express.js middleware to monitor and block traffic according to PerimeterX risk score",
   "main": "index.js",
   "directories": {
