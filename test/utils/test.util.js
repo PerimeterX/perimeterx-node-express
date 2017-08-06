@@ -25,7 +25,9 @@ exports.initConfigurations = {
     debugMode: true,
     ipHeader: 'x-px-true-ip',
     maxBufferLength: 1,
-    dynamicConfigurations: false
+    dynamicConfigurations: false,
+    moduleMode: 1,
+    sensitiveRoutes: ['/login']
 };
 
 const cookieGood = {
@@ -113,7 +115,7 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
     cksum.update(cookie.v);
 
     /* update ip */
-    cksum.update(ip);
+    //cksum.update(ip);
 
     /* update ua */
     cksum.update(ua);
