@@ -42,7 +42,6 @@ describe('PX Integration Tests', function () {
     });
 
     beforeEach(function (done) {
-        console.log('Called beforeEach');
         ip = faker.internet.ip();
         srvOut = [];
         srvErr = [];
@@ -66,7 +65,6 @@ describe('PX Integration Tests', function () {
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     (res.text).should.be.exactly('Hello from PX');
-                    console.log(srvOut);
                     testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
                     (res.status).should.be.exactly(200);
                     return done();
