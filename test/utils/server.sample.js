@@ -6,9 +6,6 @@ const perimeterx = require('../../index');
 const testUtil = require('../utils/test.util');
 
 const server = express();
-
-console.log("testUtil.initConfigurations", testUtil.initConfigurations.pxAppId);
-
 perimeterx.init(testUtil.initConfigurations);
 
 server.use(cookieParser());
