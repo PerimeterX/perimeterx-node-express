@@ -13,7 +13,7 @@ const perimeterx = require('../index');
 describe('PX Integration Tests', function () {
     this.timeout(3000);
     let ip = '1.2.3.5';
-    let ua = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 ABCC Safari/537.36';
+    let ua = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36';
     let server, srvOut = [], srvErr = [];
     let showSvrOutput = process.env.TEST_VERBOSE || false;
     let pxconfig;
