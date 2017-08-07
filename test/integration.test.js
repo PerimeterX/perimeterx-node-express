@@ -123,7 +123,6 @@ describe('PX Integration Tests', function () {
                 .set('X-PX-TRUE-IP', ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
-                    console.log(srvOut);
                     testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
                     (res.status).should.be.exactly(403);
                     return done();
