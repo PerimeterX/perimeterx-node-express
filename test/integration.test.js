@@ -13,7 +13,7 @@ const perimeterx = require('../index');
 describe('PX Integration Tests', function () {
     this.timeout(3000);
     let ip = '1.2.3.5';
-    let ua = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36';
+    let ua = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 ABCC Safari/537.36';
     let server, srvOut = [], srvErr = [];
     let showSvrOutput = process.env.TEST_VERBOSE || false;
     let pxconfig;
@@ -42,6 +42,7 @@ describe('PX Integration Tests', function () {
     });
 
     beforeEach(function (done) {
+        console.log('Called beforeEach');
         ip = faker.internet.ip();
         srvOut = [];
         srvErr = [];
@@ -114,20 +115,20 @@ describe('PX Integration Tests', function () {
                 });
         });
 
-        // it('BLOCK - invalid cookie. good user', (done) => {
-        //     const pxCookie = 'bad_cookie';
-        //     superagent.get(SERVER_URL)
-        //         .set('Cookie', `_px=${pxCookie};`)
-        //         .set(pxconfig.IP_HEADERS, ip)
-        //         .set('User-Agent', ua)
-        //         .end((e, res) => {
-        //             console.log(srvOut);
-
-        //             testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
-        //             (res.status).should.be.exactly(403);
-        //             return done();
-        //         });
-        // });
+        it('BLOCK - cookie decryption failed. good user', (done) => {
+            const pxCookie = 'bad_cookie';
+            superagent.get(SERVER_URL)
+                .set('Cookie', `_px=${pxCookie};`)
+                .set(pxconfig.IP_HEADERS, ip)
+                .set('X-PX-TRUE-IP', ip)
+                .set('User-Agent', ua)
+                .end((e, res) => {
+                    console.log(srvOut);
+                    testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
+                    (res.status).should.be.exactly(403);
+                    return done();
+                });
+        });
 
         it('BLOCK - invalid cookie. bad user', (done) => {
             const pxCookie = 'bad_cookie';
@@ -143,9 +144,11 @@ describe('PX Integration Tests', function () {
         });
 
         it('PASS - no cookie. good user', (done) => {
+            let tempUA = faker.internet.userAgent();
             superagent.get(SERVER_URL)
                 .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
+                .set('User-Agent', tempUA)
+                .set('X-PX-TRUE-IP', ip)
                 .end((e, res) => {
                     testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
                     (res.text).should.be.exactly('Hello from PX');
