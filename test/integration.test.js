@@ -61,12 +61,10 @@ describe('PX Integration Tests', function () {
             const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     (res.text).should.be.exactly('Hello from PX');
-                    console.log(srvOut);
-                    
                     testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
                     (res.status).should.be.exactly(200);
                     return done();
@@ -77,7 +75,7 @@ describe('PX Integration Tests', function () {
             const badCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${badCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     (res.status).should.be.exactly(403);
@@ -92,7 +90,7 @@ describe('PX Integration Tests', function () {
             const goodCookie = testUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(true);
@@ -106,7 +104,7 @@ describe('PX Integration Tests', function () {
             const goodCookie = testUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
                     testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(true);
@@ -115,11 +113,12 @@ describe('PX Integration Tests', function () {
                 });
         });
 
-        it('BLOCK - invalid cookie. good user', (done) => {
+        it('BLOCK - cookie decryption failed. good user', (done) => {
             const pxCookie = 'bad_cookie';
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${pxCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
+                .set('X-PX-TRUE-IP', ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
@@ -132,7 +131,7 @@ describe('PX Integration Tests', function () {
             const pxCookie = 'bad_cookie';
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${pxCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
                     testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
@@ -142,9 +141,11 @@ describe('PX Integration Tests', function () {
         });
 
         it('PASS - no cookie. good user', (done) => {
+            let tempUA = faker.internet.userAgent();
             superagent.get(SERVER_URL)
-                .set(pxconfig.IP_HEADER, ip)
-                .set('User-Agent', ua)
+                .set(pxconfig.IP_HEADERS, ip)
+                .set('User-Agent', tempUA)
+                .set('X-PX-TRUE-IP', ip)
                 .end((e, res) => {
                     testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
                     (res.text).should.be.exactly('Hello from PX');
@@ -155,7 +156,7 @@ describe('PX Integration Tests', function () {
 
         it('BLOCK - no cookie. bad user', (done) => {
             superagent.get(SERVER_URL)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
                     testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
@@ -167,7 +168,7 @@ describe('PX Integration Tests', function () {
     describe('Request Filtering', () => {
         it('PASS - static file request. bad user', (done) => {
             superagent.get(SERVER_URL + '/mytest.js')
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
                     (res.status).should.be.exactly(200);
@@ -180,7 +181,7 @@ describe('PX Integration Tests', function () {
             const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     testUtil.assertLogString('sending page requested activity', srvOut).should.be.exactly(true);
@@ -192,7 +193,7 @@ describe('PX Integration Tests', function () {
             const goodCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY);
             superagent.get(SERVER_URL)
                 .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     testUtil.assertLogString('sending page requested activity', srvOut).should.be.exactly(false);
@@ -206,12 +207,12 @@ describe('PX Integration Tests', function () {
 	        const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY)
 			superagent.get(`${SERVER_URL}/login`)
 			    .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADER, ip)
+                .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     testUtil.assertLogString('cookie validation passed but uri is a sensitive route', srvOut).should.be.exactly(true);
                     return done();
-                });	
+                });
 		});
 	});
 

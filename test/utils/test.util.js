@@ -17,15 +17,17 @@ exports.badValidCookie = badValidCookie;
 exports.assertLogString = assertLogString;
 
 exports.initConfigurations = {
-    pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_COOKIE_KEY',
-    authToken: 'PX_AUTH_TOKEN',
+    pxAppId: process.env.AppId,
+    cookieSecretKey: process.env.CookieSecret,
+    authToken: process.env.AuthToken,
     sendPageActivities: true,
     blockingScore: 60,
     debugMode: true,
     ipHeader: 'x-px-true-ip',
     maxBufferLength: 1,
-    dynamicConfigurations: false
+    dynamicConfigurations: false,
+    moduleMode: 1,
+    sensitiveRoutes: ['/login']
 };
 
 const cookieGood = {
@@ -113,7 +115,7 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
     cksum.update(cookie.v);
 
     /* update ip */
-    cksum.update(ip);
+    //cksum.update(ip);
 
     /* update ua */
     cksum.update(ua);
