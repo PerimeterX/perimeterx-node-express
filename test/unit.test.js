@@ -63,14 +63,14 @@ describe('PX Configurations - pxconfig.js', () => {
         done();
     });
 
-    it('blockHandler function should be overridden', (done) => {
-        params.blockHandler = function () {
+    it('requestHandler function should be overridden', (done) => {
+        params.customRequestHandler = function () {
             return 'Blocked';
         };
 
         pxconfig.init(params);
         const conf = pxconfig.conf;
-        conf.BLOCK_HANDLER().should.be.exactly('Blocked');
+        conf.CUSTOM_REQUEST_HANDLER().should.be.exactly('Blocked');
         done();
     });
 
