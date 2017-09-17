@@ -27,13 +27,7 @@
   },
   "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
   "dependencies": {
-    "agentkeepalive": "^2.1.1",
-    "cookie-parser": "1.4.1",
-    "express": "4.15.3",
-    "lodash": "4.11.1",
-    "moment": "2.17.1",
-    "request": "^2.69.0",
-    "uuid": "^3.0.0"
+
   },
   "devDependencies": {
     "faker": "^3.1.0",
@@ -41,6 +35,12 @@
     "rewire": "^2.5.2",
     "should": "^8.3.0",
     "sinon": "^2.1.0",
-    "superagent": "1.7.2"
+    "superagent": "1.7.2",
+    "cookie-parser": "1.4.1",
+    "express": "4.15.3",
+    "lodash": "4.11.1",
+    "moment": "2.17.1",
+    "request": "^2.69.0",
+    "uuid": "^3.0.0"
   }
 }

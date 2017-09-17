@@ -8,8 +8,6 @@
 const moment = require('moment');
 const crypto = require('crypto');
 const uuid = require('uuid');
-const pxconfig = require('../../lib/pxconfig');
-
 
 exports.goodValidCookie = buildCookieGoodScoreValid;
 exports.buildCookieGoodScoreInValid = buildCookieGoodScoreInValid;
@@ -56,9 +54,9 @@ const cookieBad = {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function buildCookieGoodScoreInValid(ip, ua, cookieKey) {
+function buildCookieGoodScoreInValid(ip, ua, cookieKey, pxconfig) {
     const ts = moment().add(-10, 'minutes').format('x');
-    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey), cookieKey);
+    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey, pxconfig), cookieKey, pxconfig);
 }
 
 /**
@@ -69,9 +67,9 @@ function buildCookieGoodScoreInValid(ip, ua, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function buildCookieGoodScoreValid(ip, ua, cookieKey) {
+function buildCookieGoodScoreValid(ip, ua, cookieKey, pxconfig) {
     const ts = moment().add(10, 'minutes').format('x');
-    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey), cookieKey);
+    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey, pxconfig), cookieKey, pxconfig);
 }
 
 /**
@@ -82,9 +80,9 @@ function buildCookieGoodScoreValid(ip, ua, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function badValidCookie(ip, ua, cookieKey) {
+function badValidCookie(ip, ua, cookieKey, pxconfig) {
     const ts = moment().add(10, 'minutes').format('x');
-    return encryptCookie(buildCookie(cookieBad, ip, ua, ts, cookieKey), cookieKey);
+    return encryptCookie(buildCookie(cookieBad, ip, ua, ts, cookieKey, pxconfig), cookieKey, pxconfig);
 }
 
 /**
@@ -97,8 +95,8 @@ function badValidCookie(ip, ua, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function buildCookie(cookie, ip, ua, ts, cookieKey) {
-    const cksum = crypto.createHmac(pxconfig.conf.CE_DIGEST, cookieKey);
+function buildCookie(cookie, ip, ua, ts, cookieKey, pxconfig) {
+    const cksum = crypto.createHmac(pxconfig.CE_DIGEST, cookieKey);
 
     /* add validity time */
     cookie.t = Number(ts);
@@ -132,15 +130,15 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function encryptCookie(cookie, cookieKey) {
+function encryptCookie(cookie, cookieKey, pxconfig) {
     // create cipher
     let result;
     let cipher;
     const salt = crypto.randomBytes(64);
-    const derivation = crypto.pbkdf2Sync(cookieKey, salt, pxconfig.conf.CE_ITERATIONS, pxconfig.conf.CE_IVLEN + pxconfig.conf.CE_KEYLEN, pxconfig.conf.CE_DIGEST);
+    const derivation = crypto.pbkdf2Sync(cookieKey, salt, pxconfig.CE_ITERATIONS, pxconfig.CE_IVLEN + pxconfig.CE_KEYLEN, pxconfig.CE_DIGEST);
     const key = derivation.slice(0, 32);
     const iv = derivation.slice(32);
-    cipher = crypto.createCipheriv(pxconfig.conf.CE_ALGO, key, iv);
+    cipher = crypto.createCipheriv(pxconfig.CE_ALGO, key, iv);
     result = salt.toString('base64') + ':1000:';
     // encrypt data
     result += cipher.update(JSON.stringify(cookie), 'utf8', 'base64');
