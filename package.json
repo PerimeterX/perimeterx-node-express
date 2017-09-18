@@ -38,7 +38,6 @@
     "superagent": "1.7.2",
     "cookie-parser": "1.4.1",
     "express": "4.15.3",
-    "lodash": "4.11.1",
     "moment": "2.17.1",
     "request": "^2.69.0",
     "uuid": "^3.0.0"
