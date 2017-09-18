@@ -85,6 +85,20 @@ describe('PX Integration Tests', function () {
     });
 
     describe('PX Server 2 Server Evaluation', () => {
+        it('PASS - no cookie. good user', (done) => {
+            let tempUA = faker.internet.userAgent();
+            superagent.get(SERVER_URL)
+                .set(pxconfig.IP_HEADERS, ip)
+                .set('User-Agent', tempUA)
+                .set('X-PX-TRUE-IP', ip)
+                .end((e, res) => {
+                    testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
+                    (res.text).should.be.exactly('Hello from PX');
+                    (res.status).should.be.exactly(200);
+                    return done();
+                });
+        });
+
         it('PASS - expired cookie. good user', (done) => {
             const goodCookie = testUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
             superagent.get(SERVER_URL)
@@ -139,19 +153,6 @@ describe('PX Integration Tests', function () {
                 });
         });
 
-        it('PASS - no cookie. good user', (done) => {
-            let tempUA = faker.internet.userAgent();
-            superagent.get(SERVER_URL)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', tempUA)
-                .set('X-PX-TRUE-IP', ip)
-                .end((e, res) => {
-                    testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
-                    (res.text).should.be.exactly('Hello from PX');
-                    (res.status).should.be.exactly(200);
-                    return done();
-                });
-        });
 
         it('BLOCK - no cookie. bad user', (done) => {
             superagent.get(SERVER_URL)
