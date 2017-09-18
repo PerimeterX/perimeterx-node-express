@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
   "dependencies": {
-
+    "perimeterx-node-core": "0.0.1"
   },
   "devDependencies": {
     "faker": "^3.1.0",
