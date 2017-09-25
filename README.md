@@ -16,7 +16,7 @@ Table of Contents
   *   [Blocking Score](#blocking-score)
   *   [Customizing Block Page](#custom-block-page)
   *   [Custom Block Action](#custom-block)
-  *   [Enable/Disable Captcha](#captcha-support)
+  *   [Select CAPTCHA provider](#captcha-support)
   *   [Module Mode](#modulemode-support)
   *   [Extracting Real IP Address](#real-ip)
   *   [Filter Sensitive Headers](#sensitive-headers)
@@ -175,7 +175,6 @@ function customBlockHandler(req, res, next)
     const block_score = req.block_score;
     const block_uuid = req.block_uuid;
 
-    #### <a name="custom-block"></a> Custom Blocking Actions
     /* user defined logic comes here */
 }
 
@@ -223,15 +222,16 @@ const pxConfig = {
 }
 ```
 
-#### <a name="captcha-support"></a>Enable/Disable CAPTCHA on the block page
+#### <a name="captcha-support"></a>Select CAPTCHA provider
 
-By enabling CAPTCHA support, a CAPTCHA will be served as part of the block page, giving real users the ability to identify as a human. By solving the CAPTCHA, the user's score is then cleaned up and the user is allowed to continue.
-
-**Default: true**
+The CAPTCHA part of the block page can use one of the following:
+* [reCAPTCHA](https://www.google.com/recaptcha)
+* [FunCaptcha](https://www.funcaptcha.com/)
+**Default: reCaptcha**
 
 ```javascript
 const pxConfig = {
-    captchaEnabled: false
+    captchaProvider: 'funCaptcha'
 }
 ```
 
