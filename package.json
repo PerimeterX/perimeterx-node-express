@@ -29,7 +29,7 @@
   "dependencies": {
     "agentkeepalive": "^2.1.1",
     "cookie-parser": "1.4.1",
-    "express": "4.15.5",
+    "express": "4.16.0",
     "htmlencode": "0.0.4",
     "lodash": "4.11.1",
     "moment": "2.17.1",
