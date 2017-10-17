@@ -55,6 +55,7 @@ const pxConfig = {
     pxAppId: 'PX_APP_ID',
     cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
     authToken: 'PX_TOKEN',
+    moduleMode: 1,
     blockingScore: 60
 };
 perimeterx.init(pxConfig);
@@ -90,6 +91,7 @@ const pxConfig = {
     pxAppId: 'PX_APP_ID',
     cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
     authToken: 'PX_TOKEN',
+    moduleMode: 1,
     blockingScore: 60
 };
 perimeterx.init(pxConfig);
@@ -118,6 +120,7 @@ Configuration options are set in the `pxConfig` variable.
 - pxAppid
 - cookieSecretKey
 - authToken
+- moduleMode
 
 ##### <a name="blocking-score"></a> Changing the Minimum Score for Blocking
 
