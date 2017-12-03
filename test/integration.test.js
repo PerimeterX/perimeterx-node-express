@@ -92,7 +92,7 @@ describe('PX Integration Tests', function () {
                 .set('User-Agent', tempUA)
                 .set('X-PX-TRUE-IP', ip)
                 .end((e, res) => {
-                    testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString('Cookie is missing', srvOut).should.be.exactly(true);
                     (res.text).should.be.exactly('Hello from PX');
                     (res.status).should.be.exactly(200);
                     return done();
@@ -106,7 +106,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
-                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString('Cookie TTL is expired', srvOut).should.be.exactly(true);
                     (res.text).should.be.exactly('Hello from PX');
                     (res.status).should.be.exactly(200);
                     return done();
@@ -120,7 +120,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
-                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString('Cookie TTL is expired', srvOut).should.be.exactly(true);
                     (res.status).should.be.exactly(403);
                     return done();
                 });
@@ -159,7 +159,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
-                    testUtil.assertLogString('No cookie found', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString('Cookie is missing', srvOut).should.be.exactly(true);
                     (res.status).should.be.exactly(403);
                     return done();
                 });
@@ -210,7 +210,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
-                    testUtil.assertLogString('cookie validation passed but uri is a sensitive route', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString(`Sensitive route match, sending Risk API. path: /login`, srvOut).should.be.exactly(true);
                     return done();
                 });
 		});
