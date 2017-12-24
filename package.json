@@ -29,12 +29,12 @@
   "dependencies": {
     "perimeterx-node-core": "~1.0.0",
     "cookie-parser": "1.4.1",
-    "express": "4.15.3",
     "moment": "^2.19.3"
   },
   "devDependencies": {
     "faker": "^3.1.0",
     "mocha": "^2.4.5",
+    "express": "4.16.2",
     "rewire": "^2.5.2",
     "should": "^8.3.0",
     "sinon": "^2.1.0",
