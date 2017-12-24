@@ -8,8 +8,6 @@
 const moment = require('moment');
 const crypto = require('crypto');
 const uuid = require('uuid');
-const pxconfig = require('../../lib/pxconfig').conf();
-
 
 exports.goodValidCookie = buildCookieGoodScoreValid;
 exports.buildCookieGoodScoreInValid = buildCookieGoodScoreInValid;
@@ -17,14 +15,17 @@ exports.badValidCookie = badValidCookie;
 exports.assertLogString = assertLogString;
 
 exports.initConfigurations = {
-    pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_COOKIE_KEY',
-    authToken: 'PX_AUTH_TOKEN',
+    pxAppId: process.env.AppId,
+    cookieSecretKey: process.env.CookieSecret,
+    authToken: process.env.AuthToken,
     sendPageActivities: true,
     blockingScore: 60,
     debugMode: true,
     ipHeader: 'x-px-true-ip',
-    maxBufferLength: 1
+    maxBufferLength: 1,
+    dynamicConfigurations: false,
+    moduleMode: 1,
+    sensitiveRoutes: ['/login']
 };
 
 const cookieGood = {
@@ -53,9 +54,9 @@ const cookieBad = {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function buildCookieGoodScoreInValid(ip, ua, cookieKey) {
+function buildCookieGoodScoreInValid(ip, ua, cookieKey, pxconfig) {
     const ts = moment().add(-10, 'minutes').format('x');
-    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey), cookieKey);
+    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey, pxconfig), cookieKey, pxconfig);
 }
 
 /**
@@ -66,9 +67,9 @@ function buildCookieGoodScoreInValid(ip, ua, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function buildCookieGoodScoreValid(ip, ua, cookieKey) {
+function buildCookieGoodScoreValid(ip, ua, cookieKey, pxconfig) {
     const ts = moment().add(10, 'minutes').format('x');
-    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey), cookieKey);
+    return encryptCookie(buildCookie(cookieGood, ip, ua, ts, cookieKey, pxconfig), cookieKey, pxconfig);
 }
 
 /**
@@ -79,9 +80,9 @@ function buildCookieGoodScoreValid(ip, ua, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function badValidCookie(ip, ua, cookieKey) {
+function badValidCookie(ip, ua, cookieKey, pxconfig) {
     const ts = moment().add(10, 'minutes').format('x');
-    return encryptCookie(buildCookie(cookieBad, ip, ua, ts, cookieKey), cookieKey);
+    return encryptCookie(buildCookie(cookieBad, ip, ua, ts, cookieKey, pxconfig), cookieKey, pxconfig);
 }
 
 /**
@@ -94,7 +95,7 @@ function badValidCookie(ip, ua, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function buildCookie(cookie, ip, ua, ts, cookieKey) {
+function buildCookie(cookie, ip, ua, ts, cookieKey, pxconfig) {
     const cksum = crypto.createHmac(pxconfig.CE_DIGEST, cookieKey);
 
     /* add validity time */
@@ -111,9 +112,6 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
     /* visitor id */
     cksum.update(cookie.v);
 
-    /* update ip */
-    cksum.update(ip);
-
     /* update ua */
     cksum.update(ua);
 
@@ -129,7 +127,7 @@ function buildCookie(cookie, ip, ua, ts, cookieKey) {
  * @param {string} cookieKey - cookie secret to sign cookie with
  *
  */
-function encryptCookie(cookie, cookieKey) {
+function encryptCookie(cookie, cookieKey, pxconfig) {
     // create cipher
     let result;
     let cipher;

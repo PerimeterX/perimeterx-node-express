@@ -1,6 +1,6 @@
 {
   "name": "perimeterx-node-express",
-  "version": "1.9.0",
+  "version": "3.0.0",
   "description": "PerimeterX Express.js middleware to monitor and block traffic according to PerimeterX risk score",
   "main": "index.js",
   "directories": {
@@ -27,22 +27,18 @@
   },
   "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
   "dependencies": {
-    "agentkeepalive": "^2.1.1",
+    "perimeterx-node-core": "~1.0.0",
     "cookie-parser": "1.4.1",
-    "express": "4.16.0",
-    "htmlencode": "0.0.4",
-    "lodash": "4.11.1",
-    "moment": "2.19.3",
-    "mu2": "^0.5.21",
-    "request": "^2.69.0",
-    "uuid": "^3.0.0"
+    "moment": "^2.19.3"
   },
   "devDependencies": {
     "faker": "^3.1.0",
     "mocha": "^2.4.5",
+    "express": "4.16.2",
     "rewire": "^2.5.2",
     "should": "^8.3.0",
     "sinon": "^2.1.0",
-    "superagent": "1.7.2"
+    "superagent": "1.7.2",
+    "uuid": "^3.0.0"
   }
 }

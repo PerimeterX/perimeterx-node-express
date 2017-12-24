@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-12-24
+### Modified
+- Restructured code to use shared core package
+- Enhanced module logs
+### Added
+- Mobile SDK support
+- Remote configurations
+- Enforcer telemetry
+- Support FunCaptcha
+- New configuration - moduleMode
+
 ## [1.9.0] - 2017-06-08
 ### Added
 - Support for cookie v3 & risk v2
