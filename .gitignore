@@ -4,7 +4,6 @@ node_modules
 # Optional npm cache directory
 .npm
 
-# IDEA metadata files
-.idea
-
+.idea/
+.vscode/
 # test/utils/test.util.js
