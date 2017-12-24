@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Mobile SDK support
 - Remote configurations
 - Enforcer telemetry
+- Support FunCaptcha
+- New configuration - moduleMode
 
 ## [1.9.0] - 2017-06-08
 ### Added

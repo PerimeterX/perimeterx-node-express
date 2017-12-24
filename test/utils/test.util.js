@@ -112,9 +112,6 @@ function buildCookie(cookie, ip, ua, ts, cookieKey, pxconfig) {
     /* visitor id */
     cksum.update(cookie.v);
 
-    /* update ip */
-    //cksum.update(ip);
-
     /* update ua */
     cksum.update(ua);
 
