@@ -264,13 +264,8 @@ The user's IP can be passed to the PerimeterX module using a custom user defined
 **Extract the real IP from a custom header**
 
 ```javascript
-function getUserIp(req) {
-    const ipsHeader = req.get('user-true-ip');
-    return ipsHeader.split(',')[0];
-}
-
 const pxConfig = {
-    getUserIp: getUserIp
+    ipHeaders: ['x-true-ip', 'x-some-other-header']
 }
 ```
 
