@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "cover": "istanbul cover _mocha"
   },
   "repository": {
     "type": "git",
@@ -32,9 +33,9 @@
     "moment": "^2.19.3"
   },
   "devDependencies": {
-    "faker": "^3.1.0",
-    "mocha": "^2.4.5",
     "express": "4.16.2",
+    "faker": "^3.1.0",
+    "mocha": "^2.5.3",
     "rewire": "^2.5.2",
     "should": "^8.3.0",
     "sinon": "^2.1.0",
