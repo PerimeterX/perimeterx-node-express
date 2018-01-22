@@ -5,13 +5,12 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v3.0.1](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v3.1.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
 
 -   [Usage](#usage)
-  *   [Dependencies](#dependencies)
   *   [Installation](#installation)
   *   [Basic Usage Example](#basic-usage)
 -   [Configuration](#configuration)
@@ -29,13 +28,6 @@ Table of Contents
   *   [Tests](#tests)
 
 <a name="Usage"></a>
-
-<a name="dependencies"></a> Dependencies
-----------------------------------------
-
--   [cookie-parser](https://github.com/expressjs/cookie-parser)
-
-`    $ npm install --save cookie-parser`
 
 <a name="installation"></a> Installation
 ----------------------------------------
