@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.1.0] - 2018-01-22
 ### Added
+
+## [3.1.0] - 2018-01-22
+### Added 
 - First party support
 
 ## [3.0.1] - 2017-12-24
