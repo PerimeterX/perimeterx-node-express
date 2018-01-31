@@ -175,9 +175,7 @@ function customBlockHandler(req, res, next)
     /* user defined logic comes here */
 }
 
-const pxConfig = {
-    blockHandler: customBlockHandler
-}
+perimeterx.setBlockHandler(customBlockHandler);
 ```      
 
 ###### Examples
@@ -197,9 +195,7 @@ function customBlockHandler(req, res, next) {
     res.write(html);
     res.end();
 }
-const pxConfig = {
-    blockHandler: customBlockHandler
-}
+perimeterx.setBlockHandler(customBlockHandler);
 ```
 
 **No Blocking, Monitor Only**
@@ -213,10 +209,8 @@ function customBlockHandler(req, res, next) {
 
     return next()
 }
+perimeterx.setBlockHandler(customBlockHandler);
 
-const pxConfig = {
-    blockHandler: customBlockHandler
-}
 ```
 
 #### <a name="captcha-support"></a>Select CAPTCHA provider
