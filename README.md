@@ -119,7 +119,7 @@ Configuration options are set in the `pxConfig` variable.
 
 ##### <a name="blocking-score"></a> Changing the Minimum Score for Blocking
 
-**Default blocking value:** 70
+**Default blocking value:** 100
 
 ```javascript
 const pxConfig = {
