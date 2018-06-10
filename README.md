@@ -15,7 +15,6 @@ Table of Contents
 - [Advanced Configuration Options](#configuration)
     * [Module Enabled](#moduleEnabled)
     * [Module Mode](#moduleMode)
-    * [CAPTCHA Provider](#captchaProvider)
     * [Blocking Score](#blockingScore)
     * [Send Page Activities](#sendPageActivities)
     * [Send Block Activities](#sendBlockActivities)
@@ -158,24 +157,6 @@ Possible values:
 const pxConfig = {
   ...
   moduleMode: 1
-  ...
-};
-```
-
-#### <a name="captchaProvider"></a>CAPTCHA Provider
-Sets the CAPTCHA provider that is displayed on the PerimeterX default CAPTCHA page.
-
-Possible values:
-
-* `reCaptcha` - Use Google reCaptcha as the CAPTCHA provider.
-* `funCaptcha`- Use FunCaptcha as the CAPTCHA provider.
-
-**Default:** `reCaptcha`
-
-```js
-const pxConfig = {
-  ...
-  captchaProvider: 'funCaptcha'
   ...
 };
 ```
