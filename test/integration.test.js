@@ -218,7 +218,7 @@ describe('PX Integration Tests', function () {
     describe('Whitelist routes', () => {
         it("should pass request on whitelist_route with bad cookie", (done) => {
             const badCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent.get(`${SERVER_URL}/account2222`)
+            superagent.get(`${SERVER_URL}/account`)
                 .set('Cookie', `_px=${badCookie};`)
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)

@@ -25,7 +25,8 @@ exports.initConfigurations = {
     maxBufferLength: 1,
     dynamicConfigurations: false,
     moduleMode: 1,
-    sensitiveRoutes: ['/login']
+    sensitiveRoutes: ['/login'],
+    whitelistRoutes: ['/account']
 };
 
 const cookieGood = {
