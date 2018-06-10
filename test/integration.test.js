@@ -184,8 +184,8 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
-                    testUtil.assertLogString('sending page requested activity', srvOut).should.be.exactly(true);
-                    testUtil.assertLogString('sending block activity', srvOut).should.be.exactly(false);
+                    testUtil.assertLogString('Sending page requested activity', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString('Sending block activity', srvOut).should.be.exactly(false);
                     return done();
                 });
         });
@@ -196,8 +196,8 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
-                    testUtil.assertLogString('sending page requested activity', srvOut).should.be.exactly(false);
-                    testUtil.assertLogString('sending block activity', srvOut).should.be.exactly(true);
+                    testUtil.assertLogString('Sending page requested activity', srvOut).should.be.exactly(false);
+                    testUtil.assertLogString('Sending block activity', srvOut).should.be.exactly(true);
                     return done();
                 });
         });
@@ -215,5 +215,18 @@ describe('PX Integration Tests', function () {
                 });
 		});
 	});
+    describe('Whitelist routes', () => {
+        it("should pass request on whitelist_route with bad cookie", (done) => {
+            const badCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
+            superagent.get(`${SERVER_URL}/account2222`)
+                .set('Cookie', `_px=${badCookie};`)
+                .set(pxconfig.IP_HEADERS, ip)
+                .set('User-Agent', ua)
+                .end((e, res) => {
+                    testUtil.assertLogString(`Whitelist route match: /account`, srvOut).should.be.exactly(true);
+                    return done();
+                });
+        });
+    });
 
 });
