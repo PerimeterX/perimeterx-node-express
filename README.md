@@ -124,7 +124,8 @@ window._pxOnCaptchaSuccess = function(isValid) {
     }
 }
 ```
-For details on how to create a custom Captcha page, refer to the [documentation]()
+
+For details on how to create a custom Captcha page, refer to the [documentation](https://console.perimeterx.com/docs/server_integration_new.html#custom-captcha-section)
 
 ## <a name="configuration"></a>Advanced Configuration Options
 
