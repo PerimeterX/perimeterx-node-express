@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v3.3.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v3.4.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -124,6 +124,7 @@ window._pxOnCaptchaSuccess = function(isValid) {
     }
 }
 ```
+
 For details on how to create a custom Captcha page, refer to the [documentation](https://console.perimeterx.com/docs/server_integration_new.html#custom-captcha-section)
 
 ## <a name="configuration"></a>Advanced Configuration Options
