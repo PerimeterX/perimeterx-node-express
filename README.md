@@ -11,6 +11,7 @@ Table of Contents
 -----------------
 - [Installation](#installation)
 - [Basic Usage Example](#basicUsage)
+- [Upgrading](#upgrade)
 - [Advanced Blocking Response](#advancedBlockingResponse)
 - [Advanced Configuration Options](#configuration)
     * [Module Enabled](#moduleEnabled)
@@ -95,6 +96,9 @@ server.listen(8081, () => {
     console.log('server started');
 });
 ```
+## <a name="upgrade"></a> Upgrading
+
+TBD
 
 ## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
 In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the *Accept* header with the value of `application/json`. A sample JSON response appears as follows:
