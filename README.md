@@ -27,6 +27,7 @@ Table of Contents
       * [First Party Enabled](#firstPartyEnabled)
       * [Custom Request Handler](#customRequestHandler)
       * [Additional Activity Handler](#additionalActivityHandler)
+- [Advanced Blocking Response](#advancedBlockingResponse)
 
 ## <a name="installation"></a> Installation
 PerimeterX Express.js middleware is installed via NPM:
