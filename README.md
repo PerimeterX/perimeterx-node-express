@@ -10,28 +10,34 @@
 Table of Contents
 -----------------
 - [Installation](#installation)
-- [Basic Usage Example](#basicUsage)
+- [Upgrading](#upgrading)
+- [Configuration](#configuration)
+   * [Required Configuration](#requiredConfiguration)
+   * [Optional Configuration](#optionalConfiguration)
+      * [Module Enabled](#moduleEnabled)
+      * [Module Mode](#moduleMode)
+      * [Blocking Score](#blockingScore)
+      * [Send Page Activities](#sendPageActivities)
+      * [Send Block Activities](#sendBlockActivities)
+      * [Debug Mode](#debugMode)
+      * [Sensitive Routes](#sensitiveRoutes)
+      * [Whitelist Routes](#whitelistRoutes)
+      * [Sensitive Headers](#sensitiveHeaders)
+      * [IP Headers](#ipHeaders)
+      * [First Party Enabled](#firstPartyEnabled)
+      * [Custom Request Handler](#customRequestHandler)
+      * [Additional Activity Handler](#additionalActivityHandler)
 - [Advanced Blocking Response](#advancedBlockingResponse)
-- [Advanced Configuration Options](#configuration)
-    * [Module Enabled](#moduleEnabled)
-    * [Module Mode](#moduleMode)
-    * [Blocking Score](#blockingScore)
-    * [Send Page Activities](#sendPageActivities)
-    * [Send Block Activities](#sendBlockActivities)
-    * [Debug Mode](#debugMode)
-    * [Sensitive Routes](#sensitiveRoutes)
-    * [Whitelist Routes](#whitelistRoutes)
-    * [Sensitive Headers](#sensitiveHeaders)
-    * [IP Headers](#ipHeaders)
-    * [First Party Enabled](#firstPartyEnabled)
-    * [Custom Request Handler](#customRequestHandler)
-    * [Additional Activity Handler](#additionalActivityHandler)
 
 ## <a name="installation"></a> Installation
 PerimeterX Express.js middleware is installed via NPM:
 `$ npm install --save perimeterx-node-express`
 
-## <a name="basicUsage"></a> Basic Usage Example
+## <a name="upgrading"></a> Upgrading
+
+## <a name="configuration"></a> Configuration
+
+### <a name="requiredConfiguration"></a> Required Configuration
 To use PerimeterX middleware on a specific route follow this example:
 
 ```javascript
@@ -45,7 +51,7 @@ const server = express();
 /* px-module and cookie parser need to be initiated before any route usage */
 const pxConfig = {
     pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
+    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
     authToken: 'PX_TOKEN'
 };
 perimeterx.init(pxConfig);
@@ -60,7 +66,11 @@ server.listen(8081, () => {
 });
 ```
 
-**Note:** app id, cookie secret and auth token are required fields.
+ - The PerimeterX **Application ID / AppId** and PerimeterX **Token / Auth Token** can be found in the Portal, in <a href="https://console.perimeterx.com/#/app/applicationsmgmt" onclick="window.open(this.href); return false;">**Applications**</a>.
+
+ - The PerimeterX **Cookie Encryption Key** can be found in the portal, in <a href="https://console.perimeterx.com/#/app/policiesmgmt" onclick="window.open(this.href); return false;">**Policies**</a>.
+
+   The Policy from where the **Cookie Encryption Key** is taken must correspond with the Application from where the **Application ID / AppId** and PerimeterX **Token / Auth Token**
 
 Setting the PerimeterX middleware on all server's routes:
 
@@ -76,10 +86,10 @@ const perimeterx = require('perimeterx-node-express');
 
 const server = express();
 
-/* the px-module and cookie parser need to be initialized before any route usage */
+/* the px-module and parser need to be initialized before any route usage */
 const pxConfig = {
     pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_RISK_COOKIE_SECRET',
+    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
     authToken: 'PX_TOKEN'
 };
 perimeterx.init(pxConfig);
@@ -96,40 +106,9 @@ server.listen(8081, () => {
 });
 ```
 
-## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
-In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the *Accept* header with the value of `application/json`. A sample JSON response appears as follows:
+### <a name="optionalConfiguration"></a>Optional Configuration
 
-```javascript
-{
-    "appId": String,
-    "jsClientSrc": String,
-    "firstPartyEnabled": Boolean,
-    "vid": String,
-    "uuid": String,
-    "hostUrl": String,
-    "blockScript": String
-}
-```
-
-Once you have the JSON response object, you can pass it to your implementation (with query strings or any other solution) and render the Captcha challenge.
-
-In addition, you can add the `_pxOnCaptchaSuccess` callback function on the window object of your Captcha page to react according to the Captcha status. For example when using a modal, you can use this callback to close the modal once the Captcha is successfullt solved. <br/> An example of using the `_pxOnCaptchaSuccess` callback is as follows:
-
-```javascript
-window._pxOnCaptchaSuccess = function(isValid) {
-    if(isValid) {
-        alert("yay");
-    } else {
-        alert("nay");
-    }
-}
-```
-
-For details on how to create a custom Captcha page, refer to the [documentation](https://console.perimeterx.com/docs/server_integration_new.html#custom-captcha-section)
-
-## <a name="configuration"></a>Advanced Configuration Options
-
-In addition to the basic installation configuration [above](#basicUsage), the following configurations options are available:
+In addition to the basic installation configuration [above](#requiredConfiguration), the following configurations options are available:
 
 #### <a name="moduleEnabled"></a>Module Enabled
 A boolean flag to enable/disable the PerimeterX Enforcer.
@@ -314,3 +293,34 @@ const pxConfig = {
   ...
 };
 ```
+## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
+In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the *Accept* header with the value of `application/json`. A sample JSON response appears as follows:
+
+```javascript
+{
+    "appId": String,
+    "jsClientSrc": String,
+    "firstPartyEnabled": Boolean,
+    "vid": String,
+    "uuid": String,
+    "hostUrl": String,
+    "blockScript": String
+}
+```
+
+Once you have the JSON response object, you can pass it to your implementation (with query strings or any other solution) and render the Captcha challenge.
+
+In addition, you can add the `_pxOnCaptchaSuccess` callback function on the window object of your Captcha page to react according to the Captcha status. For example when using a modal, you can use this callback to close the modal once the Captcha is successfullt solved. <br/> An example of using the `_pxOnCaptchaSuccess` callback is as follows:
+
+```javascript
+window._pxOnCaptchaSuccess = function(isValid) {
+    if(isValid) {
+        alert("yay");
+    } else {
+        alert("nay");
+    }
+}
+```
+
+For details on how to create a custom Captcha page, refer to the [documentation](https://console.perimeterx.com/docs/server_integration_new.html#custom-captcha-section)
+
