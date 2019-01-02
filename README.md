@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v3.5.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v4.0.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -27,6 +27,7 @@ Table of Contents
       * [First Party Enabled](#firstPartyEnabled)
       * [Custom Request Handler](#customRequestHandler)
       * [Additional Activity Handler](#additionalActivityHandler)
+      * [Proxy Support](#proxySupport)
 - [Advanced Blocking Response](#advancedBlockingResponse)
 
 ## <a name="installation"></a> Installation
@@ -290,6 +291,18 @@ const pxConfig = {
   additionalActivityHandler: function(pxCtx, request) {
     ...
   }
+  ...
+};
+```
+#### <a name="proxySupport"></a>Proxy Support
+Allows the traffic to pass through a proxy server. Enter the whole hostname as the url.
+
+**Default:** Empty
+
+```javascript
+const pxConfig = {
+  ...
+  proxy: 'proxy_url',
   ...
 };
 ```
