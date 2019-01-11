@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v4.0.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v4.1.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -295,14 +295,14 @@ const pxConfig = {
 };
 ```
 #### <a name="proxySupport"></a>Proxy Support
-Allows the traffic to pass through a proxy server. Enter the whole hostname as the url.
+Allows traffic to pass through a http proxy server.
 
 **Default:** Empty
 
 ```javascript
 const pxConfig = {
   ...
-  proxy: 'proxy_url',
+  proxy: 'https://localhost:8008',
   ...
 };
 ```
