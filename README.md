@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v4.0.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v5.0.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -33,6 +33,8 @@ Table of Contents
 ## <a name="installation"></a> Installation
 PerimeterX Express.js middleware is installed via NPM:
 `$ npm install --save perimeterx-node-express`
+
+> Please note: As stated in (NodeJS's release schedule)(#https://github.com/nodejs/Release#release-schedule), NodeJS 6.x is reaching EOL. Thus, support for it will be dropped starting with version 5.0.0.
 
 ## <a name="upgrading"></a> Upgrading
 
@@ -295,14 +297,14 @@ const pxConfig = {
 };
 ```
 #### <a name="proxySupport"></a>Proxy Support
-Allows the traffic to pass through a proxy server. Enter the whole hostname as the url.
+Allows traffic to pass through a http proxy server.
 
 **Default:** Empty
 
 ```javascript
 const pxConfig = {
   ...
-  proxy: 'proxy_url',
+  proxy: 'https://localhost:8008',
   ...
 };
 ```
