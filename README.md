@@ -34,7 +34,7 @@ Table of Contents
 PerimeterX Express.js middleware is installed via NPM:
 `$ npm install --save perimeterx-node-express`
 
-> Please note: As stated in (NodeJS's release schedule)(#https://github.com/nodejs/Release#release-schedule), NodeJS 6.x is reaching EOL. Thus, support for it will be dropped starting with version 5.0.0.
+> Please note: NodeJS 6.x will reach EoL on April 2019 as stated in [NodeJS’s release schedule](https://github.com/nodejs/Release#release-schedule). Hence, [NodeJS express module](https://github.com/PerimeterX/perimeterx-node-express/) version 5.0.0 and above will only support NodeJS 8.x and above.
 
 ## <a name="upgrading"></a> Upgrading
 
