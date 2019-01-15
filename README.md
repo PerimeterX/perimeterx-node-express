@@ -108,6 +108,13 @@ server.listen(8081, () => {
     console.log('server started');
 });
 ```
+## <a name="upgrade"></a> Upgrading
+
+Run:
+
+`npm install -s perimeterx-node-express`
+
+For more information,contact [PerimeterX Support](support@perimeterx.com).
 
 ### <a name="optionalConfiguration"></a>Optional Configuration
 
