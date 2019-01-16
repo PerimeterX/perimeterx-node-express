@@ -115,9 +115,11 @@ server.listen(8081, () => {
 ```
 ## <a name="upgrade"></a> Upgrading
 
-Run:
+To upgrade to the latest Enforcer version, run:
 
 `npm install -s perimeterx-node-express`
+
+Your Enforcer version is now upgraded to the latest enforcer version.
 
 For more information,contact [PerimeterX Support](support@perimeterx.com).
 
