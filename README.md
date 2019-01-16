@@ -25,7 +25,8 @@ Table of Contents
       * [Sensitive Headers](#sensitiveHeaders)
       * [IP Headers](#ipHeaders)
       * [First Party Enabled](#firstPartyEnabled)
-      * [Custom Request Handler](#customRequestHandler)
+    
+    * [Custom Request Handler](#customRequestHandler)
       * [Additional Activity Handler](#additionalActivityHandler)
       * [Proxy Support](#proxySupport)
 - [Advanced Blocking Response](#advancedBlockingResponse)
@@ -37,7 +38,11 @@ PerimeterX Express.js middleware is installed via NPM:
 > Please note: As stated in (NodeJS's release schedule)(#https://github.com/nodejs/Release#release-schedule), NodeJS 6.x is reaching EOL. Thus, support for it will be dropped starting with version 5.0.0.
 
 ## <a name="upgrading"></a> Upgrading
+To upgrade to the latest Enforcer version, run:
 
+`npm install -s perimeterx-node-express`
+
+For more information, contact [PerimeterX Support](support@perimeterx.com).
 ## <a name="configuration"></a> Configuration
 
 ### <a name="requiredConfiguration"></a> Required Configuration
