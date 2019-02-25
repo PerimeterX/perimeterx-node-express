@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0] - 2019-02-25
+### Added
+- Support for testing blocking flow in monitor mode
+
 ## [5.0.0] - 2018-01-11
 ### Added
 - Full refactor of proxy support

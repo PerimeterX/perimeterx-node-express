@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v5.0.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v5.1.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -25,10 +25,10 @@ Table of Contents
       * [Sensitive Headers](#sensitiveHeaders)
       * [IP Headers](#ipHeaders)
       * [First Party Enabled](#firstPartyEnabled)
-    
-    * [Custom Request Handler](#customRequestHandler)
+      * [Custom Request Handler](#customRequestHandler)
       * [Additional Activity Handler](#additionalActivityHandler)
       * [Proxy Support](#proxySupport)
+      * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
 - [Advanced Blocking Response](#advancedBlockingResponse)
 
 ## <a name="installation"></a> Installation
@@ -322,6 +322,26 @@ const pxConfig = {
   ...
 };
 ```
+
+#### <a name=“bypassMonitorHeader”></a> Test Block Flow on Monitoring Mode
+
+Allows you to test an enforcer’s blocking flow while you are still in Monitor Mode.
+
+When the header name is set(eg. `x-px-block`) and the value is set to `1`, when there is a block response (for example from using a User-Agent header with the value of `PhantomJS/1.0`) the Monitor Mode is bypassed and full block mode is applied. If one of the conditions is missing you will stay in Monitor Mode. This is done per request.
+To stay in Monitor Mode, set the header value to `0`.
+
+The Header Name is configurable using the `BypassMonitorHeader` property.
+
+**Default:** Empty
+
+```javascript
+const pxConfig = {
+  ...
+  bypassMonitorHeader: "x-px-block"
+  ...
+};
+```
+
 ## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
 In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the *Accept* header with the value of `application/json`. A sample JSON response appears as follows:
 
