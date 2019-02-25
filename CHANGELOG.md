@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Various PXHD related issues
 
 ### Removed
-- *Breaking Change*: Dropped support for NodeJS 6.x
+- **Breaking Change**: Dropped support for NodeJS 6.x
 
 ## [4.0.0] - 2018-01-02
 ### Added
