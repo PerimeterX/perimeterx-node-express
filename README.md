@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v5.0.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v5.1.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -28,16 +28,21 @@ Table of Contents
       * [Custom Request Handler](#customRequestHandler)
       * [Additional Activity Handler](#additionalActivityHandler)
       * [Proxy Support](#proxySupport)
+      * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
 - [Advanced Blocking Response](#advancedBlockingResponse)
 
 ## <a name="installation"></a> Installation
 PerimeterX Express.js middleware is installed via NPM:
 `$ npm install --save perimeterx-node-express`
 
-> Please note: NodeJS 6.x will reach EoL on April 2019 as stated in [NodeJS’s release schedule](https://github.com/nodejs/Release#release-schedule). Hence, [NodeJS express module](https://github.com/PerimeterX/perimeterx-node-express/) version 5.0.0 and above will only support NodeJS 8.x and above.
+> Please note: As stated in [NodeJS's release schedule](https://github.com/nodejs/Release#release-schedule), NodeJS 6.x is reaching EOL. Thus, support for it will be dropped starting with version 5.0.0.
 
 ## <a name="upgrading"></a> Upgrading
+To upgrade to the latest Enforcer version, run:
 
+`npm install -s perimeterx-node-express`
+
+For more information, contact [PerimeterX Support](support@perimeterx.com).
 ## <a name="configuration"></a> Configuration
 
 ### <a name="requiredConfiguration"></a> Required Configuration
@@ -108,6 +113,15 @@ server.listen(8081, () => {
     console.log('server started');
 });
 ```
+## <a name="upgrade"></a> Upgrading
+
+To upgrade to the latest Enforcer version, run:
+
+`npm install -s perimeterx-node-express`
+
+Your Enforcer version is now upgraded to the latest enforcer version.
+
+For more information,contact [PerimeterX Support](support@perimeterx.com).
 
 ### <a name="optionalConfiguration"></a>Optional Configuration
 
@@ -308,6 +322,26 @@ const pxConfig = {
   ...
 };
 ```
+
+#### <a name=“bypassMonitorHeader”></a> Test Block Flow on Monitoring Mode
+
+Allows you to test an enforcer’s blocking flow while you are still in Monitor Mode.
+
+When the header name is set(eg. `x-px-block`) and the value is set to `1`, when there is a block response (for example from using a User-Agent header with the value of `PhantomJS/1.0`) the Monitor Mode is bypassed and full block mode is applied. If one of the conditions is missing you will stay in Monitor Mode. This is done per request.
+To stay in Monitor Mode, set the header value to `0`.
+
+The Header Name is configurable using the `BypassMonitorHeader` property.
+
+**Default:** Empty
+
+```javascript
+const pxConfig = {
+  ...
+  bypassMonitorHeader: "x-px-block"
+  ...
+};
+```
+
 ## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
 In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the *Accept* header with the value of `application/json`. A sample JSON response appears as follows:
 
