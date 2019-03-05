@@ -29,6 +29,7 @@ Table of Contents
       * [Additional Activity Handler](#additionalActivityHandler)
       * [Proxy Support](#proxySupport)
       * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
+      * [Config File](#configFilePath)
 - [Advanced Blocking Response](#advancedBlockingResponse)
 
 ## <a name="installation"></a> Installation
@@ -338,6 +339,21 @@ The Header Name is configurable using the `BypassMonitorHeader` property.
 const pxConfig = {
   ...
   bypassMonitorHeader: "x-px-block"
+  ...
+};
+```
+
+#### <a name=“configFilePath”></a> Config File
+
+Allows you to use a configuration file for the enforcer's configuration parameters.
+Best practice would be to use the absolute path to your config-json file.
+
+**Default:** Empty
+
+```javascript
+const pxConfig = {
+  ...
+  configFilePath: "/Users/myUser/myConfig.json"
   ...
 };
 ```
