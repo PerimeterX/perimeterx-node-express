@@ -26,11 +26,14 @@ describe('PX Integration Tests', function () {
         server.stdout.setEncoding('utf8');
         server.stderr.setEncoding('utf8');
 
-        setTimeout(() => {
+        server.stdout.on('data', function (msg) {
             pxconfig = perimeterx.enforcer().config.conf;
-            done();
-        }, 2 * 1000);
-
+            srvOut.push(msg);
+            if (showSvrOutput) console.log("PX Tests Out: ", msg);
+            if (msg.indexOf('test server started') != -1) {
+                done();
+            }
+        });
         server.stderr.on('data', function (msg) {
             if (showSvrOutput) console.log("PX Tests Error: ", msg);
             srvErr.push(msg);
@@ -199,19 +202,19 @@ describe('PX Integration Tests', function () {
                 });
         });
     });
-    describe('Sensitive routes', () => {
-        it("should trigger s2s activity on sensitive_route", (done) => {
-            const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent.get(`${SERVER_URL}/login`)
-                .set('Cookie', `_px=${goodCookie};`)
+	describe('Sensitive routes', () => {
+		it("should trigger s2s activity on sensitive_route", (done) => {
+	        const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
+			superagent.get(`${SERVER_URL}/login`)
+			    .set('Cookie', `_px=${goodCookie};`)
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
                     testUtil.assertLogString(`Sensitive route match, sending Risk API. path: /login`, srvOut).should.be.exactly(true);
                     return done();
                 });
-        });
-    });
+		});
+	});
     describe('Whitelist routes', () => {
         it("should pass request on whitelist_route with bad cookie", (done) => {
             const badCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
