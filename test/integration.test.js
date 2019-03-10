@@ -29,7 +29,7 @@ describe('PX Integration Tests', function () {
         setTimeout(() => {
             pxconfig = perimeterx.enforcer().config.conf;
             done();
-        }, 3 * 1000);
+        }, 2 * 1000);
 
         server.stderr.on('data', function (msg) {
             if (showSvrOutput) console.log("PX Tests Error: ", msg);
