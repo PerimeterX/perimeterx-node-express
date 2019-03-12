@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v5.1.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.0.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -30,6 +30,7 @@ Table of Contents
       * [Proxy Support](#proxySupport)
       * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
 - [Advanced Blocking Response](#advancedBlockingResponse)
+- [Multiple App Support](#multipleAppSupport)
 
 ## <a name="installation"></a> Installation
 PerimeterX Express.js middleware is installed via NPM:
@@ -113,6 +114,7 @@ server.listen(8081, () => {
     console.log('server started');
 });
 ```
+
 ## <a name="upgrade"></a> Upgrading
 
 To upgrade to the latest Enforcer version, run:
@@ -373,3 +375,45 @@ window._pxOnCaptchaSuccess = function(isValid) {
 
 For details on how to create a custom Captcha page, refer to the [documentation](https://console.perimeterx.com/docs/server_integration_new.html#custom-captcha-section)
 
+## <a name="multipleAppSupport"></a> Multiple App Support
+If you use two different apps on the same node runtime, you can create two instances and use them on two routes:
+
+```javascript
+"use strict";
+
+const express = require('express');
+const perimeterx = require('perimeterx-node-express');
+
+const server = express();
+
+/* the px-module and parser need to be initialized before any route usage */
+const pxConfig1 = {
+    pxAppId: 'PX_APP_ID_1',
+    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
+    authToken: 'PX_TOKEN_1'
+};
+const middlewareApp1 = perimeterx.new(pxConfig1).middleware;
+const app1Router = express.Router();
+app1Router.use(middlewareApp1);
+app1Router.get('/hello', (req, res) => {
+    res.send('Hello from App1');
+});
+server.use('/app1', app1Router);
+
+const pxConfig2 = {
+    pxAppId: 'PX_APP_ID_2',
+    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
+    authToken: 'PX_TOKEN_2'
+};
+const middlewareApp2 = perimeterx.new(pxConfig2).middleware;
+const app2Router = express.Router();
+app2Router.use(middlewareApp2);
+app2Router.get('/app2', (req, res) => {
+    res.send('Hello from App2');
+});
+server.use('/app2', app1Router);
+
+server.listen(8081, () => {
+    console.log('server started');
+});
+```
