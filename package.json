@@ -30,7 +30,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.1",
     "moment": "^2.19.3",
-    "perimeterx-node-core": "~2.0.0"
+    "perimeterx-node-core": "~2.1.0"
   },
   "devDependencies": {
     "express": "4.16.2",
