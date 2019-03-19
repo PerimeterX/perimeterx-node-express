@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [6.1.0] - 2019-03-19
 ### Added
 - Support for loading configuration from a file.
-- Advanced Blocking Response configuration.
+- Advanced Blocking Response
 
 ### Changed
 - Updated perimeterx-node-core dependency to version ~2.1.0.
@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - **Breaking Change**: Dropped support for NodeJS 6.x
 
-## [4.0.002
+## [4.0.0] - 2018-01-02
 ### Added
 - Added PXHD handling
 - Added async custom params
