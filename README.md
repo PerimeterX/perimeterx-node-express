@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.0.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.1.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -374,6 +374,15 @@ window._pxOnCaptchaSuccess = function(isValid) {
 ```
 
 For details on how to create a custom Captcha page, refer to the [documentation](https://console.perimeterx.com/docs/server_integration_new.html#custom-captcha-section)
+
+> If you wish to disable this behavior when the *Accept* header has the value of `application/json`, set the following configuration:
+> ```javascript
+> const pxConfig = {
+>   ...
+>   advancedBlockingResponse: false
+>   ...
+> };
+> ```
 
 ## <a name="multipleAppSupport"></a> Multiple App Support
 If you use two different apps on the same node runtime, you can create two instances and use them on two routes:

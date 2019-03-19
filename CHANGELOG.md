@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.0] - 2019-03-19
+### Added
+- Support for loading configuration from a file.
+- Advanced Blocking Response configuration.
+
+### Changed
+- Updated perimeterx-node-core dependency to version ~2.1.0.
+
 ## [6.0.0] - 2019-03-11
 ### Added
 - Support multiple instances of the enforcer using the `new` method.
@@ -28,7 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - **Breaking Change**: Dropped support for NodeJS 6.x
 
-## [4.0.0] - 2018-01-02
+## [4.0.002
 ### Added
 - Added PXHD handling
 - Added async custom params
