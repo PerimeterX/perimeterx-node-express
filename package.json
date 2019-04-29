@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha --exit",
-    "cover": "istanbul cover _mocha"
+    "cover": "istanbul cover _mocha",
+    "lint": "./node_modules/eslint/bin/eslint.js lib/"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,8 @@
     "perimeterx-node-core": "~2.1.0"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-perimeterx": "^0.1.1",
     "express": "4.16.2",
     "faker": "^3.1.0",
     "mocha": "^5.2.0",
