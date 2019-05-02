@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.1] - 2019-05-02
+### Fixed
+- pxConfig setting for proxy
+- Risk API timeout check
+
 ## [6.1.0] - 2019-03-19
 ### Added
 - Support for loading configuration from a file.
