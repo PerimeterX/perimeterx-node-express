@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.2.0] - 2019-05-24
+### Added
+- send telemetry by command
+### Fixed
+- timeout error handling for api calls
+
 ## [6.1.1] - 2019-05-02
 ### Fixed
 - pxConfig setting for proxy
