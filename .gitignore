@@ -10,3 +10,4 @@ public/
 coverage/
 # test/utils/test.util.js
 copyCore.sh
+package-lock.json

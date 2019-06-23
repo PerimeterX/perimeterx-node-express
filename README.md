@@ -27,6 +27,7 @@ Table of Contents
       * [First Party Enabled](#firstPartyEnabled)
       * [Custom Request Handler](#customRequestHandler)
       * [Additional Activity Handler](#additionalActivityHandler)
+      * [Enrich Custom Parameters](#enrichCustomParams)
       * [Proxy Support](#proxySupport)
       * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
 - [Advanced Blocking Response](#advancedBlockingResponse)
@@ -312,6 +313,36 @@ const pxConfig = {
   ...
 };
 ```
+
+#### <a name="enrichCustomParams"></a>Enrich Custom Parameters
+With the `enrichCustomParameters` function you can add up to 10 custom parameters to be sent back to PerimeterX servers. When set, the function is called before seting the payload on every request to PerimetrX servers. The parameters should be passed according to the correct order (1-10).
+
+**Default:** Empty
+
+```javascript
+const pxConfig = {
+  ...
+  enrichCustomParameters: function(customParams) {
+    customParams["custom_param1"] = "yay, test value";
+    return customParams;
+  }
+  ...
+};
+```
+
+#### <a name="cssRef"></a>CSS Ref
+Modifies a custom CSS by adding the CSSRef directive and providing a valid URL to the CSS.
+
+**Default:** Empty
+
+```javascript
+const pxConfig = {
+  ...
+  cssRef: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+  ...
+};
+```
+
 #### <a name="proxySupport"></a>Proxy Support
 Allows traffic to pass through a http proxy server.
 
@@ -365,10 +396,10 @@ In addition, you can add the `_pxOnCaptchaSuccess` callback function on the wind
 
 ```javascript
 window._pxOnCaptchaSuccess = function(isValid) {
-    if(isValid) {
-        alert("yay");
+    if (isValid) {
+        alert('yay');
     } else {
-        alert("nay");
+        alert('nay');
     }
 }
 ```
