@@ -267,7 +267,7 @@ An array of route prefixes that are always set to be in [monitor mode](#moduleMo
 ```js
 const pxConfig = {
   ...
-  monitoredSRoutes: ['/home']
+  monitoredRoutes: ['/home']
   ...
 };
 ```
