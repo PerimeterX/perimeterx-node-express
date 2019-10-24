@@ -5,7 +5,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.2.1](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.3.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -21,7 +21,9 @@ Table of Contents
       * [Send Block Activities](#sendBlockActivities)
       * [Debug Mode](#debugMode)
       * [Sensitive Routes](#sensitiveRoutes)
-      * [Whitelist Routes](#whitelistRoutes)
+      * [Whitelist Specific Routes](#whitelistRoutes)
+      * [Enforced Specific Routes](#enforcedSpecificRoutes)
+      * [Monitored Specific Routes](#monitoredSpecificRoutes)
       * [Sensitive Headers](#sensitiveHeaders)
       * [IP Headers](#ipHeaders)
       * [First Party Enabled](#firstPartyEnabled)
@@ -231,7 +233,7 @@ const pxConfig = {
 };
 ```
 
-#### <a name="whitelistRoutes"></a> Whitelist Routes
+#### <a name="whitelistRoutes"></a> Whitelist Specific Routes
 An array of route prefixes which will bypass enforcement (will never get scored).
 
 **Default:** Empty
@@ -240,6 +242,32 @@ An array of route prefixes which will bypass enforcement (will never get scored)
 const pxConfig = {
   ...
   whitelistRoutes: ['/about-us', '/careers']
+  ...
+};
+```
+
+#### <a name="enforcedSpecificRoutes"></a>Enforced Specific Routes
+An array of route prefixes that are always validated by the PerimeterX Enforcer (as opposed to whitelisted routes).
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  enforcedRoutes: ['/home']
+  ...
+};
+```
+
+#### <a name="monitoredSpecificRoutes"></a>Monitored Specific Routes
+An array of route prefixes that are always set to be in [monitor mode](#moduleMode). This only takes effect when the module is enabled and in blocking mode.
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  monitoredSRoutes: ['/home']
   ...
 };
 ```
