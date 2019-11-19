@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/PerimeterX/perimeterx-node-express.svg?branch=master)](https://travis-ci.org/PerimeterX/perimeterx-node-express)
+[![Known Vulnerabilities](https://snyk.io/test/github/PerimeterX/perimeterx-node-express/badge.svg)](https://snyk.io/test/github/PerimeterX/perimeterx-node-express)
 
 ![image](https://s.perimeterx.net/logo.png)
 
