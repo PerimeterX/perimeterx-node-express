@@ -1,11 +1,12 @@
 [![Build Status](https://travis-ci.org/PerimeterX/perimeterx-node-express.svg?branch=master)](https://travis-ci.org/PerimeterX/perimeterx-node-express)
+[![Known Vulnerabilities](https://snyk.io/test/github/PerimeterX/perimeterx-node-express/badge.svg)](https://snyk.io/test/github/PerimeterX/perimeterx-node-express)
 
 ![image](https://s.perimeterx.net/logo.png)
 
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.3.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.3.1](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -30,6 +31,9 @@ Table of Contents
       * [Custom Request Handler](#customRequestHandler)
       * [Additional Activity Handler](#additionalActivityHandler)
       * [Enrich Custom Parameters](#enrichCustomParams)
+      * [CSS Ref](#cssRef)
+      * [JS Ref](#jsRef)
+      * [Custom Logo](#customLogo)
       * [Proxy Support](#proxySupport)
       * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
 - [Advanced Blocking Response](#advancedBlockingResponse)
@@ -267,7 +271,7 @@ An array of route prefixes that are always set to be in [monitor mode](#moduleMo
 ```js
 const pxConfig = {
   ...
-  monitoredSRoutes: ['/home']
+  monitoredRoutes: ['/home']
   ...
 };
 ```
@@ -367,6 +371,34 @@ Modifies a custom CSS by adding the CSSRef directive and providing a valid URL t
 const pxConfig = {
   ...
   cssRef: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+  ...
+};
+```
+
+#### <a name="jsRef"></a>JS Ref
+Adds a custom JS file by adding JSRef directive and providing the JS file that is loaded with the block page.
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  jsRef: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+  ...
+};
+```
+
+
+#### <a name="customLogo"></a>Custom Logo
+The logo is displayed at the top of the the block page.
+Max-height = 150px, Width = auto.
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  customLogo: 'https://s.perimeterx.net/logo.png',
   ...
 };
 ```

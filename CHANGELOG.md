@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.3.1] - 2019-11-19
+### Fixed
+- cssRef, jsRef to accept string values
+
 ## [6.3.0] - 2019-10-24
 ### Added
 - Send HTTP method on async activities
@@ -107,7 +111,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ## [3.1.0] - 2018-01-22
-### Added 
+### Added
 - First party support
 
 ## [3.0.1] - 2017-12-24
