@@ -6,7 +6,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.3.1](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.4.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -35,6 +35,8 @@ Table of Contents
       * [JS Ref](#jsRef)
       * [Custom Logo](#customLogo)
       * [Proxy Support](#proxySupport)
+      * [Filter Traffic by User Agent](#filterByUserAgent)
+      * [Filter Traffic by IP](#filterByIP)
       * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
 - [Advanced Blocking Response](#advancedBlockingResponse)
 - [Multiple App Support](#multipleAppSupport)
@@ -238,40 +240,47 @@ const pxConfig = {
 ```
 
 #### <a name="whitelistRoutes"></a> Whitelist Specific Routes
-An array of route prefixes which will bypass enforcement (will never get scored).
+An array of route prefixes and/or regular expressions that are always whitelisted and not validated by the PerimeterX Worker.
+<br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
+<br/>A string value of a path will be treated as a prefix.
 
 **Default:** Empty
 
 ```js
 const pxConfig = {
   ...
-  whitelistRoutes: ['/about-us', '/careers']
+  whitelistRoutes: ['/contact-us', /\/user\/.*\/show/]
   ...
 };
 ```
 
 #### <a name="enforcedSpecificRoutes"></a>Enforced Specific Routes
-An array of route prefixes that are always validated by the PerimeterX Enforcer (as opposed to whitelisted routes).
+An array of route prefixes and/or regular expressions that are always validated by the PerimeterX Worker (as opposed to whitelisted routes).
+<br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
+<br/>A string value of a path will be treated as a prefix.
 
 **Default:** Empty
 
 ```js
 const pxConfig = {
   ...
-  enforcedRoutes: ['/home']
+  enforcedRoutes: ['/home',/^\/$/]
   ...
 };
 ```
 
 #### <a name="monitoredSpecificRoutes"></a>Monitored Specific Routes
-An array of route prefixes that are always set to be in [monitor mode](#moduleMode). This only takes effect when the module is enabled and in blocking mode.
+An array of route prefixes and/or regular expressions that are always set to be in [monitor mode](#moduleMode). This only takes effect when the module is enabled and in blocking mode.
+<br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
+<br/>A string value of a path will be treated as a prefix.
+
 
 **Default:** Empty
 
 ```js
 const pxConfig = {
   ...
-  monitoredRoutes: ['/home']
+  monitoredRoutes: ['/home', new RegExp(/^\/$/)]
   ...
 };
 ```
@@ -412,6 +421,32 @@ Allows traffic to pass through a http proxy server.
 const pxConfig = {
   ...
   proxy: 'https://localhost:8008',
+  ...
+};
+```
+
+#### <a name="filterByUserAgent"></a> Filter Traffic by User Agent
+An array of user agents that are always filtered and not validated by the PerimeterX Worker.
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  filterByUserAgent: ['testUserAgent/v1.0']
+  ...
+};
+```
+
+#### <a name="filterByIP"></a> Filter Traffic by IP
+An array of IP ranges / IP addresses that are always filtered and not validated by the PerimeterX Worker.
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  filterByIP: ['192.168.10.0/24', '192.168.2.2']
   ...
 };
 ```

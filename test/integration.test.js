@@ -223,7 +223,7 @@ describe('PX Integration Tests', function () {
                 .set(pxconfig.IP_HEADERS, ip)
                 .set('User-Agent', ua)
                 .end((e, res) => {
-                    testUtil.assertLogString(`Whitelist route match: /account`, srvOut).should.be.exactly(true);
+                    testUtil.assertLogString(`Found whitelist route /account`, srvOut).should.be.exactly(true);
                     return done();
                 });
         });
