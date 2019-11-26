@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.4.0] - 2019-11-26
+### Added
+- Support for regex in enforced/whitelisted/monitored specific routes.
+- Support for filtering traffic by IPs/CIDRs.
+- Support for filtering traffic by user agents.
+
 ## [6.3.1] - 2019-11-19
 ### Fixed
 - cssRef, jsRef to accept string values
