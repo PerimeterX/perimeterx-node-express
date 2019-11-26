@@ -249,7 +249,7 @@ An array of route prefixes and/or regular expressions that are always whiteliste
 ```js
 const pxConfig = {
   ...
-  whitelistRoutes: ['/contant-us', /\/user\/.*\/show/]
+  whitelistRoutes: ['/contact-us', /\/user\/.*\/show/]
   ...
 };
 ```
