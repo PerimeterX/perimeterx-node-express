@@ -1,6 +1,6 @@
 {
   "name": "perimeterx-node-express",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "description": "PerimeterX Express.js middleware to monitor and block traffic according to PerimeterX risk score",
   "main": "index.js",
   "directories": {
@@ -30,11 +30,11 @@
   "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
   "dependencies": {
     "cookie-parser": "^1.4.1",
-    "perimeterx-node-core": "^2.5.0"
+    "perimeterx-node-core": "^2.6.0"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
-    "eslint-config-perimeterx": "^0.1.1",
+    "eslint-config-perimeterx": "^0.5.0",
     "express": "4.16.2",
     "faker": "^3.1.0",
     "mocha": "^5.2.0",
