@@ -6,7 +6,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.4.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.5.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -37,6 +37,7 @@ Table of Contents
       * [Proxy Support](#proxySupport)
       * [Filter Traffic by User Agent](#filterByUserAgent)
       * [Filter Traffic by IP](#filterByIP)
+      * [Filter Traffic by HTTP Method](#filterByMethod)
       * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
 - [Advanced Blocking Response](#advancedBlockingResponse)
 - [Multiple App Support](#multipleAppSupport)
@@ -426,7 +427,7 @@ const pxConfig = {
 ```
 
 #### <a name="filterByUserAgent"></a> Filter Traffic by User Agent
-An array of user agents that are always filtered and not validated by the PerimeterX Worker.
+An array of user agents that are always filtered and not validated by the PerimeterX middleware.
 
 **Default:** Empty
 
@@ -439,7 +440,7 @@ const pxConfig = {
 ```
 
 #### <a name="filterByIP"></a> Filter Traffic by IP
-An array of IP ranges / IP addresses that are always filtered and not validated by the PerimeterX Worker.
+An array of IP ranges / IP addresses that are always filtered and not validated by the PerimeterX middleware.
 
 **Default:** Empty
 
@@ -447,6 +448,18 @@ An array of IP ranges / IP addresses that are always filtered and not validated 
 const pxConfig = {
   ...
   filterByIP: ['192.168.10.0/24', '192.168.2.2']
+  ...
+};
+```
+#### <a name="filterByMethod"></a> Filter Traffic by HTTP Method
+An array of HTTP methods that are always filtered and not validated by the PerimeterX middleware.
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  filterByMethod: ['options']
   ...
 };
 ```
