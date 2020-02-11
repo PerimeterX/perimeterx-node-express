@@ -364,7 +364,7 @@ With the `enrichCustomParameters` function you can add up to 10 custom parameter
 ```javascript
 const pxConfig = {
   ...
-  enrichCustomParameters: function(customParams) {
+  enrichCustomParameters: function(customParams, originalRequest) {
     customParams["custom_param1"] = "yay, test value";
     return customParams;
   }
