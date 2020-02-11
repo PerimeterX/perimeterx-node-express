@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.5.2] - 2020-02-11
+### Fixed
+- Custom parameters for async activities.
+
 ## [6.5.1] - 2020-02-11
 ### Fixed
 - Support for `originalRequest` in `enrichCustomParameters`.
