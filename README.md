@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/PerimeterX/perimeterx-node-express.svg?branch=master)](https://travis-ci.org/PerimeterX/perimeterx-node-express)
 [![Known Vulnerabilities](https://snyk.io/test/github/PerimeterX/perimeterx-node-express/badge.svg)](https://snyk.io/test/github/PerimeterX/perimeterx-node-express)
 
-![image](https://s.perimeterx.net/logo.png)
+![image](https://storage.googleapis.com/perimeterx-logos/primary_logo_red_cropped.png)
 
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
