@@ -34,6 +34,7 @@ Table of Contents
       * [CSS Ref](#cssRef)
       * [JS Ref](#jsRef)
       * [Custom Logo](#customLogo)
+      * [Secured PXHD cookie](#securedpxhd)
       * [Proxy Support](#proxySupport)
       * [Filter Traffic by User Agent](#filterByUserAgent)
       * [Filter Traffic by IP](#filterByIP)
@@ -414,10 +415,10 @@ const pxConfig = {
 ```
 
 
-#### <a name="securedPxhd"></a>Secured pxhd
-Boolean config. If true, bake pxhd cookie with `Secure` flag 
+#### <a name="securedpxhd"></a>Secured PXHD cookie
+A boolean flag to enable/disable the `Secure` flag when baking a PXHD cookie.
 
-**Default:** False
+**Default:** false
 
 ```js
 const pxConfig = {
