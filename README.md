@@ -6,7 +6,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.5.2](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.5.3](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -85,9 +85,9 @@ server.listen(8081, () => {
 });
 ```
 
- - The PerimeterX **Application ID / AppId** and PerimeterX **Token / Auth Token** can be found in the Portal, in <a href="https://console.perimeterx.com/#/app/applicationsmgmt" onclick="window.open(this.href); return false;">**Applications**</a>.
+ - The PerimeterX **Application ID / AppId** and PerimeterX **Token / Auth Token** can be found in the Portal, in <a href="https://console.perimeterx.com/botDefender/admin?page=applicationsmgmt" onclick="window.open(this.href); return false;">**Applications**</a>.
 
- - The PerimeterX **Cookie Encryption Key** can be found in the portal, in <a href="https://console.perimeterx.com/#/app/policiesmgmt" onclick="window.open(this.href); return false;">**Policies**</a>.
+ - The PerimeterX **Cookie Encryption Key** can be found in the portal, in <a href="https://console.perimeterx.com/botDefender/admin?page=policiesmgmt" onclick="window.open(this.href); return false;">**Policies**</a>.
 
    The Policy from where the **Cookie Encryption Key** is taken must correspond with the Application from where the **Application ID / AppId** and PerimeterX **Token / Auth Token**
 
@@ -412,6 +412,21 @@ const pxConfig = {
   ...
 };
 ```
+
+
+#### <a name="securedPxhd"></a>Secured pxhd
+Boolean config. If true, bake pxhd cookie with `Secure` flag 
+
+**Default:** False
+
+```js
+const pxConfig = {
+  ...
+  pxhdSecure: true
+  ...
+};
+```
+
 
 #### <a name="proxySupport"></a>Proxy Support
 Allows traffic to pass through a http proxy server.
