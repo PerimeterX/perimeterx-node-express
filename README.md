@@ -6,7 +6,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.5.2](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.5.3](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -412,6 +412,21 @@ const pxConfig = {
   ...
 };
 ```
+
+
+#### <a name="securedPxhd"></a>Secured pxhd
+Boolean config. If true, bake pxhd cookie with `Secure` flag 
+
+**Default:** False
+
+```js
+const pxConfig = {
+  ...
+  pxhdSecure: true
+  ...
+};
+```
+
 
 #### <a name="proxySupport"></a>Proxy Support
 Allows traffic to pass through a http proxy server.
