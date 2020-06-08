@@ -1,0 +1,7 @@
+{
+    "px_app_id": "PXZ7wl3dvS",
+    "px_cookie_secret": "0U1N3yzuIBCDRgh3c6jvPJJEKTp6SljoLXVTYZ6R7B2FuidmNiQOks9kEH0Dg7Nf",
+    "px_auth_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhdCI6MTQ3NTA2Mzg3Mywic3ViIjoiUFhaN3dsM2R2UyIsImp0aSI6ImIyNDBhNGFmLTlmMDYtNDM1ZC1iZDRjLTZlZWMxYjM3MGY2NiJ9.RvCXtZccCIX_uPUTKH4TAbi0sZEMTD0KdoG23I7ip9I",
+    "mock_collector_url": "",
+    "site_url": ""
+}
