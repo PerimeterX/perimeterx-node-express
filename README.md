@@ -148,7 +148,7 @@ A boolean flag to enable/disable the PerimeterX Enforcer.
 ```js
 const pxConfig = {
   ...
-  moduleEnabled: false
+  enableModule: false
   ...
 };
 ```
