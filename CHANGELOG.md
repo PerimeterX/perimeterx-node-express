@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.5.4] - 2020-10-25
+### Fixed
+- Support for `ACTIVITIES_TIMEOUT_MS`.
+
 ## [6.5.3] - 2020-04-21
 ### Added
 - New config to support `Secure` flag for pxhd cookie

@@ -6,7 +6,7 @@
 [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 =============================================================
 
-> Latest stable version: [v6.5.3](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.5.4](https://www.npmjs.com/package/perimeterx-node-express)
 
 Table of Contents
 -----------------
@@ -148,7 +148,7 @@ A boolean flag to enable/disable the PerimeterX Enforcer.
 ```js
 const pxConfig = {
   ...
-  moduleEnabled: false
+  enableModule: false
   ...
 };
 ```
@@ -528,7 +528,7 @@ window._pxOnCaptchaSuccess = function(isValid) {
 }
 ```
 
-For details on how to create a custom Captcha page, refer to the [documentation](https://console.perimeterx.com/docs/server_integration_new.html#custom-captcha-section)
+For details on how to create a custom Captcha page, refer to the [documentation](https://docs.perimeterx.com/pxconsole/docs/customize-challenge-page)
 
 > If you wish to disable this behavior when the *Accept* header has the value of `application/json`, set the following configuration:
 > ```javascript
