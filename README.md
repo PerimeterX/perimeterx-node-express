@@ -3,65 +3,69 @@
 
 ![image](https://storage.googleapis.com/perimeterx-logos/primary_logo_red_cropped.png)
 
-[PerimeterX](http://www.perimeterx.com) Express.js Middleware
-=============================================================
+# [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v6.5.4](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.6.0](https://www.npmjs.com/package/perimeterx-node-express)
 
-Table of Contents
------------------
-- [Installation](#installation)
-- [Upgrading](#upgrading)
-- [Configuration](#configuration)
-   * [Required Configuration](#requiredConfiguration)
-   * [Optional Configuration](#optionalConfiguration)
-      * [Module Enabled](#moduleEnabled)
-      * [Module Mode](#moduleMode)
-      * [Blocking Score](#blockingScore)
-      * [Send Page Activities](#sendPageActivities)
-      * [Send Block Activities](#sendBlockActivities)
-      * [Debug Mode](#debugMode)
-      * [Sensitive Routes](#sensitiveRoutes)
-      * [Whitelist Specific Routes](#whitelistRoutes)
-      * [Enforced Specific Routes](#enforcedSpecificRoutes)
-      * [Monitored Specific Routes](#monitoredSpecificRoutes)
-      * [Sensitive Headers](#sensitiveHeaders)
-      * [IP Headers](#ipHeaders)
-      * [First Party Enabled](#firstPartyEnabled)
-      * [Custom Request Handler](#customRequestHandler)
-      * [Additional Activity Handler](#additionalActivityHandler)
-      * [Enrich Custom Parameters](#enrichCustomParams)
-      * [CSS Ref](#cssRef)
-      * [JS Ref](#jsRef)
-      * [Custom Logo](#customLogo)
-      * [Secured PXHD cookie](#securedpxhd)
-      * [Proxy Support](#proxySupport)
-      * [Filter Traffic by User Agent](#filterByUserAgent)
-      * [Filter Traffic by IP](#filterByIP)
-      * [Filter Traffic by HTTP Method](#filterByMethod)
-      * [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
-- [Advanced Blocking Response](#advancedBlockingResponse)
-- [Multiple App Support](#multipleAppSupport)
+## Table of Contents
+
+-   [Installation](#installation)
+-   [Upgrading](#upgrading)
+-   [Configuration](#configuration)
+    -   [Required Configuration](#requiredConfiguration)
+    -   [Optional Configuration](#optionalConfiguration)
+        -   [Module Enabled](#moduleEnabled)
+        -   [Module Mode](#moduleMode)
+        -   [Blocking Score](#blockingScore)
+        -   [Send Page Activities](#sendPageActivities)
+        -   [Send Block Activities](#sendBlockActivities)
+        -   [Debug Mode](#debugMode)
+        -   [Sensitive Routes](#sensitiveRoutes)
+        -   [Whitelist Specific Routes](#whitelistRoutes)
+        -   [Enforced Specific Routes](#enforcedSpecificRoutes)
+        -   [Monitored Specific Routes](#monitoredSpecificRoutes)
+        -   [Sensitive Headers](#sensitiveHeaders)
+        -   [IP Headers](#ipHeaders)
+        -   [First Party Enabled](#firstPartyEnabled)
+        -   [Custom Request Handler](#customRequestHandler)
+        -   [Additional Activity Handler](#additionalActivityHandler)
+        -   [Enrich Custom Parameters](#enrichCustomParams)
+        -   [CSS Ref](#cssRef)
+        -   [JS Ref](#jsRef)
+        -   [Custom Logo](#customLogo)
+        -   [Secured PXHD cookie](#securedpxhd)
+        -   [Proxy Support](#proxySupport)
+        -   [Custom Cookie Header](#customCookieHeader)
+        -   [Filter Traffic by User Agent](#filterByUserAgent)
+        -   [Filter Traffic by IP](#filterByIP)
+        -   [Filter Traffic by HTTP Method](#filterByMethod)
+        -   [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
+-   [Advanced Blocking Response](#advancedBlockingResponse)
+-   [Multiple App Support](#multipleAppSupport)
 
 ## <a name="installation"></a> Installation
+
 PerimeterX Express.js middleware is installed via NPM:
 `$ npm install --save perimeterx-node-express`
 
 > Please note: As stated in [NodeJS's release schedule](https://github.com/nodejs/Release#release-schedule), NodeJS 6.x is reaching EOL. Thus, support for it will be dropped starting with version 5.0.0.
 
 ## <a name="upgrading"></a> Upgrading
+
 To upgrade to the latest Enforcer version, run:
 
 `npm install -s perimeterx-node-express`
 
 For more information, contact [PerimeterX Support](support@perimeterx.com).
+
 ## <a name="configuration"></a> Configuration
 
 ### <a name="requiredConfiguration"></a> Required Configuration
+
 To use PerimeterX middleware on a specific route follow this example:
 
 ```javascript
-"use strict";
+'use strict';
 
 const express = require('express');
 const perimeterx = require('perimeterx-node-express');
@@ -72,7 +76,7 @@ const server = express();
 const pxConfig = {
     pxAppId: 'PX_APP_ID',
     cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN'
+    authToken: 'PX_TOKEN',
 };
 perimeterx.init(pxConfig);
 
@@ -86,11 +90,11 @@ server.listen(8081, () => {
 });
 ```
 
- - The PerimeterX **Application ID / AppId** and PerimeterX **Token / Auth Token** can be found in the Portal, in <a href="https://console.perimeterx.com/botDefender/admin?page=applicationsmgmt" onclick="window.open(this.href); return false;">**Applications**</a>.
+-   The PerimeterX **Application ID / AppId** and PerimeterX **Token / Auth Token** can be found in the Portal, in <a href="https://console.perimeterx.com/botDefender/admin?page=applicationsmgmt" onclick="window.open(this.href); return false;">**Applications**</a>.
 
- - The PerimeterX **Cookie Encryption Key** can be found in the portal, in <a href="https://console.perimeterx.com/botDefender/admin?page=policiesmgmt" onclick="window.open(this.href); return false;">**Policies**</a>.
+-   The PerimeterX **Cookie Encryption Key** can be found in the portal, in <a href="https://console.perimeterx.com/botDefender/admin?page=policiesmgmt" onclick="window.open(this.href); return false;">**Policies**</a>.
 
-   The Policy from where the **Cookie Encryption Key** is taken must correspond with the Application from where the **Application ID / AppId** and PerimeterX **Token / Auth Token**
+    The Policy from where the **Cookie Encryption Key** is taken must correspond with the Application from where the **Application ID / AppId** and PerimeterX **Token / Auth Token**
 
 Setting the PerimeterX middleware on all server's routes:
 
@@ -99,7 +103,7 @@ Setting the PerimeterX middleware on all server's routes:
 > on top of page views routes.
 
 ```javascript
-"use strict";
+'use strict';
 
 const express = require('express');
 const perimeterx = require('perimeterx-node-express');
@@ -110,7 +114,7 @@ const server = express();
 const pxConfig = {
     pxAppId: 'PX_APP_ID',
     cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN'
+    authToken: 'PX_TOKEN',
 };
 perimeterx.init(pxConfig);
 
@@ -141,6 +145,7 @@ For more information,contact [PerimeterX Support](support@perimeterx.com).
 In addition to the basic installation configuration [above](#requiredConfiguration), the following configurations options are available:
 
 #### <a name="moduleEnabled"></a>Module Enabled
+
 A boolean flag to enable/disable the PerimeterX Enforcer.
 
 **Default:** true
@@ -154,12 +159,13 @@ const pxConfig = {
 ```
 
 #### <a name="moduleMode"></a>Module Mode
+
 Sets the working mode of the Enforcer.
 
 Possible values:
 
-* `0` - Monitor Mode
-* `1` - Blocking Mode
+-   `0` - Monitor Mode
+-   `1` - Blocking Mode
 
 **Default:** `0` - Monitor Mode
 
@@ -172,11 +178,12 @@ const pxConfig = {
 ```
 
 #### <a name="blockingScore"></a>Blocking Score
+
 Sets the minimum blocking score of a request.
 
 Possible values:
 
-* Any integer between 0 and 100.
+-   Any integer between 0 and 100.
 
 **Default:** 100
 
@@ -189,6 +196,7 @@ const pxConfig = {
 ```
 
 #### <a name="sendPageActivities"></a>Send Page Activities
+
 A boolean flag to enable/disable sending activities and metrics to PerimeterX with each request. <br/>
 Enabling this feature allows data to populate the PerimeterX Portal with valuable information, such as the number of requests blocked and additional API usage statistics.
 
@@ -203,6 +211,7 @@ const pxConfig = {
 ```
 
 #### <a name="sendBlockActivities"></a>Send Block Activities
+
 A boolean flag to enable/disable sending block activities to PerimeterX with each request.
 
 **Default:** true
@@ -216,6 +225,7 @@ const pxConfig = {
 ```
 
 #### <a name="debugMode"></a>Debug Mode
+
 A boolean flag to enable/disable the debug log messages.
 
 **Default:** false
@@ -229,6 +239,7 @@ const pxConfig = {
 ```
 
 #### <a name="sensitiveRoutes"></a> Sensitive Routes
+
 An array of route prefixes that trigger a server call to PerimeterX servers every time the page is viewed, regardless of viewing history.
 
 **Default:** Empty
@@ -242,6 +253,7 @@ const pxConfig = {
 ```
 
 #### <a name="whitelistRoutes"></a> Whitelist Specific Routes
+
 An array of route prefixes and/or regular expressions that are always whitelisted and not validated by the PerimeterX Worker.
 <br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
 <br/>A string value of a path will be treated as a prefix.
@@ -257,6 +269,7 @@ const pxConfig = {
 ```
 
 #### <a name="enforcedSpecificRoutes"></a>Enforced Specific Routes
+
 An array of route prefixes and/or regular expressions that are always validated by the PerimeterX Worker (as opposed to whitelisted routes).
 <br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
 <br/>A string value of a path will be treated as a prefix.
@@ -272,10 +285,10 @@ const pxConfig = {
 ```
 
 #### <a name="monitoredSpecificRoutes"></a>Monitored Specific Routes
+
 An array of route prefixes and/or regular expressions that are always set to be in [monitor mode](#moduleMode). This only takes effect when the module is enabled and in blocking mode.
 <br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
 <br/>A string value of a path will be treated as a prefix.
-
 
 **Default:** Empty
 
@@ -288,6 +301,7 @@ const pxConfig = {
 ```
 
 #### <a name="sensitiveHeaders"></a>Sensitive Headers
+
 An array of headers that are not sent to PerimeterX servers on API calls.
 
 **Default:** ['cookie', 'cookies']
@@ -301,6 +315,7 @@ const pxConfig = {
 ```
 
 #### <a name="ipHeaders"></a>IP Headers
+
 An array of trusted headers that specify an IP to be extracted.
 
 **Default:** Empty
@@ -314,6 +329,7 @@ const pxConfig = {
 ```
 
 #### <a name="firstPartyEnabled"></a>First Party Enabled
+
 A boolean flag to enable/disable first party mode.
 
 **Default:** true
@@ -327,6 +343,7 @@ const pxConfig = {
 ```
 
 #### <a name="customRequestHandler"></a>Custom Request Handler
+
 A JavaScript function that adds a custom response handler to the request.
 
 **Default:** Empty
@@ -343,6 +360,7 @@ const pxConfig = {
 ```
 
 #### <a name="additionalActivityHandler"></a>Additional Activity Handler
+
 A JavaScript function that allows interaction with the request data collected by PerimeterX before the data is returned to the PerimeterX servers. Does not alter the response.
 
 **Default:** Empty
@@ -358,6 +376,7 @@ const pxConfig = {
 ```
 
 #### <a name="enrichCustomParams"></a>Enrich Custom Parameters
+
 With the `enrichCustomParameters` function you can add up to 10 custom parameters to be sent back to PerimeterX servers. When set, the function is called before seting the payload on every request to PerimetrX servers. The parameters should be passed according to the correct order (1-10).
 
 **Default:** Empty
@@ -374,6 +393,7 @@ const pxConfig = {
 ```
 
 #### <a name="cssRef"></a>CSS Ref
+
 Modifies a custom CSS by adding the CSSRef directive and providing a valid URL to the CSS.
 
 **Default:** Empty
@@ -387,6 +407,7 @@ const pxConfig = {
 ```
 
 #### <a name="jsRef"></a>JS Ref
+
 Adds a custom JS file by adding JSRef directive and providing the JS file that is loaded with the block page.
 
 **Default:** Empty
@@ -399,8 +420,8 @@ const pxConfig = {
 };
 ```
 
-
 #### <a name="customLogo"></a>Custom Logo
+
 The logo is displayed at the top of the the block page.
 Max-height = 150px, Width = auto.
 
@@ -414,8 +435,8 @@ const pxConfig = {
 };
 ```
 
-
 #### <a name="securedpxhd"></a>Secured PXHD cookie
+
 A boolean flag to enable/disable the `Secure` flag when baking a PXHD cookie.
 
 **Default:** false
@@ -428,8 +449,8 @@ const pxConfig = {
 };
 ```
 
-
 #### <a name="proxySupport"></a>Proxy Support
+
 Allows traffic to pass through a http proxy server.
 
 **Default:** Empty
@@ -442,7 +463,22 @@ const pxConfig = {
 };
 ```
 
+#### <a name="customCookieHeader"></a>Custom Cookie Header
+
+When set, instead of extrating the PerimeterX Cookie from the `Cookie` header, this property specifies a header name that will contain the PerimeterX Cookie. 
+
+**Default:** Empty
+
+```javascript
+const pxConfig = {
+  ...
+  customCookieHeader: "x-px-cookies"
+  ...
+};
+```
+
 #### <a name="filterByUserAgent"></a> Filter Traffic by User Agent
+
 An array of user agents that are always filtered and not validated by the PerimeterX middleware.
 
 **Default:** Empty
@@ -456,6 +492,7 @@ const pxConfig = {
 ```
 
 #### <a name="filterByIP"></a> Filter Traffic by IP
+
 An array of IP ranges / IP addresses that are always filtered and not validated by the PerimeterX middleware.
 
 **Default:** Empty
@@ -467,7 +504,9 @@ const pxConfig = {
   ...
 };
 ```
+
 #### <a name="filterByMethod"></a> Filter Traffic by HTTP Method
+
 An array of HTTP methods that are always filtered and not validated by the PerimeterX middleware.
 
 **Default:** Empty
@@ -500,7 +539,8 @@ const pxConfig = {
 ```
 
 ## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
-In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the *Accept* header with the value of `application/json`. A sample JSON response appears as follows:
+
+In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the _Accept_ header with the value of `application/json`. A sample JSON response appears as follows:
 
 ```javascript
 {
@@ -519,18 +559,19 @@ Once you have the JSON response object, you can pass it to your implementation (
 In addition, you can add the `_pxOnCaptchaSuccess` callback function on the window object of your Captcha page to react according to the Captcha status. For example when using a modal, you can use this callback to close the modal once the Captcha is successfullt solved. <br/> An example of using the `_pxOnCaptchaSuccess` callback is as follows:
 
 ```javascript
-window._pxOnCaptchaSuccess = function(isValid) {
+window._pxOnCaptchaSuccess = function (isValid) {
     if (isValid) {
         alert('yay');
     } else {
         alert('nay');
     }
-}
+};
 ```
 
 For details on how to create a custom Captcha page, refer to the [documentation](https://docs.perimeterx.com/pxconsole/docs/customize-challenge-page)
 
-> If you wish to disable this behavior when the *Accept* header has the value of `application/json`, set the following configuration:
+> If you wish to disable this behavior when the _Accept_ header has the value of `application/json`, set the following configuration:
+>
 > ```javascript
 > const pxConfig = {
 >   ...
@@ -540,10 +581,11 @@ For details on how to create a custom Captcha page, refer to the [documentation]
 > ```
 
 ## <a name="multipleAppSupport"></a> Multiple App Support
+
 If you use two different apps on the same node runtime, you can create two instances and use them on two routes:
 
 ```javascript
-"use strict";
+'use strict';
 
 const express = require('express');
 const perimeterx = require('perimeterx-node-express');
@@ -554,7 +596,7 @@ const server = express();
 const pxConfig1 = {
     pxAppId: 'PX_APP_ID_1',
     cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN_1'
+    authToken: 'PX_TOKEN_1',
 };
 const middlewareApp1 = perimeterx.new(pxConfig1).middleware;
 const app1Router = express.Router();
@@ -567,7 +609,7 @@ server.use('/app1', app1Router);
 const pxConfig2 = {
     pxAppId: 'PX_APP_ID_2',
     cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN_2'
+    authToken: 'PX_TOKEN_2',
 };
 const middlewareApp2 = perimeterx.new(pxConfig2).middleware;
 const app2Router = express.Router();

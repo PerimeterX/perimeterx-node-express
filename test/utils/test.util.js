@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * PerimeterX (http://www.perimeterx.com) NodeJS-Express SDK
@@ -26,7 +26,8 @@ exports.initConfigurations = {
     dynamicConfigurations: false,
     moduleMode: 1,
     sensitiveRoutes: ['/login'],
-    whitelistRoutes: ['/account']
+    whitelistRoutes: ['/account'],
+    customCookieHeader: 'x-px-cookies',
 };
 
 const cookieGood = {
@@ -34,8 +35,8 @@ const cookieGood = {
     v: uuid.v1(),
     s: {
         b: 0,
-        a: 0
-    }
+        a: 0,
+    },
 };
 
 const cookieBad = {
@@ -43,8 +44,8 @@ const cookieBad = {
     v: uuid.v1(),
     s: {
         b: 100,
-        a: 0
-    }
+        a: 0,
+    },
 };
 
 /**
@@ -143,7 +144,6 @@ function encryptCookie(cookie, cookieKey, pxconfig) {
     result += cipher.final('base64');
     return result;
 }
-
 
 function assertLogString(str, logs) {
     for (let i = 0; i < logs.length; i++) {

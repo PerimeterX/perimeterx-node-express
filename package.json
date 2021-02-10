@@ -1,48 +1,48 @@
 {
-  "name": "perimeterx-node-express",
-  "version": "6.5.4",
-  "description": "PerimeterX Express.js middleware to monitor and block traffic according to PerimeterX risk score",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "mocha --exit",
-    "cover": "istanbul cover _mocha",
-    "lint": "./node_modules/eslint/bin/eslint.js lib/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PerimeterX/perimeterx-node-express.git"
-  },
-  "keywords": [
-    "perimeterx",
-    "nodejs",
-    "express",
-    "security",
-    "middleware"
-  ],
-  "author": "Ben Diamant",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/PerimeterX/perimeterx-node-express/issues"
-  },
-  "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
-  "dependencies": {
-    "cookie-parser": "^1.4.1",
-    "perimeterx-node-core": "^2.7.2"
-  },
-  "devDependencies": {
-    "eslint": "^7.12.0",
-    "eslint-config-perimeterx": "^0.5.0",
-    "express": "4.16.2",
-    "faker": "^3.1.0",
-    "mocha": "^8.2.0",
-    "moment": "^2.19.3",
-    "rewire": "^2.5.2",
-    "should": "^8.3.0",
-    "sinon": "^2.1.0",
-    "superagent": "^3.8.3",
-    "uuid": "^3.0.0"
-  }
+    "name": "perimeterx-node-express",
+    "version": "6.6.0",
+    "description": "PerimeterX Express.js middleware to monitor and block traffic according to PerimeterX risk score",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "mocha --exit",
+        "cover": "istanbul cover _mocha",
+        "lint": "./node_modules/eslint/bin/eslint.js lib/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PerimeterX/perimeterx-node-express.git"
+    },
+    "keywords": [
+        "perimeterx",
+        "nodejs",
+        "express",
+        "security",
+        "middleware"
+    ],
+    "author": "Ben Diamant",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/PerimeterX/perimeterx-node-express/issues"
+    },
+    "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
+    "dependencies": {
+        "cookie-parser": "^1.4.1",
+        "perimeterx-node-core": "^2.9.1"
+    },
+    "devDependencies": {
+        "eslint": "^7.12.0",
+        "eslint-config-perimeterx": "^0.5.0",
+        "express": "4.16.2",
+        "faker": "^3.1.0",
+        "mocha": "^8.2.0",
+        "moment": "^2.19.3",
+        "rewire": "^2.5.2",
+        "should": "^8.3.0",
+        "sinon": "^2.1.0",
+        "superagent": "^3.8.3",
+        "uuid": "^3.0.0"
+    }
 }
