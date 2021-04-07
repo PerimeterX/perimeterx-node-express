@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v6.6.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v6.7.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -466,7 +466,7 @@ const pxConfig = {
 
 #### <a name="customCookieHeader"></a>Custom Cookie Header
 
-When set, instead of extrating the PerimeterX Cookie from the `Cookie` header, this property specifies a header name that will contain the PerimeterX Cookie. 
+When set, instead of extrating the PerimeterX Cookie from the `Cookie` header, this property specifies a header name that will contain the PerimeterX Cookie.
 
 **Default:** Empty
 
@@ -480,14 +480,14 @@ const pxConfig = {
 
 #### <a name="filterByUserAgent"></a> Filter Traffic by User Agent
 
-An array of user agents that are always filtered and not validated by the PerimeterX middleware.
+An array of user agent constants and/or regular expressions that are always filtered and not validated by the PerimeterX middleware.
 
 **Default:** Empty
 
 ```js
 const pxConfig = {
   ...
-  filterByUserAgent: ['testUserAgent/v1.0']
+  filterByUserAgent: ['testUserAgent/v1.0', /test/]
   ...
 };
 ```
@@ -626,7 +626,9 @@ server.listen(8081, () => {
 ```
 
 ## <a name=“additionalInformation”></a> Additional Information
+
 ### URI Delimiters
+
 PerimeterX processes URI paths with general- and sub-delimiters according to RFC 3986. General delimiters (e.g., `?`, `#`) are used to separate parts of the URI. Sub-delimiters (e.g., `$`, `&`) are not used to split the URI as they are considered valid characters in the URI path.
 
 ## Thanks
