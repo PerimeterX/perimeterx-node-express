@@ -480,7 +480,7 @@ const pxConfig = {
 
 #### <a name="filterByUserAgent"></a> Filter Traffic by User Agent
 
-An array of user agents constants and/or regular expressions that are always filtered and not validated by the PerimeterX middleware.
+An array of user agent constants and/or regular expressions that are always filtered and not validated by the PerimeterX middleware.
 
 **Default:** Empty
 
