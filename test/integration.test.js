@@ -57,51 +57,6 @@ describe('PX Integration Tests', function () {
         server.kill('SIGINT');
         server = undefined;
     });
-    describe('PX Cookie Evaluation', () => {
-        it('PASS - good score cookie, valid time', (done) => {
-            const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    res.text.should.be.exactly('Hello from PX');
-                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
-                    res.status.should.be.exactly(200);
-                    return done();
-                });
-        });
-
-        it('BLOCK - bad score cookie, valid time', (done) => {
-            const badCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${badCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    res.status.should.be.exactly(403);
-                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
-                    return done();
-                });
-        });
-        it('PASS - good score cookie on custom cookie header', (done) => {
-            const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-
-            superagent
-                .get(SERVER_URL)
-                .set('x-px-cookies', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    res.text.should.be.exactly('Hello from PX');
-                    testUtil.assertLogString('cookie invalid', srvOut).should.be.exactly(false);
-                    res.status.should.be.exactly(200);
-                    return done();
-                });
-        });
-    });
 
     describe('PX Server 2 Server Evaluation', () => {
         it('PASS - no cookie. good user', (done) => {
@@ -115,64 +70,6 @@ describe('PX Integration Tests', function () {
                     testUtil.assertLogString('Cookie is missing', srvOut).should.be.exactly(true);
                     res.text.should.be.exactly('Hello from PX');
                     res.status.should.be.exactly(200);
-                    return done();
-                });
-        });
-
-        it('PASS - expired cookie. good user', (done) => {
-            const goodCookie = testUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    testUtil.assertLogString('Cookie TTL is expired', srvOut).should.be.exactly(true);
-                    res.text.should.be.exactly('Hello from PX');
-                    res.status.should.be.exactly(200);
-                    return done();
-                });
-        });
-
-        it('BLOCK - expired cookie. bad user', (done) => {
-            const goodCookie = testUtil.buildCookieGoodScoreInValid(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', 'curl')
-                .end((e, res) => {
-                    testUtil.assertLogString('Cookie TTL is expired', srvOut).should.be.exactly(true);
-                    res.status.should.be.exactly(403);
-                    return done();
-                });
-        });
-
-        it('BLOCK - cookie decryption failed. good user', (done) => {
-            const pxCookie = 'bad_cookie';
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${pxCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('X-PX-TRUE-IP', ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
-                    res.status.should.be.exactly(403);
-                    return done();
-                });
-        });
-
-        it('BLOCK - invalid cookie. bad user', (done) => {
-            const pxCookie = 'bad_cookie';
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${pxCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', 'curl')
-                .end((e, res) => {
-                    testUtil.assertLogString('invalid cookie format', srvOut).should.be.exactly(true);
-                    res.status.should.be.exactly(403);
                     return done();
                 });
         });
@@ -197,62 +94,6 @@ describe('PX Integration Tests', function () {
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
                     res.status.should.be.exactly(200);
-                    return done();
-                });
-        });
-    });
-    describe('Sending Activities', () => {
-        it('send page_requested activity, dont send block activity', (done) => {
-            const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    testUtil.assertLogString('Sending page requested activity', srvOut).should.be.exactly(true);
-                    testUtil.assertLogString('Sending block activity', srvOut).should.be.exactly(false);
-                    return done();
-                });
-        });
-        it('send block activity, dont send page_requested activity', (done) => {
-            const goodCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(SERVER_URL)
-                .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    testUtil.assertLogString('Sending page requested activity', srvOut).should.be.exactly(false);
-                    testUtil.assertLogString('Sending block activity', srvOut).should.be.exactly(true);
-                    return done();
-                });
-        });
-    });
-    describe('Sensitive routes', () => {
-        it('should trigger s2s activity on sensitive_route', (done) => {
-            const goodCookie = testUtil.goodValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(`${SERVER_URL}/login`)
-                .set('Cookie', `_px=${goodCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    testUtil.assertLogString(`Sensitive route match, sending Risk API. path: /login`, srvOut).should.be.exactly(true);
-                    return done();
-                });
-        });
-    });
-    describe('Whitelist routes', () => {
-        it('should pass request on whitelist_route with bad cookie', (done) => {
-            const badCookie = testUtil.badValidCookie(ip, ua, pxconfig.COOKIE_SECRET_KEY, pxconfig);
-            superagent
-                .get(`${SERVER_URL}/account`)
-                .set('Cookie', `_px=${badCookie};`)
-                .set(pxconfig.IP_HEADERS, ip)
-                .set('User-Agent', ua)
-                .end((e, res) => {
-                    testUtil.assertLogString(`Found whitelist route /account`, srvOut).should.be.exactly(true);
                     return done();
                 });
         });
