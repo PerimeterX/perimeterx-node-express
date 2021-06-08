@@ -40,6 +40,10 @@
         -   [Filter Traffic by IP](#filterByIP)
         -   [Filter Traffic by HTTP Method](#filterByMethod)
         -   [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
+        -   [CSP Enabled](#cspEnabled)
+        -   [CSP Policy Refresh Interval](#cspPolicyRefreshIntervalMinutes)
+        -   [CSP Invalidate Policy Interval](#cspNoUpdatesMaxIntervalMinutes)
+-   [Code Defender Middleware - cdMiddleware](#cdMiddleware)
 -   [Advanced Blocking Response](#advancedBlockingResponse)
 -   [Multiple App Support](#multipleAppSupport)
 -   [Additional Information](#additionalInformation)
@@ -537,6 +541,65 @@ const pxConfig = {
   bypassMonitorHeader: "x-px-block"
   ...
 };
+```
+
+#### <a name=“cspEnabled”></a> CSP Enabled
+
+Used in `cdMiddleware` - Code Defender's middleware. Enable enforcement of CSP header policy on responses retured to the client (only if active CSP policy exists in PerimeterX for the specific appId). 
+
+**Default:** false
+
+```javascript
+const pxConfig = {
+  ...
+  cspEnabled: false
+  ...
+};
+```
+
+#### <a name=“cspPolicyRefreshIntervalMinutes”></a> CSP Policy Refresh Interval
+
+Used by `cdMiddleware` - Code Defender's middleware. Sets the interval, in minutes, to fetch and update the active CSP policy for the specific appId from PerimeterX. 
+
+**Default:** 5
+
+```javascript
+const pxConfig = {
+  ...
+  cspPolicyRefreshIntervalMinutes: 5
+  ...
+};
+```
+
+#### <a name=“cspNoUpdatesMaxIntervalMinutes”></a> CSP Invalidate Policy Interval
+
+Used by `cdMiddleware` - Code Defender's middleware. Invalidates active CSP policy after specified number of minutes with no updates received from PerimeterX. 
+
+**Default:** 60
+
+```javascript
+const pxConfig = {
+  ...
+  cspNoUpdatesMaxIntervalMinutes: 60
+  ...
+};
+```
+
+## <a name="cdMiddleware"></a> Code Defender Middleware - cdMiddleware
+
+Code Defender's middleware to handle the enforcement of CSP headers on responses returned to the client.
+The express module is in charge of communicating with PerimeterX to receive and maintain the latest CSP policy for the given appId.
+It also maintain the policy state and invalidates the policy when communication with PerimeterX's Enforcer Data Provider is lost, base on the configuration values (`cspNoUpdatesMaxIntervalMinutes`, `cspPolicyRefreshIntervalMinutes`).
+
+It then uses **PerimetrX Node Core** module to enforce the actual functionality adding the necessary CSP header to the response object.
+
+usage example:
+```javascript
+const perimeterx = require('perimeterx-node-express');
+...
+const pxInstance = perimeterx.new(pxConfig);
+app.use(pxInstance.cdMiddleware);
+...
 ```
 
 ## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
