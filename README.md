@@ -573,7 +573,7 @@ const pxConfig = {
 
 #### <a name=“cspNoUpdatesMaxIntervalMinutes”></a> CSP Invalidate Policy Interval
 
-Used by `cdMiddleware` - Code Defender's middleware. Invalidates active CSP policy after specified number of minutes with no updates recieved from PerimeterX. 
+Used by `cdMiddleware` - Code Defender's middleware. Invalidates active CSP policy after specified number of minutes with no updates received from PerimeterX. 
 
 **Default:** 60
 
@@ -588,10 +588,10 @@ const pxConfig = {
 ## <a name="cdMiddleware"></a> Code Defender Middleware - cdMiddleware
 
 Code Defender's middleware to handle the enforcement of CSP headers on responses returned to the client.
-The express module is in charge of cummunicating with PerimeterX to recieve and maintain the latest CSP policy for the given appId.
+The express module is in charge of communicating with PerimeterX to receive and maintain the latest CSP policy for the given appId.
 It also maintain the policy state and invalidates the policy when communication with PerimeterX's Enforcer Data Provider is lost, base on the configuration values (`cspNoUpdatesMaxIntervalMinutes`, `cspPolicyRefreshIntervalMinutes`).
 
-It then uses **PerimetrX Node Core** module to enforce the actual functionality adding the neccessary CSP header to the response object.
+It then uses **PerimetrX Node Core** module to enforce the actual functionality adding the necessary CSP header to the response object.
 
 usage example:
 ```javascript
