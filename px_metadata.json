@@ -1,0 +1,22 @@
+{
+    "supported_features": ["cookie_v3",
+                "risk_api",
+                "page_requested",
+                "block_activity",
+                "pxvid",
+                "sensitive_routes",
+                "whitelist_ext",
+                "block_page_captcha",
+                "first_party",
+                "advanced_blocking_response",
+                "telemetry_command",
+                "sensitive_headers",
+                "block_page_hard_block",
+                "block_page_rate_limiter",
+                "block_page_js_challenge",
+                "whitelist_routes",
+                "enforce_route",
+                "batching_activities",
+                "module_enable_disable",
+                "monitor_mode"]
+}
