@@ -43,6 +43,7 @@
         -   [CSP Enabled](#cspEnabled)
         -   [CSP Policy Refresh Interval](#cspPolicyRefreshIntervalMinutes)
         -   [CSP Invalidate Policy Interval](#cspNoUpdatesMaxIntervalMinutes)
+        -   [Login Credentials Extraction](#loginCredentialsExtraction)
 -   [Code Defender Middleware - cdMiddleware](#cdMiddleware)
 -   [Advanced Blocking Response](#advancedBlockingResponse)
 -   [Multiple App Support](#multipleAppSupport)
@@ -573,6 +574,39 @@ const pxConfig = {
   px_csp_no_updates_max_interval_minutes: 60
   ...
 };
+```
+
+#### <a name="loginCredentialsExtraction"></a>Login Credentials Extraction
+
+This feature extracts credentials (hashed username and password) from requests and sends them to PerimeterX as additional info in the risk api call. The feature can be toggled on and off, and may be set for any number of unique paths.
+
+> Note: This feature requires access to the request body as a either an `object` or a `string` type.
+
+**Default Values**
+
+px_login_credentials_extraction_enabled: false
+
+px_login_credentials_extraction: Empty
+
+```javascript
+const pxConfig = {
+  ...
+  px_login_credentials_extraction_enabled: true,
+  px_login_credentials_extraction: [
+    {
+      path: "/login", // login path
+      method: "post", // supported methods: post
+      sentThrough: "body", // supported sentThroughs: body, header, query-param
+      contentType: "json", // supported contentTypes: json, form
+      encoding: "clear-text", // supported encodings: clear-text, url-encode
+      passField: "password", // name of the password field in the request
+      userField: "username" // name of the username field in the request
+    },
+    ...
+  ],
+  ...
+};
+
 ```
 
 ## <a name="cdMiddleware"></a> Code Defender Middleware - cdMiddleware
