@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v6.8.2](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.0.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -19,11 +19,11 @@
         -   [Blocking Score](#blockingScore)
         -   [Send Page Activities](#sendPageActivities)
         -   [Send Block Activities](#sendBlockActivities)
-        -   [Debug Mode](#debugMode)
+        -   [Logger Severity](#loggerSeverity)
         -   [Sensitive Routes](#sensitiveRoutes)
-        -   [Whitelist Specific Routes](#whitelistRoutes)
         -   [Enforced Specific Routes](#enforcedSpecificRoutes)
         -   [Monitored Specific Routes](#monitoredSpecificRoutes)
+        -   [Filter By Route](#filterByRoute)
         -   [Sensitive Headers](#sensitiveHeaders)
         -   [IP Headers](#ipHeaders)
         -   [First Party Enabled](#firstPartyEnabled)
@@ -43,6 +43,7 @@
         -   [CSP Enabled](#cspEnabled)
         -   [CSP Policy Refresh Interval](#cspPolicyRefreshIntervalMinutes)
         -   [CSP Invalidate Policy Interval](#cspNoUpdatesMaxIntervalMinutes)
+        -   [Login Credentials Extraction](#loginCredentialsExtraction)
 -   [Code Defender Middleware - cdMiddleware](#cdMiddleware)
 -   [Advanced Blocking Response](#advancedBlockingResponse)
 -   [Multiple App Support](#multipleAppSupport)
@@ -79,9 +80,9 @@ const server = express();
 
 /* px-module and cookie parser need to be initiated before any route usage */
 const pxConfig = {
-    pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN',
+    px_app_id: 'PX_APP_ID',
+    px_cookie_secret: 'PX_COOKIE_ENCRYPTION_KEY',
+    px_auth_token: 'PX_TOKEN',
 };
 perimeterx.init(pxConfig);
 
@@ -117,9 +118,9 @@ const server = express();
 
 /* the px-module and parser need to be initialized before any route usage */
 const pxConfig = {
-    pxAppId: 'PX_APP_ID',
-    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN',
+    px_app_id: 'PX_APP_ID',
+    px_cookie_secret: 'PX_COOKIE_ENCRYPTION_KEY',
+    px_auth_token: 'PX_TOKEN',
 };
 perimeterx.init(pxConfig);
 
@@ -158,7 +159,7 @@ A boolean flag to enable/disable the PerimeterX Enforcer.
 ```js
 const pxConfig = {
   ...
-  enableModule: false
+  px_module_enabled: false
   ...
 };
 ```
@@ -169,15 +170,15 @@ Sets the working mode of the Enforcer.
 
 Possible values:
 
--   `0` - Monitor Mode
--   `1` - Blocking Mode
+-   `monitor` - Monitor Mode
+-   `active_blocking` - Blocking Mode
 
-**Default:** `0` - Monitor Mode
+**Default:** `monitor`
 
 ```js
 const pxConfig = {
   ...
-  moduleMode: 1
+  px_module_mode: "monitor"
   ...
 };
 ```
@@ -195,7 +196,7 @@ Possible values:
 ```js
 const pxConfig = {
   ...
-  blockingScore: 100
+  px_blocking_score: 100
   ...
 };
 ```
@@ -210,35 +211,25 @@ Enabling this feature allows data to populate the PerimeterX Portal with valuabl
 ```js
 const pxConfig = {
   ...
-  sendPageActivities: true
+  px_send_async_activities_enabled: true
   ...
 };
 ```
 
-#### <a name="sendBlockActivities"></a>Send Block Activities
+#### <a name="loggerSeverity"></a>Logger Severity
 
-A boolean flag to enable/disable sending block activities to PerimeterX with each request.
+Sets the logging verbosity level. The available options are:
 
-**Default:** true
+* `none` - no logs will be generated
+* `error` - logs only when severe errors occur, best for production environments
+* `debug` - logs more descriptive messages, helpful for analyzing and debugging the enforcer flow
 
-```js
-const pxConfig = {
-  ...
-  sendBlockActivities: true
-  ...
-};
-```
-
-#### <a name="debugMode"></a>Debug Mode
-
-A boolean flag to enable/disable the debug log messages.
-
-**Default:** false
+**Default:** error
 
 ```js
 const pxConfig = {
   ...
-  debugMode: true
+  px_logger_severity: 'debug'
   ...
 };
 ```
@@ -252,30 +243,14 @@ An array of route prefixes that trigger a server call to PerimeterX servers ever
 ```js
 const pxConfig = {
   ...
-  sensitiveRoutes: ['/login', '/user/checkout']
-  ...
-};
-```
-
-#### <a name="whitelistRoutes"></a> Whitelist Specific Routes
-
-An array of route prefixes and/or regular expressions that are always whitelisted and not validated by the PerimeterX Worker.
-<br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
-<br/>A string value of a path will be treated as a prefix.
-
-**Default:** Empty
-
-```js
-const pxConfig = {
-  ...
-  whitelistRoutes: ['/contact-us', /\/user\/.*\/show/]
+  px_sensitive_routes: ['/login', '/user/checkout']
   ...
 };
 ```
 
 #### <a name="enforcedSpecificRoutes"></a>Enforced Specific Routes
 
-An array of route prefixes and/or regular expressions that are always validated by the PerimeterX Worker (as opposed to whitelisted routes).
+An array of route prefixes and/or regular expressions that are always validated by the PerimeterX Worker (as opposed to filtered routes).
 <br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
 <br/>A string value of a path will be treated as a prefix.
 
@@ -284,7 +259,7 @@ An array of route prefixes and/or regular expressions that are always validated 
 ```js
 const pxConfig = {
   ...
-  enforcedRoutes: ['/home',/^\/$/]
+  px_enforced_routes: ['/home',/^\/$/]
   ...
 };
 ```
@@ -300,7 +275,23 @@ An array of route prefixes and/or regular expressions that are always set to be 
 ```js
 const pxConfig = {
   ...
-  monitoredRoutes: ['/home', new RegExp(/^\/$/)]
+  px_monitored_routes: ['/home', new RegExp(/^\/$/)]
+  ...
+};
+```
+
+#### <a name="filterByRoute"></a> Filter By Route
+
+An array of route prefixes and/or regular expressions that are always allowed and not validated by the PerimeterX Worker.
+<br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
+<br/>A string value of a path will be treated as a prefix.
+
+**Default:** Empty
+
+```js
+const pxConfig = {
+  ...
+  px_filter_by_route: ['/contact-us', /\/user\/.*\/show/]
   ...
 };
 ```
@@ -314,7 +305,7 @@ An array of headers that are not sent to PerimeterX servers on API calls.
 ```js
 const pxConfig = {
   ...
-  sensitiveHeaders: ['cookie', 'cookies', 'x-sensitive-header']
+  px_sensitive_headers: ['cookie', 'cookies', 'x-sensitive-header']
   ...
 };
 ```
@@ -328,7 +319,7 @@ An array of trusted headers that specify an IP to be extracted.
 ```js
 const pxConfig = {
   ...
-  ipHeaders: ['x-user-real-ip']
+  px_ip_headers: ['x-user-real-ip']
   ...
 };
 ```
@@ -342,7 +333,7 @@ A boolean flag to enable/disable first party mode.
 ```js
 const pxConfig = {
   ...
-  firstPartyEnabled: false
+  px_first_party_enabled: false
   ...
 };
 ```
@@ -356,7 +347,7 @@ A JavaScript function that adds a custom response handler to the request.
 ```js
 const pxConfig = {
   ...
-  customRequestHandler: function(pxCtx, pxconfig, req, cb) {
+  px_custom_request_handler: function(pxCtx, pxconfig, req, cb) {
     ...
     cb({body: result, status: 200, statusDescription: "OK", header: {key: 'Content-Type', value:'application/json'}})
   }
@@ -373,7 +364,7 @@ A JavaScript function that allows interaction with the request data collected by
 ```javascript
 const pxConfig = {
   ...
-  additionalActivityHandler: function(pxCtx, request) {
+  px_additional_activity_handler: function(pxCtx, request) {
     ...
   }
   ...
@@ -382,14 +373,14 @@ const pxConfig = {
 
 #### <a name="enrichCustomParams"></a>Enrich Custom Parameters
 
-With the `enrichCustomParameters` function you can add up to 10 custom parameters to be sent back to PerimeterX servers. When set, the function is called before seting the payload on every request to PerimetrX servers. The parameters should be passed according to the correct order (1-10).
+With the `px_enrich_custom_parameters` function you can add up to 10 custom parameters to be sent back to PerimeterX servers. When set, the function is called before seting the payload on every request to PerimetrX servers. The parameters should be passed according to the correct order (1-10).
 
 **Default:** Empty
 
 ```javascript
 const pxConfig = {
   ...
-  enrichCustomParameters: function(customParams, originalRequest) {
+  px_enrich_custom_parameters: function(customParams, originalRequest) {
     customParams["custom_param1"] = "yay, test value";
     return customParams;
   }
@@ -406,7 +397,7 @@ Modifies a custom CSS by adding the CSSRef directive and providing a valid URL t
 ```javascript
 const pxConfig = {
   ...
-  cssRef: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+  px_css_ref: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
   ...
 };
 ```
@@ -420,7 +411,7 @@ Adds a custom JS file by adding JSRef directive and providing the JS file that i
 ```js
 const pxConfig = {
   ...
-  jsRef: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+  px_js_ref: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
   ...
 };
 ```
@@ -435,7 +426,7 @@ Max-height = 150px, Width = auto.
 ```js
 const pxConfig = {
   ...
-  customLogo: 'https://s.perimeterx.net/logo.png',
+  px_custom_logo: 'https://s.perimeterx.net/logo.png',
   ...
 };
 ```
@@ -449,7 +440,7 @@ A boolean flag to enable/disable the `Secure` flag when baking a PXHD cookie.
 ```js
 const pxConfig = {
   ...
-  pxhdSecure: true
+  px_pxhd_secure: true
   ...
 };
 ```
@@ -463,7 +454,7 @@ Allows traffic to pass through a http proxy server.
 ```javascript
 const pxConfig = {
   ...
-  proxy: 'https://localhost:8008',
+  px_proxy_url: 'https://localhost:8008',
   ...
 };
 ```
@@ -477,7 +468,7 @@ When set, instead of extrating the PerimeterX Cookie from the `Cookie` header, t
 ```javascript
 const pxConfig = {
   ...
-  customCookieHeader: "x-px-cookies"
+  px_custom_cookie_header: "x-px-cookies"
   ...
 };
 ```
@@ -491,7 +482,7 @@ An array of user agent constants and/or regular expressions that are always filt
 ```js
 const pxConfig = {
   ...
-  filterByUserAgent: ['testUserAgent/v1.0', /test/]
+  px_filter_by_user_agent: ['testUserAgent/v1.0', /test/]
   ...
 };
 ```
@@ -505,7 +496,7 @@ An array of IP ranges / IP addresses that are always filtered and not validated 
 ```js
 const pxConfig = {
   ...
-  filterByIP: ['192.168.10.0/24', '192.168.2.2']
+  px_filter_by_ip: ['192.168.10.0/24', '192.168.2.2']
   ...
 };
 ```
@@ -519,7 +510,7 @@ An array of HTTP methods that are always filtered and not validated by the Perim
 ```js
 const pxConfig = {
   ...
-  filterByMethod: ['options']
+  px_filter_by_http_method: ['options']
   ...
 };
 ```
@@ -531,14 +522,14 @@ Allows you to test an enforcer’s blocking flow while you are still in Monitor 
 When the header name is set(eg. `x-px-block`) and the value is set to `1`, when there is a block response (for example from using a User-Agent header with the value of `PhantomJS/1.0`) the Monitor Mode is bypassed and full block mode is applied. If one of the conditions is missing you will stay in Monitor Mode. This is done per request.
 To stay in Monitor Mode, set the header value to `0`.
 
-The Header Name is configurable using the `BypassMonitorHeader` property.
+The Header Name is configurable using the `px_bypass_monitor_header` property.
 
 **Default:** Empty
 
 ```javascript
 const pxConfig = {
   ...
-  bypassMonitorHeader: "x-px-block"
+  px_bypass_monitor_header: "x-px-block"
   ...
 };
 ```
@@ -552,7 +543,7 @@ Used in `cdMiddleware` - Code Defender's middleware. Enable enforcement of CSP h
 ```javascript
 const pxConfig = {
   ...
-  cspEnabled: false
+  px_csp_enabled: false
   ...
 };
 ```
@@ -566,7 +557,7 @@ Used by `cdMiddleware` - Code Defender's middleware. Sets the interval, in minut
 ```javascript
 const pxConfig = {
   ...
-  cspPolicyRefreshIntervalMinutes: 5
+  px_csp_policy_refresh_interval_minutes: 5
   ...
 };
 ```
@@ -580,16 +571,49 @@ Used by `cdMiddleware` - Code Defender's middleware. Invalidates active CSP poli
 ```javascript
 const pxConfig = {
   ...
-  cspNoUpdatesMaxIntervalMinutes: 60
+  px_csp_no_updates_max_interval_minutes: 60
   ...
 };
+```
+
+#### <a name="loginCredentialsExtraction"></a>Login Credentials Extraction
+
+This feature extracts credentials (hashed username and password) from requests and sends them to PerimeterX as additional info in the risk api call. The feature can be toggled on and off, and may be set for any number of unique paths.
+
+> Note: This feature requires access to the request body as a either an `object` or a `string` type.
+
+**Default Values**
+
+px_login_credentials_extraction_enabled: false
+
+px_login_credentials_extraction: Empty
+
+```javascript
+const pxConfig = {
+  ...
+  px_login_credentials_extraction_enabled: true,
+  px_login_credentials_extraction: [
+    {
+      path: "/login", // login path
+      method: "post", // supported methods: post
+      sentThrough: "body", // supported sentThroughs: body, header, query-param
+      contentType: "json", // supported contentTypes: json, form
+      encoding: "clear-text", // supported encodings: clear-text, url-encode
+      passField: "password", // name of the password field in the request
+      userField: "username" // name of the username field in the request
+    },
+    ...
+  ],
+  ...
+};
+
 ```
 
 ## <a name="cdMiddleware"></a> Code Defender Middleware - cdMiddleware
 
 Code Defender's middleware to handle the enforcement of CSP headers on responses returned to the client.
 The express module is in charge of communicating with PerimeterX to receive and maintain the latest CSP policy for the given appId.
-It also maintain the policy state and invalidates the policy when communication with PerimeterX's Enforcer Data Provider is lost, base on the configuration values (`cspNoUpdatesMaxIntervalMinutes`, `cspPolicyRefreshIntervalMinutes`).
+It also maintain the policy state and invalidates the policy when communication with PerimeterX's Enforcer Data Provider is lost, base on the configuration values (`px_csp_no_updates_max_interval_minutes`, `px_csp_policy_refresh_interval_minutes`).
 
 It then uses **PerimetrX Node Core** module to enforce the actual functionality adding the necessary CSP header to the response object.
 
@@ -639,7 +663,7 @@ For details on how to create a custom Captcha page, refer to the [documentation]
 > ```javascript
 > const pxConfig = {
 >   ...
->   advancedBlockingResponse: false
+>   px_advanced_blocking_response_enabled: false
 >   ...
 > };
 > ```
@@ -658,9 +682,9 @@ const server = express();
 
 /* the px-module and parser need to be initialized before any route usage */
 const pxConfig1 = {
-    pxAppId: 'PX_APP_ID_1',
-    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN_1',
+    px_app_id: 'PX_APP_ID_1',
+    px_cookie_secret: 'PX_COOKIE_ENCRYPTION_KEY',
+    px_auth_token: 'PX_TOKEN_1',
 };
 const middlewareApp1 = perimeterx.new(pxConfig1).middleware;
 const app1Router = express.Router();
@@ -671,9 +695,9 @@ app1Router.get('/hello', (req, res) => {
 server.use('/app1', app1Router);
 
 const pxConfig2 = {
-    pxAppId: 'PX_APP_ID_2',
-    cookieSecretKey: 'PX_COOKIE_ENCRYPTION_KEY',
-    authToken: 'PX_TOKEN_2',
+    px_app_id: 'PX_APP_ID_2',
+    px_cookie_secret: 'PX_COOKIE_ENCRYPTION_KEY',
+    px_auth_token: 'PX_TOKEN_2',
 };
 const middlewareApp2 = perimeterx.new(pxConfig2).middleware;
 const app2Router = express.Router();
