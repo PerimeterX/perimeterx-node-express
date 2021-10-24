@@ -15,19 +15,19 @@ exports.badValidCookie = badValidCookie;
 exports.assertLogString = assertLogString;
 
 exports.initConfigurations = {
-    pxAppId: process.env.AppId,
-    cookieSecretKey: process.env.CookieSecret,
-    authToken: process.env.AuthToken,
-    sendPageActivities: true,
-    blockingScore: 60,
-    debugMode: true,
-    ipHeader: 'x-px-true-ip',
-    maxBufferLength: 1,
-    dynamicConfigurations: false,
-    moduleMode: 1,
-    sensitiveRoutes: ['/login'],
-    whitelistRoutes: ['/account'],
-    customCookieHeader: 'x-px-cookies',
+    px_app_id: process.env.AppId,
+    px_cookie_secret: process.env.CookieSecret,
+    px_auth_token: process.env.AuthToken,
+    px_send_async_activities: true,
+    px_blocking_score: 60,
+    px_logger_severity: 'debug',
+    px_ip_headers: ['x-px-true-ip'],
+    px_max_activity_batch_size: 1,
+    px_dynamic_configurations: false,
+    px_module_mode: 'active_blocking',
+    px_sensitive_routes: ['/login'],
+    px_filter_by_route: ['/account'],
+    px_custom_cookie_header: 'x-px-cookies',
 };
 
 const cookieGood = {

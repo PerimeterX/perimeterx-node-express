@@ -60,12 +60,11 @@ describe('PX Integration Tests', function () {
 
     describe('PX Server 2 Server Evaluation', () => {
         it('PASS - no cookie. good user', (done) => {
-            let tempUA = faker.internet.userAgent();
+            const tempUA = faker.internet.userAgent();
             superagent
                 .get(SERVER_URL)
-                .set(pxconfig.IP_HEADERS, ip)
+                .set(pxconfig.IP_HEADERS[0], ip)
                 .set('User-Agent', tempUA)
-                .set('X-PX-TRUE-IP', ip)
                 .end((e, res) => {
                     testUtil.assertLogString('Cookie is missing', srvOut).should.be.exactly(true);
                     res.text.should.be.exactly('Hello from PX');
@@ -77,7 +76,7 @@ describe('PX Integration Tests', function () {
         it('BLOCK - no cookie. bad user', (done) => {
             superagent
                 .get(SERVER_URL)
-                .set(pxconfig.IP_HEADERS, ip)
+                .set(pxconfig.IP_HEADERS[0], ip)
                 .set('User-Agent', 'curl')
                 .end((e, res) => {
                     testUtil.assertLogString('Cookie is missing', srvOut).should.be.exactly(true);
