@@ -250,7 +250,7 @@ const pxConfig = {
 
 #### <a name="enforcedSpecificRoutes"></a>Enforced Specific Routes
 
-An array of route prefixes and/or regular expressions that are always validated by the PerimeterX Worker (as opposed to whitelisted routes).
+An array of route prefixes and/or regular expressions that are always validated by the PerimeterX Worker (as opposed to filtered routes).
 <br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
 <br/>A string value of a path will be treated as a prefix.
 
@@ -282,7 +282,7 @@ const pxConfig = {
 
 #### <a name="filterByRoute"></a> Filter By Route
 
-An array of route prefixes and/or regular expressions that are always whitelisted and not validated by the PerimeterX Worker.
+An array of route prefixes and/or regular expressions that are always allowed and not validated by the PerimeterX Worker.
 <br/>A regular expression can be defined using `new RegExp` or directly as an expression, and will be treated as is.
 <br/>A string value of a path will be treated as a prefix.
 
