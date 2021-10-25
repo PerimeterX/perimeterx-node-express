@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v7.0.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.0.1](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -580,9 +580,13 @@ const pxConfig = {
 
 This feature extracts credentials (hashed username and password) from requests and sends them to PerimeterX as additional info in the risk api call. The feature can be toggled on and off, and may be set for any number of unique paths.
 
+If credentials are found to be compromised, the header `px-compromised-credentials` will be added to the request with the value `1`. You may configure the name of this header with the `px_compromised_credentials_header` configuration.
+
 > Note: This feature requires access to the request body as a either an `object` or a `string` type.
 
 **Default Values**
+
+px_compromised_credentials_header: "px-compromised-credentials"
 
 px_login_credentials_extraction_enabled: false
 
@@ -591,6 +595,7 @@ px_login_credentials_extraction: Empty
 ```javascript
 const pxConfig = {
   ...
+  px_compromised_credentials_header: "x-px-comp-creds",
   px_login_credentials_extraction_enabled: true,
   px_login_credentials_extraction: [
     {
