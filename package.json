@@ -31,7 +31,7 @@
     "dependencies": {
         "cookie-parser": "^1.4.1",
         "perimeterx-node-core": "^3.0.1",
-        "axios": "^0.21.1"
+        "axios": "^0.22.0"
     },
     "devDependencies": {
         "eslint": "^7.12.0",
