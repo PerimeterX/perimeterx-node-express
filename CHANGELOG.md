@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.2] - 2021-11-14
+
+### Added
+
+-   Nonce support in CSP header
+
 ## [7.0.1] - 2021-10-25
+
+### Added
 
 -   Compromised credentials header support
 
