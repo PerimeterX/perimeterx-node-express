@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v7.0.1](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.0.2](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -630,6 +630,24 @@ const pxInstance = perimeterx.new(pxConfig);
 app.use(pxInstance.cdMiddleware);
 ...
 ```
+
+### Adding Nonce value to CSP header
+
+The PerimeterX Express module allows adding a Nonce value to the CSP header.
+To do this, use the module's static function `addNonce`.
+After PerimeterX cdMiddleware has added the CSP header to the response, call the `addNonce` function,
+passing in the response object and a nonce value (string consisting of alphanumeric characters).
+If a CSP header exists on the response object, the function will alter the header by adding the nonce value in the correct place.
+The function does not return a value, but rather changes the original response.
+```javascript
+const perimeterx = require('perimeterx-node-express');
+...
+perimeterx.addNonce(response, 'rAnd0mNon6e');
+...
+```
+> Please note: the nonce value must be unique for each HTTP response.
+> For further explanation, refer to the official documentation of [CSP nonce](https://content-security-policy.com/nonce/).
+
 
 ## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
 
