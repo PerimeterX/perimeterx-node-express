@@ -614,13 +614,11 @@ const pxConfig = {
   px_login_credentials_extraction_enabled: true,
   px_login_credentials_extraction: [
     {
-      path: "/login", // login path
-      method: "post", // supported methods: post
-      sentThrough: "body", // supported sentThroughs: body, header, query-param
-      contentType: "json", // supported contentTypes: json, form
-      encoding: "clear-text", // supported encodings: clear-text, url-encode
-      passField: "password", // name of the password field in the request
-      userField: "username" // name of the username field in the request
+      path: "/login", // login path, automatically added to sensitive routes
+      method: "post", // supported values: post
+      sent_through: "body", // supported values: body, header, query-param
+      pass_field: "password", // name of the password field in the request
+      user_field: "username" // name of the username field in the request
     },
     ...
   ],
@@ -629,13 +627,185 @@ const pxConfig = {
 
 ```
 
+It is also possible to define a custom callback to extract the username and password. The function should accept the request object as
+a parameter and return an object with the keys `user` and `pass`. If extraction is unsuccessful, the function should return `null`.
+
+```javascript
+const pxConfig = {
+    ...
+    px_login_credentials_extraction_enabled: true,
+    px_login_credentials_extraction: [{
+        path: "/login", // login path, automatically added to sensitive routes
+        method: "post", // supported values: post
+        callback: (req) => {
+            // custom implementation resulting in variables username and password
+            if (username && password) {
+                return { "user": username, "pass": password };
+            } else {
+                return null;
+            }
+        }
+    }]
+};
+```
+
+### <a name="additional-s2s-activity"></a> Additional S2S Activity
+
+To enhance detection on login credentials extraction endpoints, the following additional information is sent to PerimeterX
+via an `additional_s2s` activity:
+
+* __Response Code__ - The numerical HTTP status code of the response. This is sent automatically.
+* __Login Success__ - A boolean indicating whether the login completed successfully. See the options listed below for how to provide this data.
+* __Raw Username__ - The original username used for the login attempt. In order to report this information, make sure the configuration `px_send_raw_username_on_additional_activity` is set to `true`.
+
+By default, this `additional_s2s` activity is sent automatically. If it is preferable to send this activity manually,
+it's possible to disable automatic sending by configuring the value of `px_automatic_additional_activity_enabled` to `false`.
+
+**Default Value*: true
+
+```javascript
+const pxConfig = {
+    ...
+    px_automatic_additional_activity_enabled: false
+    ...
+}
+```
+
+The activity can then be sent manually by invoking the function `sendAdditionalS2SActivity()`. The function accepts three
+arguments: the original HTTP request, the status code, and a boolean indicating the login successful status.
+
+```javascript
+const perimeterx = require('perimeterx-node-express');
+const pxConfig = {
+    px_app_id: '<APP_ID>',
+    // ...
+};
+pxInstance = perimeterx.new(pxConfig);
+
+app.use(pxInstance.middleware);
+
+app.post('/login', (req, res) => {
+   // login flow resulting in boolean isLoginSuccessful
+    res.status(200).json({ successful: isLoginSuccessful });
+    pxInstance.sendAdditionalS2SActivity(req, res.statusCode, isLoginSuccessful);
+});
+```
+
+#### Login Success Reporting
+
+There are a number of different possible ways to report the success or failure of the login attempt. If left empty, the
+login successful status will always be reported as `false`.
+
+**Default**: Empty
+
+```javascript
+const pxConfig = {
+    ...
+    px_login_successful_reporting_method: 'status' // supported values: status, header, body, custom
+    ...
+}
+```
+
+__Status__
+
+Provide a status or array of statuses that represent a successful login. If a response's status code matches the provided
+value or one of the values in the provided array, the login successful status is set to `true`. Otherwise, it's set to `false`.
+
+> Note: To define a range of statuses, use the `custom` reporting method.
+
+**Default Values**
+
+px_login_successful_status: 200
+
+```javascript
+const pxConfig = {
+    ...
+    px_login_successful_reporting_method: 'status',
+    px_login_successful_status: [200, 202] // number or array of numbers
+    ...
+}
+```
+
+__Header__
+
+Provide a header name and value. If the header exists on the response and matches the provided value, the login successful
+status is set to `true`. If the header is not found on the response, or if the header value does not match the value in the
+configuration, the login successful status is set to `false`.
+
+**Default Values**
+
+px_login_successful_header_name: x-px-login-successful
+
+px_login_successful_header_value: 1
+
+```javascript
+const pxConfig = {
+    ...
+    px_login_successful_reporting_method: 'header',
+    px_login_successful_header_name: 'login-successful',
+    px_login_successful_header_value: 'true'
+    ...
+}
+```
+
+__Body__
+
+Provide a string or regular expression with which to parse the response body. If a match is found, the login successful
+status is set to `true`. If no match is found, the login successful status is set to `false`.
+
+**Default Values**
+
+px_login_successful_body_regex: Empty
+
+```javascript
+const pxConfig = {
+    ...
+    px_login_successful_reporting_method: 'body',
+    px_login_successful_body_regex: 'You logged in successfully!' // string or RegExp
+    ...
+}
+```
+
+__Custom__
+
+Provide a custom callback that returns a boolean indicating if the login was successful.
+
+**Default Values**
+px_login_successful_custom_callback: null
+
+```javascript
+const pxConfig = {
+    ...
+    px_login_successful_reporting_method: 'custom',
+    px_login_successful_custom_callback: (response) => {
+        return response && response.locals && response.locals.isLoginSuccessful;
+    }
+    ...
+}
+```
+
+#### Raw Username
+
+When enabled, the raw username used for logins on login credentials extraction endpoints will be reported to PerimeterX
+if (1) the credentials were identified as compromised, and (2) the login was successful as reported via the property above.
+
+**Default**: false
+
+```javascript
+const pxConfig = {
+    ...
+    px_send_raw_username_on_additional_activity: true
+    ...
+}
+```
+
 ## <a name="cdMiddleware"></a> Code Defender Middleware - cdMiddleware
 
 Code Defender's middleware to handle the enforcement of CSP headers on responses returned to the client.
 The express module is in charge of communicating with PerimeterX to receive and maintain the latest CSP policy for the given appId.
-It also maintain the policy state and invalidates the policy when communication with PerimeterX's Enforcer Data Provider is lost, base on the configuration values (`px_csp_no_updates_max_interval_minutes`, `px_csp_policy_refresh_interval_minutes`).
+It also maintains the policy state and invalidates the policy when communication with PerimeterX's Enforcer Data Provider is lost, base on the configuration values (`px_csp_no_updates_max_interval_minutes`, `px_csp_policy_refresh_interval_minutes`).
 
-It then uses **PerimetrX Node Core** module to enforce the actual functionality adding the necessary CSP header to the response object.
+It then uses **PerimeterX Node Core** module to enforce the actual functionality adding the necessary CSP header to the response object.
 
 usage example:
 ```javascript
