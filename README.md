@@ -656,17 +656,17 @@ via an `additional_s2s` activity:
 
 * __Response Code__ - The numerical HTTP status code of the response. This is sent automatically.
 * __Login Success__ - A boolean indicating whether the login completed successfully. See the options listed below for how to provide this data.
-* __Raw Username__ - The original username used for the login attempt. In order to report this information, make sure the configuration `px_send_raw_username_on_additional_activity` is set to `true`.
+* __Raw Username__ - The original username used for the login attempt. In order to report this information, make sure the configuration `px_send_raw_username_on_additional_s2s_activity` is set to `true`.
 
 By default, this `additional_s2s` activity is sent automatically. If it is preferable to send this activity manually,
-it's possible to disable automatic sending by configuring the value of `px_automatic_additional_activity_enabled` to `false`.
+it's possible to disable automatic sending by configuring the value of `px_automatic_additional_s2s_activity_enabled` to `false`.
 
 **Default Value*: true
 
 ```javascript
 const pxConfig = {
     ...
-    px_automatic_additional_activity_enabled: false
+    px_automatic_additional_s2s_activity_enabled: false
     ...
 }
 ```
@@ -794,7 +794,7 @@ if (1) the credentials were identified as compromised, and (2) the login was suc
 ```javascript
 const pxConfig = {
     ...
-    px_send_raw_username_on_additional_activity: true
+    px_send_raw_username_on_additional_s2s_activity: true
     ...
 }
 ```
