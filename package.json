@@ -30,7 +30,7 @@
     "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
     "dependencies": {
         "cookie-parser": "^1.4.1",
-        "perimeterx-node-core": "^3.0.2",
+        "perimeterx-node-core": "^3.1.2",
         "axios": "^0.21.1"
     },
     "devDependencies": {
