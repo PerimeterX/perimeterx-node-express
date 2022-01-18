@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v7.0.2](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.0.3](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -27,6 +27,7 @@
         -   [Sensitive Headers](#sensitiveHeaders)
         -   [IP Headers](#ipHeaders)
         -   [First Party Enabled](#firstPartyEnabled)
+        -   [CD First Party Enabled](#CDFirstPartyEnabled)
         -   [Custom Request Handler](#customRequestHandler)
         -   [Additional Activity Handler](#additionalActivityHandler)
         -   [Enrich Custom Parameters](#enrichCustomParams)
@@ -334,6 +335,20 @@ A boolean flag to enable/disable first party mode.
 const pxConfig = {
   ...
   px_first_party_enabled: false
+  ...
+};
+```
+
+#### <a name="CDFirstPartyEnabled"></a>CD First Party Enabled
+
+A boolean flag to enable/disable Code Defender first party mode.
+
+**Default:** false
+
+```js
+const pxConfig = {
+  ...
+  px_cd_first_party_enabled: false
   ...
 };
 ```
