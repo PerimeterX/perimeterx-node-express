@@ -1,5 +1,5 @@
 'use strict';
-/** Copyright © 2016 PerimeterX, Inc.
+/** Copyright © 2022 PerimeterX, Inc.
 
  ** Permission is hereby granted, free of charge, to any
  ** person obtaining a copy of this software and associated
