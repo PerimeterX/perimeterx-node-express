@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Support for credentials intelligence protocols `v1` and `multistep_sso`
-- Support for login successful reporting methods `header`, `status`, and `custom`
+- Support for login successful reporting methods `header`, `status`, `body`, and `custom`
 - Support for automatic sending of `additional_s2s` activity
 - Support for manual sending of `additional_s2s` activity via header or API call
 - Support for sending raw username on `additional_s2s` activity
