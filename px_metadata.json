@@ -1,8 +1,9 @@
 {
-    "version": "7.0.3",
+    "version": "7.1.0",
     "supported_features": [
         "additional_activity_handler",
         "advanced_blocking_response",
+        "additional_s2s",
         "batched_activities",
         "block_activity",
         "block_page_captcha",
