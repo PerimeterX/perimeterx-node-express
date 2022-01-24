@@ -614,7 +614,7 @@ const pxConfig = {
   px_login_credentials_extraction_enabled: true,
   px_login_credentials_extraction: [
     {
-      path: "/login", // login path, automatically added to sensitive routes
+      path: "/login", // login path
       method: "post", // supported values: post
       sent_through: "body", // supported values: body, header, query-param
       pass_field: "password", // name of the password field in the request
