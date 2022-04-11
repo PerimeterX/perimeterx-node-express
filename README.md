@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v7.1.1](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.2.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
