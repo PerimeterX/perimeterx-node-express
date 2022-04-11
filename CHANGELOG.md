@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.2.0] - 2022-04-11
+
+### Added
+
+- New block page implementation
+- Support for dynamic cookie signing with IP (requires PXHD)
+- Send PX cookie over risk_api on sensitive routes
+
 ## [7.1.1] - 2022-03-10
 
 ### Added
