@@ -1,9 +1,8 @@
 {
-    "version": "7.2.0",
+    "version": "7.3.0",
     "supported_features": [
         "additional_activity_handler",
         "advanced_blocking_response",
-        "additional_s2s",
         "batched_activities",
         "block_activity",
         "block_page_captcha",
@@ -28,7 +27,7 @@
         "first_party",
         "js_ref",
         "logger",
-        "login_credentials_extraction",
+        "credentials_intelligence",
         "mobile_support",
         "module_enable",
         "module_mode",
