@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.3.0] - 2022-05-2
+
+### Added
+
+- Support for credentials intelligence v2 hashing protocol added and set as default
+
 ## [7.2.0] - 2022-04-11
 
 ### Added
