@@ -1,7 +1,16 @@
-name: Unit Tests
+name: ci
 on: push
 jobs:
-  Test:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run linter
+        run: npm run lint
+  unit-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
