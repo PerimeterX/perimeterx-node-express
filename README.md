@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v7.4.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.5.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -45,6 +45,7 @@
         -   [CSP Policy Refresh Interval](#cspPolicyRefreshIntervalMinutes)
         -   [CSP Invalidate Policy Interval](#cspNoUpdatesMaxIntervalMinutes)
         -   [Login Credentials Extraction](#loginCredentialsExtraction)
+        -   [JWT](#JWT)
 -   [Code Defender Middleware - cdMiddleware](#cdMiddleware)
 -   [Advanced Blocking Response](#advancedBlockingResponse)
 -   [Multiple App Support](#multipleAppSupport)
@@ -646,6 +647,59 @@ const pxConfig = {
             }
         }
     }]
+};
+```
+
+#### <a name="JWT"></a>JWT
+
+Enable the extraction of JWT fields from requests and adding them to the risk, page requested and block activities.
+
+px_jwt_cookie_name
+
+The cookie name that should contain the JWT token.
+
+**Default:** ""
+
+px_jwt_cookie_user_id_field_name
+
+The field name in the JWT object, extracted from the JWT cookie, that contains the user ID to be extracted
+
+**Default:** ""
+
+px_jwt_cookie_additional_field_names
+
+The field names in the JWT object, extracted from the JWT cookie, that should be extracted in addition to the user ID.
+
+**Default:** []
+
+px_jwt_header_name
+
+The header name that should contain the JWT token.
+
+**Default:** ""
+
+px_jwt_header_user_id_field_name
+
+The field name in the JWT object, extracted from the JWT header, that contains the user ID to be extracted
+
+**Default:** ""
+
+px_jwt_header_additional_field_names
+
+The field names in the JWT object, extracted from the JWT header, that should be extracted in addition to the user ID.
+
+**Default:** []
+
+```javascript
+const pxConfig = {
+  ...
+    "px_jwt_cookie_name":  "auth",
+    "px_jwt_cookie_user_id_field_name": "nameID",
+    "px_jwt_cookie_additional_field_names": ["exp", "iss"],
+    "px_jwt_header_name":  "authorization",
+    "px_jwt_header_user_id_field_name": "sub",
+    "px_jwt_header_additional_field_names": ["jti"]
+  ...
 };
 ```
 
