@@ -876,9 +876,9 @@ const pxConfig = {
         };
     
         response.headers = {
-            'Access-Control-Allow-Origin': req.headers['origin'] || '*',
-            'Access-Control-Allow-Methods': req.method,
-            'Access-Control-Allow-Headers': req.headers['access-control-request-headers'],
+            'Access-Control-Allow-Origin': request.headers['origin'] || '*',
+            'Access-Control-Allow-Methods': request.method,
+            'Access-Control-Allow-Headers': request.headers['access-control-request-headers'],
             'Access-Control-Allow-Credentials': 'true',
             'Access-Control-Max-Age': '86400',
         };
@@ -921,10 +921,10 @@ const pxConfig = {
   ...
       px_cors_create_custom_block_response_headers: function(request) { 
             return {
-                'Access-Control-Allow-Origin': 'test_custom',
+                'Access-Control-Allow-Origin':  request.headers['origin'],
                 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                'Access-Control-Allow-Credentials': 'test_custom'
+                'Access-Control-Allow-Credentials': 'true'
             }
         };
   ...
