@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v7.5.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.6.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -14,38 +14,39 @@
 -   [Configuration](#configuration)
     -   [Required Configuration](#requiredConfiguration)
     -   [Optional Configuration](#optionalConfiguration)
-        -   [Module Enabled](#moduleEnabled)
-        -   [Module Mode](#moduleMode)
-        -   [Blocking Score](#blockingScore)
-        -   [Send Page Activities](#sendPageActivities)
-        -   [Send Block Activities](#sendBlockActivities)
-        -   [Logger Severity](#loggerSeverity)
-        -   [Sensitive Routes](#sensitiveRoutes)
-        -   [Enforced Specific Routes](#enforcedSpecificRoutes)
-        -   [Monitored Specific Routes](#monitoredSpecificRoutes)
-        -   [Filter By Route](#filterByRoute)
-        -   [Sensitive Headers](#sensitiveHeaders)
-        -   [IP Headers](#ipHeaders)
-        -   [First Party Enabled](#firstPartyEnabled)
-        -   [CD First Party Enabled](#CDFirstPartyEnabled)
-        -   [Custom Request Handler](#customRequestHandler)
-        -   [Additional Activity Handler](#additionalActivityHandler)
-        -   [Enrich Custom Parameters](#enrichCustomParams)
-        -   [CSS Ref](#cssRef)
-        -   [JS Ref](#jsRef)
-        -   [Custom Logo](#customLogo)
-        -   [Secured PXHD cookie](#securedpxhd)
-        -   [Proxy Support](#proxySupport)
-        -   [Custom Cookie Header](#customCookieHeader)
-        -   [Filter Traffic by User Agent](#filterByUserAgent)
-        -   [Filter Traffic by IP](#filterByIP)
-        -   [Filter Traffic by HTTP Method](#filterByMethod)
-        -   [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
-        -   [CSP Enabled](#cspEnabled)
-        -   [CSP Policy Refresh Interval](#cspPolicyRefreshIntervalMinutes)
-        -   [CSP Invalidate Policy Interval](#cspNoUpdatesMaxIntervalMinutes)
-        -   [Login Credentials Extraction](#loginCredentialsExtraction)
-        -   [JWT](#JWT)
+        - [Module Enabled](#moduleEnabled)
+        - [Module Mode](#moduleMode)
+        - [Blocking Score](#blockingScore)
+        - [Send Page Activities](#sendPageActivities)
+        - [Send Block Activities](#sendBlockActivities)
+        - [Logger Severity](#loggerSeverity)
+        - [Sensitive Routes](#sensitiveRoutes)
+        - [Enforced Specific Routes](#enforcedSpecificRoutes)
+        - [Monitored Specific Routes](#monitoredSpecificRoutes)
+        - [Filter By Route](#filterByRoute)
+        - [Sensitive Headers](#sensitiveHeaders)
+        - [IP Headers](#ipHeaders)
+        - [First Party Enabled](#firstPartyEnabled)
+        - [CD First Party Enabled](#CDFirstPartyEnabled)
+        - [Custom Request Handler](#customRequestHandler)
+        - [Additional Activity Handler](#additionalActivityHandler)
+        - [Enrich Custom Parameters](#enrichCustomParams)
+        - [CSS Ref](#cssRef)
+        - [JS Ref](#jsRef)
+        - [Custom Logo](#customLogo)
+        - [Secured PXHD cookie](#securedpxhd)
+        - [Proxy Support](#proxySupport)
+        - [Custom Cookie Header](#customCookieHeader)
+        - [Filter Traffic by User Agent](#filterByUserAgent)
+        - [Filter Traffic by IP](#filterByIP)
+        - [Filter Traffic by HTTP Method](#filterByMethod)
+        - [Test Block Flow on Monitoring Mode](#bypassMonitorHeader)
+        - [CSP Enabled](#cspEnabled)
+        - [CSP Policy Refresh Interval](#cspPolicyRefreshIntervalMinutes)
+        - [CSP Invalidate Policy Interval](#cspNoUpdatesMaxIntervalMinutes)
+        - [Login Credentials Extraction](#loginCredentialsExtraction)
+        - [JWT](#JWT)
+        - [CORS support](#px_cors_support)
 -   [Code Defender Middleware - cdMiddleware](#cdMiddleware)
 -   [Advanced Blocking Response](#advancedBlockingResponse)
 -   [Multiple App Support](#multipleAppSupport)
@@ -853,6 +854,85 @@ const pxConfig = {
 }
 ```
 
+#### <a name="px_cors_support"></a>CORS Support
+
+Enable CORS support for the enforcer. This will allow the enforcer to filter out preflight requests and to add CORS headers to block responses.
+This will ensure responses are not blocked by the browser.
+CORS support is enabled by default.
+
+`px_cors_support_enabled` - Enable CORS support for the enforcer.
+
+**Default:** `false`
+
+`px_cors_custom_preflight_handler` - Custom preflight handler. This function will be called for preflight requests and returns response that will return to the client.
+
+```js
+// Example
+const pxConfig = { 
+    ...
+    px_cors_custom_preflight_handler: function(request) {
+        const response = {
+            status: '204',
+        };
+    
+        response.headers = {
+            'Access-Control-Allow-Origin': request.headers['origin'] || '*',
+            'Access-Control-Allow-Methods': request.method,
+            'Access-Control-Allow-Headers': request.headers['access-control-request-headers'],
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Max-Age': '86400',
+        };
+    
+        return response;
+    };
+}
+```
+
+`px_cors_preflight_request_filter_enabled` - Filter out preflight requests from validation flow.
+
+**Default:** false
+
+Enable CORS support for the enforcer:
+``` JS
+const pxConfig = {
+  ...
+  px_cors_support_enabled: true,
+  px_cors_preflight_request_filter_enabled: true,
+  ...
+};
+```
+
+The default CORS policy when blocking a request is as follows:
+``` JS
+Access-Control-Allow-Origin: request origin
+Access-Control-Allow-Credentials: true
+```
+
+The default CORS policy can be overridden by setting the following properties:
+
+`px_cors_create_custom_block_response_headers`
+
+Synchronous function supplied by the customer which gets the original request and returns an array of custom headers to be added to the block response.
+Return type should be an array of objects as follows:
+
+```js
+// Example
+const pxConfig = {
+  ...
+      px_cors_create_custom_block_response_headers: function(request) { 
+            return {
+                'Access-Control-Allow-Origin':  request.headers['origin'],
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                'Access-Control-Allow-Credentials': 'true'
+            }
+        };
+  ...
+};
+```
+
+**Default:** `null`
+
 ## <a name="cdMiddleware"></a> Code Defender Middleware - cdMiddleware
 
 Code Defender's middleware to handle the enforcement of CSP headers on responses returned to the client.
@@ -972,7 +1052,7 @@ server.use('/app2', app1Router);
 server.listen(8081, () => {
     console.log('server started');
 });
-```
+``
 
 ## <a name=“additionalInformation”></a> Additional Information
 
