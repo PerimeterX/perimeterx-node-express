@@ -1,5 +1,5 @@
 {
-    "version": "7.5.0",
+    "version": "7.6.0",
     "supported_features": [
         "additional_activity_handler",
         "advanced_blocking_response",
@@ -11,6 +11,7 @@
         "block_page_js_challenge",
         "bypass_monitor_header",
         "client_ip_extraction",
+        "cors_support",
         "csp_support",
         "css_ref",
         "cookie_v3",
