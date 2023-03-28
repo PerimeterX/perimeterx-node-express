@@ -5,7 +5,7 @@
 
 # [PerimeterX](http://www.perimeterx.com) Express.js Middleware
 
-> Latest stable version: [v7.6.0](https://www.npmjs.com/package/perimeterx-node-express)
+> Latest stable version: [v7.7.0](https://www.npmjs.com/package/perimeterx-node-express)
 
 ## Table of Contents
 
@@ -930,6 +930,25 @@ const pxConfig = {
   ...
 };
 ```
+
+#### <a name="px_custom_is_sensitive_request"></a>Custom Is Sensitive Request
+Allows writing your own logic to decide whether the request is sensitive.
+The custom sensitive request function gets the request object as a parameter and should return true, otherwise, return false. Throwing an exception is equivalent to `false`.
+
+**Default**: Empty
+
+```javascript
+const pxConfig = {
+    ...
+        px_custom_is_sensitive_request: function(req) {
+            if (req.method === 'GET' && req.body && req.body.test) {
+                return true;
+            }
+            return false;
+        }
+    ...
+```
+
 
 **Default:** `null`
 
