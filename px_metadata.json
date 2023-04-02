@@ -1,5 +1,5 @@
 {
-    "version": "7.6.0",
+    "version": "7.7.0",
     "supported_features": [
         "additional_activity_handler",
         "advanced_blocking_response",
@@ -19,6 +19,7 @@
         "custom_logo",
         "custom_parameters",
         "custom_proxy",
+        "custom_sensitive_request",
         "enforced_routes",
         "filter_by_route",
         "filter_by_http_method",
