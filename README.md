@@ -941,7 +941,7 @@ The custom sensitive request function gets the request object as a parameter and
 const pxConfig = {
     ...
         px_custom_is_sensitive_request: function(req) {
-            if (req.method === 'GET' && req.body && req.body.test) {
+            if (req.method === 'POST' && req.body && req.body.test) {
                 return true;
             }
             return false;
