@@ -10,7 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Custom cookie header is processed in addition to (not instead of) default cookie header 
-- Custom cookie header default value has been set to x-px-cookies 
+- Custom cookie header default value has been set to x-px-cookies
+
+### Added
+
 - Added PXHD from risk response to the async activities
 
 ## [7.7.1] - 2023-03-28
