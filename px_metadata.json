@@ -1,5 +1,5 @@
 {
-    "version": "7.7.1",
+    "version": "7.8.0",
     "supported_features": [
         "additional_activity_handler",
         "advanced_blocking_response",
