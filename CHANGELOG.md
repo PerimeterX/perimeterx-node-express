@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.8.0] - 2023-05-16
+
+### Changed
+
+- Custom cookie header is processed in addition to (not instead of) default cookie header 
+- Custom cookie header default value has been set to x-px-cookies 
+- Added PXHD from risk response to the async activities
+
 ## [7.7.1] - 2023-03-28
 
 ### Changed
