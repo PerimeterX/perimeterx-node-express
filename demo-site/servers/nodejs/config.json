@@ -1,0 +1,24 @@
+{
+  "site_config": {
+    "public_output_dir": "public",
+    "local_enforcer_dir": "/Users/danbezalel/workspace/enforcers/perimeterx-node-express",
+    "local_core_enforcer_dir": "/Users/danbezalel/workspace/enforcers/perimeterx-node-core",
+    "port": 3000
+  },
+  "enforcer_credentials": {
+    "px_app_id": "PXnEpdw6lS",
+    "px_auth_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhdCI6MTY1NDAwMTUwOSwic3ViIjoiUFhuRXBkdzZsUyIsImp0aSI6ImM2NmYwMjQ0LTBmMmUtNDk0Ni05YmEyLWM1OTNjY2Q0ZmRkYyJ9.4B7C90yuRTEjiisiU2J7e4G-arJw0xZHsxggxaLf_C0",
+    "px_cookie_secret": "UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd"
+  },
+  "enforcer_config_override": {
+    "px_blocking_score": 70,
+    "px_module_mode": "active_blocking",
+    "px_s2s_timeout": 1000,
+    "px_user_agent_max_length": 8528,
+    "px_risk_cookie_max_length": 2048,
+    "px_risk_cookie_max_iterations": 5000,
+    "px_risk_cookie_min_iterations": 1,
+    "px_custom_cookie_header": "x-px-cookies",
+    "px_backend_url": "https://dan-bez-test.ngrok.io"
+  }
+}
