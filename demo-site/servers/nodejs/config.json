@@ -1,7 +1,7 @@
 {
   "site_config": {
     "public_output_dir": "public",
-    "local_enforcer_dir": "/Users/danbezalel/workspace/enforcers/perimeterx-node-express",
+    "local_enforcer_dir": "../../",
     "local_core_enforcer_dir": "/Users/danbezalel/workspace/enforcers/perimeterx-node-core",
     "port": 3000
   },
@@ -18,7 +18,6 @@
     "px_risk_cookie_max_length": 2048,
     "px_risk_cookie_max_iterations": 5000,
     "px_risk_cookie_min_iterations": 1,
-    "px_custom_cookie_header": "x-px-cookies",
-    "px_backend_url": "https://dan-bez-test.ngrok.io"
+    "px_custom_cookie_header": "x-px-cookies"
   }
 }
