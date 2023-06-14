@@ -41,6 +41,8 @@ jobs:
     - build_sample_site_image
 
     steps:
+      - name: build cluster
+        uses: actions/checkout@v2
       - run: echo "💡 Building Cluster"
       - run: ls -l
       - run: ./ci_files/build_cluster.sh
