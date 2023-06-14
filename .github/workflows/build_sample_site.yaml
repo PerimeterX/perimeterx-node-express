@@ -1,12 +1,10 @@
 name: E2E Build
 
 on:
-  pull_request:
-    types:
-      - opened
+  pull_request
 
 jobs:
-  build:
+  build_sample_site_image:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,14 +20,19 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
 
-      - name: Clone private repository
+  clone_helm_repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone helm charts repo
         uses: actions/checkout@v2
         with:
           repository: PerimeterX/connect-helm-charts
           token: ${{ secrets.CONNECT_PULL_TOKEN }}
           ref: main
-          path: ./charts
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+          path: ./helm_charts
+      - run: echo "💡 The PerimeterX/connect-helm-charts repository has been cloned to the runner."
+      - run: echo "💡 Building Cluster"
+      - run: ./ci_files/build_cluster.sh
+
+
