@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - run: echo "💡 Building Cluster"
-      - run: pwd && ls -l
+      - run: ls -l
       - run: ./ci_files/build_cluster.sh
 
 
