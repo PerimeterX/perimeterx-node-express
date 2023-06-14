@@ -15,11 +15,10 @@ jobs:
           repository: PerimeterX/connect-helm-charts
           token: ${{ secrets.CONNECT_PULL_TOKEN }}
           ref: main
-          path: ./helm_charts
+          path: .
 
       - name: build local cluster
         uses: actions/checkout@v2
-      - run: echo "💡 Building Cluster"
       - run: ./ci_files/build_cluster.sh
 
       - name: Set up Docker
@@ -39,6 +38,11 @@ jobs:
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
           sudo apt-get update
           sudo apt-get install helm
+
+      - name: deploy mock collector
+        run: |
+          helm install sample-site ./connect-helm-charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0
+      - run: helm list
 
 
 
