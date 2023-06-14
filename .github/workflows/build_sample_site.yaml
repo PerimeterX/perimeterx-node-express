@@ -22,6 +22,7 @@ jobs:
 
   clone_helm_repo:
     runs-on: ubuntu-latest
+    needs: build_sample_site_image
 
     steps:
       - name: Clone helm charts repo
@@ -35,6 +36,9 @@ jobs:
 
   build_cluster:
     runs-on: ubuntu-latest
+    needs:
+    - clone_helm_repo
+    - build_sample_site_image
 
     steps:
       - run: echo "💡 Building Cluster"
