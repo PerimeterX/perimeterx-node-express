@@ -32,7 +32,13 @@ jobs:
           ref: main
           path: ./helm_charts
       - run: echo "💡 The PerimeterX/connect-helm-charts repository has been cloned to the runner."
+
+  build_cluster:
+    runs-on: ubuntu-latest
+
+    steps:
       - run: echo "💡 Building Cluster"
+      - run: pwd && ls -l
       - run: ./ci_files/build_cluster.sh
 
 
