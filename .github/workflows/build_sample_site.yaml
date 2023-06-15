@@ -39,8 +39,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install helm
 
-      - name: deploy mock collector
-        run: |
+      - name: deploy sample site
+        run: ls -l
+      - run: |
           helm install sample-site ./connect-helm-charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0
       - run: helm list
 
