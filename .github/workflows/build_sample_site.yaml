@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout enforcer repo
         uses: actions/checkout@v2
 
       - name: Clone helm charts repo
