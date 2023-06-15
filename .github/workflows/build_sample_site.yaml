@@ -43,9 +43,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install helm
 
+      - name: print ls
+        run: ls -l
+
       - name: deploy sample site
         run: |
-          helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0
+          helm install sample-site deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0
       - run: helm list
 
 
