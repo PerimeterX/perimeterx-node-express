@@ -48,11 +48,18 @@ jobs:
       - name: deploy sample site
         run: |
           helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --wait
-      - run: helm list
 
-      - name: test deploy
-        run: kubectl get deployments -o yaml
-
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCR_SA_KEY }}'
+      - name: pull mock collector image
+        run: |
+          docker pull gcr.io/px-docker-repo/connecteam/mock-collector:1.0.2 && \
+          docker tag gcr.io/px-docker-repo/connecteam/mock-collector:1.0.2 localhost:5001/mock-collector:1.0.2 && \
+          docker push localhost:5001/mock-collector:1.0.2 && \
+          docker images
 
 
 
