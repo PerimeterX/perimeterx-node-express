@@ -52,7 +52,7 @@ jobs:
 
       - name: test deploy
         run: kubectl get pods
-      - run: kubectl describe pod sample-site
+      - run:  kubectl get events --all-namespaces  --sort-by='.metadata.creationTimestamp'
 
 
 
