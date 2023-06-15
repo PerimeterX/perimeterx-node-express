@@ -15,7 +15,7 @@ jobs:
           repository: PerimeterX/connect-helm-charts
           token: ${{ secrets.CONNECT_PULL_TOKEN }}
           ref: main
-          path: .
+          path: ./deploy_charts
 
       - name: build local cluster
         uses: actions/checkout@v2
