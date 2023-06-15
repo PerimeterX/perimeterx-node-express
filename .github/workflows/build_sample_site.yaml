@@ -52,6 +52,7 @@ jobs:
 
       - name: test deploy
         run: kubectl get pods
+      - run: kubectl describe pod sample-site
 
 
 
