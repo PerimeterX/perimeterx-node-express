@@ -54,7 +54,7 @@ jobs:
         with:
           version: '342.0.0'
           service_account_key: ${{ secrets.GCR_SA_KEY }}
-          project_id: gcr.io/px-docker-repo
+          project_id: gcr.io/px-docker-repo/
 
       - name: Configure Docker credentials
         run: echo ${{ secrets.GCR_SA_KEY }} | gcloud auth activate-service-account --key-file=-
