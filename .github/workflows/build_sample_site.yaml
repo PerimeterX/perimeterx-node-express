@@ -45,7 +45,7 @@ jobs:
 
       - name: deploy sample site
         run: |
-          helm install ./deploy_charts/connect-helm-charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0
+          helm install sample-site ./deploy_charts/connect-helm-charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0
       - run: helm list
 
 
