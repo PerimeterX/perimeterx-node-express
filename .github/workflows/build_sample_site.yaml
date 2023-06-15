@@ -19,7 +19,7 @@ jobs:
           token: ${{ secrets.CONNECT_PULL_TOKEN }}
           ref: main
           path: ./deploy_charts
-      - run: pwd && ls -l
+      - run: ls -l deploy_charts
 
       - name: build local cluster
         uses: actions/checkout@v2
