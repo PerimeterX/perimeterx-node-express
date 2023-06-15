@@ -52,7 +52,7 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.3.0
         with:
-          version: '343.0.0'
+          version: '342.0.0'
           service_account_key: ${{ secrets.GCR_SA_KEY }}
           project_id: gcr.io/px-docker-repo
 
