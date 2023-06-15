@@ -43,6 +43,8 @@ jobs:
           ref: main
           path: ./deploy_charts
 
+
+      - run: docker images
       - name: deploy sample site
         run: |
           helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0
