@@ -71,7 +71,7 @@ jobs:
 
       - run: kubectl get pods
 
-      - name: pull mock collector image
+      - name: pull enforcer tests image
         run: |
           docker pull gcr.io/px-docker-repo/connecteam/enforcer-specs-tests:1.0.0 && \
           docker tag gcr.io/px-docker-repo/connecteam/enforcer-specs-tests:1.0.0 localhost:5001/enforcer-tests:1.0.0 && \
@@ -86,7 +86,7 @@ jobs:
           --set siteURL="http://sample-site:3000" \
           --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd \
           --wait
-
+      - run: kubectl describe pod enforcer-tests
       - run: kubectl get pods
 
 
