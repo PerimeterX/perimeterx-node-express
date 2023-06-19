@@ -46,7 +46,7 @@ jobs:
 
       - name: deploy sample site
         run: |
-          helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --set collectorURL=http://mock-collector:3001 --wait
+          helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --set collectorURL=http://mock-collector-mock-collector:3001 --wait
 
       - name: Set up Google Cloud SDK
         id: 'auth'
@@ -81,9 +81,9 @@ jobs:
       - name: run enforcer tests
         run: |
           helm install enforcer-spec-tests ./deploy_charts/charts/enforcer-spec-tests --set image.repository=localhost:5001/enforcer-spec-tests --set image.tag=1.0.0 --set imagePullPolicy=Always \
-          --set internalMockCollectorURL=http://mock-collector:3001  \
+          --set internalMockCollectorURL=http://mock-collector-mock-collector:3001  \
           --set appID=PXnEpdw6lS \
-          --set siteURL=http://sample-site:3000 \
+          --set siteURL=http://sample-site-sample-site:3000 \
           --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd \
           --wait --wait-for-jobs --timeout 10m
 
