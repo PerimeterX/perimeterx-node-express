@@ -44,7 +44,6 @@ jobs:
           path: ./deploy_charts
 
 
-      - run: docker images
       - name: deploy sample site
         run: |
           helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --wait
@@ -65,6 +64,12 @@ jobs:
           docker tag gcr.io/px-docker-repo/connecteam/mock-collector:1.0.2 localhost:5001/mock-collector:1.0.2 && \
           docker push localhost:5001/mock-collector:1.0.2 && \
           docker images
+
+      - name: deploy mock collector
+        run: |
+          helm install mock-collector ./deploy_charts/charts/mock-collector --set image.name=localhost:5001/mock-collector --set image.tag=1.0.2 --set imagePullPolicy=Always --wait
+
+      - run: kubectl get pods
 
 
 
