@@ -50,7 +50,7 @@ jobs:
           helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --wait
 
       - name: Set up Google Cloud SDK
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud
         with:
           service_account_key: ${{ secrets.GCR_SA_KEY }}
           project_id: gcr.io/px-docker-repo/
