@@ -67,7 +67,7 @@ jobs:
 
       - name: deploy mock collector
         run: |
-          helm install mock-collector ./deploy_charts/charts/mock-collector --set image.name=localhost:5001/mock-collector --set image.tag=1.0.2 --set imagePullPolicy=Always --wait
+          helm install mock-collector ./deploy_charts/charts/mock-collector --set image.repository=localhost:5001/mock-collector --set image.tag=1.0.2 --set imagePullPolicy=Always --wait
 
       - run: kubectl get pods
 
