@@ -46,7 +46,7 @@ jobs:
 
       - name: deploy sample site
         run: |
-          helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --wait
+          helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --set collectorURL="http://mock-collector:3001" --wait
 
       - name: Set up Google Cloud SDK
         id: 'auth'
