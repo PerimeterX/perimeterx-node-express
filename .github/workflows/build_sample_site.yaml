@@ -85,10 +85,10 @@ jobs:
           --set appID=PXnEpdw6lS \
           --set siteURL="http://sample-site:3000" \
           --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd \
-          --wait --wait-for-jobs
+          --wait --wait-for-jobs --timeout 10m
 
-      - run: kubectl get pods
-      - run: kubectl describe pod enforcer-spec-tests
+      - name: get tests results
+        run: kubectl logs job/enforcer-spec-tests
 
 
 
