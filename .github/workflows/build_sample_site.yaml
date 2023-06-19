@@ -50,14 +50,15 @@ jobs:
           helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --wait
 
       - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.3.0
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          version: '342.0.0'
           service_account_key: ${{ secrets.GCR_SA_KEY }}
           project_id: gcr.io/px-docker-repo/
+          export_default_credentials: true
 
       - name: Configure Docker credentials
-        run: echo ${{ secrets.GCR_SA_KEY }} | gcloud auth activate-service-account --key-file=-
+        run: |
+          gcloud auth configure-docker -q
 
       - name: pull mock collector image
         run: |
