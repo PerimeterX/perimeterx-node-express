@@ -88,7 +88,7 @@ jobs:
           --wait
 
       - run: kubectl get pods
-      - run: kubectl describe pod enforcer-tests
+      - run: kubectl describe pod enforcer-spec-tests
 
 
 
