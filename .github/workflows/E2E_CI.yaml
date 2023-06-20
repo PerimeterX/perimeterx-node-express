@@ -7,6 +7,7 @@ jobs:
 
   CI:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
 
@@ -84,8 +85,12 @@ jobs:
           --set internalMockCollectorURL=http://mock-collector-mock-collector:3001  \
           --set appID=PXnEpdw6lS \
           --set siteURL=http://sample-site-sample-site:3000 \
-          --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd \
-          --wait --wait-for-jobs --timeout 1h
+          --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd
+
+      - name: wait until test is over
+        run: ./ci_files/wait-for-job.sh
+        env:
+          JOB_NAME: enforcer-spec-tests
 
       - name: get tests results
         if: ${{ failure() }}
