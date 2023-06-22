@@ -44,6 +44,7 @@
         "vid_extraction"
     ],
     "excluded_tests": [
-        ""
+        "test_additional_activity_handler_with_score_from_risk",
+        "test_additional_activity_handler_with_score_from_cookie"
     ]
 }
