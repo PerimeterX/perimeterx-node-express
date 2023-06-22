@@ -19,7 +19,7 @@ jobs:
           node-version: '18.x'
       - name: extract supported features
         id: supported-features
-        run:  echo "value=$(node -p -e "require('./px_metadata.json').supported_features?.join('\\\\,') || ''")" >> "$GITHUB_OUTPUT"
+        run:  echo "value=$(node -p -e "require('./px_metadata.json').supported_features?.join(' or ') || ''")" >> "$GITHUB_OUTPUT"
 
 
   CI:
