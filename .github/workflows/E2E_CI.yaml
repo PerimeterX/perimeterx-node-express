@@ -104,7 +104,9 @@ jobs:
           --set internalMockCollectorURL=http://mock-collector-mock-collector:3001  \
           --set appID=PXnEpdw6lS \
           --set siteURL=http://sample-site-sample-site:3000 \
-          --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd
+          --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd \
+          --set supported_features=${{ needs.extract_metadata.outputs.supported-features }} \
+          --set-file enforcerMetadataContent=./px_metadata.json
 
       - name: wait until test is over
         run: ./ci_files/wait-for-job.sh
