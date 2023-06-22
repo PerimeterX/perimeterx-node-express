@@ -42,5 +42,8 @@
         "sensitive_headers",
         "telemetry_command",
         "vid_extraction"
+    ],
+    "excluded_tests": [
+        ""
     ]
 }

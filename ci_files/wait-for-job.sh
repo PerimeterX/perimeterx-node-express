@@ -23,7 +23,7 @@ fi
 while true;
 do
   echo "checking for success"
-  kubectl wait --for=condition=complete -n $ns job/$job --timeout=0s
+  kubectl wait --for=condition=complete -n $ns job/$job --timeout=0s >> /dev/null 2>&1
   success=$?
   if [ $success -eq 0 ]
   then
@@ -31,7 +31,7 @@ do
   fi
   
   echo "checking for failure"
-  kubectl wait --for=condition=failed -n $ns job/$job --timeout=0s 
+  kubectl wait --for=condition=failed -n $ns job/$job --timeout=0s >> /dev/null 2>&1
   fail=$?
   if [ $fail -eq 0 ]
   then

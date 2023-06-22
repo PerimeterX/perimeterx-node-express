@@ -5,9 +5,28 @@ on:
 
 jobs:
 
+  extract_metadata:
+    runs-on: ubuntu-latest
+    name: Extract supported_features
+    outputs:
+      supported-features: ${{ steps.supported_features.outputs.value }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: extract supported features
+        id: supported-features
+        run:  echo "value=$(node -p -e "require('./px_metadata.json').supported_features?.join(',') || ''")" >> "$GITHUB_OUTPUT"
+
+
   CI:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    needs:
+      - extract_metadata
 
     steps:
 
@@ -74,18 +93,20 @@ jobs:
 
       - name: pull enforcer tests image
         run: |
-          docker pull gcr.io/px-docker-repo/connecteam/enforcer-specs-tests:1.0.0 && \
-          docker tag gcr.io/px-docker-repo/connecteam/enforcer-specs-tests:1.0.0 localhost:5001/enforcer-spec-tests:1.0.0 && \
-          docker push localhost:5001/enforcer-spec-tests:1.0.0 && \
+          docker pull gcr.io/px-docker-repo/connecteam/enforcer-specs-tests:1.1.0 && \
+          docker tag gcr.io/px-docker-repo/connecteam/enforcer-specs-tests:1.1.0 localhost:5001/enforcer-spec-tests:1.1.0 && \
+          docker push localhost:5001/enforcer-spec-tests:1.1.0 && \
           docker images
 
       - name: run enforcer tests
         run: |
-          helm install enforcer-spec-tests ./deploy_charts/charts/enforcer-spec-tests --set image.repository=localhost:5001/enforcer-spec-tests --set image.tag=1.0.0 --set imagePullPolicy=Always \
+          helm install enforcer-spec-tests ./deploy_charts/charts/enforcer-spec-tests --set image.repository=localhost:5001/enforcer-spec-tests --set image.tag=1.1.0 --set imagePullPolicy=Always \
           --set internalMockCollectorURL=http://mock-collector-mock-collector:3001  \
           --set appID=PXnEpdw6lS \
           --set siteURL=http://sample-site-sample-site:3000 \
-          --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd
+          --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd \
+          --set supported_features=${{ needs.extract_metadata.outputs.supported-features }} \
+          --set-file enforcerMetadataContent=./px_metadata.json
 
       - name: wait until test is over
         run: ./ci_files/wait-for-job.sh
@@ -98,6 +119,3 @@ jobs:
 
       - name: get tests results
         run: kubectl logs job/enforcer-spec-tests
-
-
-
