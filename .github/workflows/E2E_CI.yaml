@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Extract supported_features
     outputs:
-      supported-features: ${{ steps.supported_features.outputs.value }}
+      supported-features: ${{ steps.supported-features.outputs.value }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
