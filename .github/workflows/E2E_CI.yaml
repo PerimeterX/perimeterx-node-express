@@ -105,7 +105,7 @@ jobs:
           --set appID=PXnEpdw6lS \
           --set siteURL=http://sample-site-sample-site:3000 \
           --set cookieSecret=UqJErUvmA1o6MBQaQTMeKsixzImgVZsEVKCQZDXvvS0AVLmE9n6XwnUEOOGVPNAd \
-          --set supported_features=${{ needs.extract_metadata.outputs.supported-features }} \
+          --set supportedFeatures=${{ needs.extract_metadata.outputs.supported-features }} \
           --set-file enforcerMetadataContent=./px_metadata.json
 
       - name: wait until test is over
