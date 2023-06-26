@@ -2,12 +2,12 @@
   "site_config": {
     "public_output_dir": "public",
     "local_enforcer_dir": "../../",
-    "local_core_enforcer_dir": "/Users/danbezalel/workspace/enforcers/perimeterx-node-core",
+    "local_core_enforcer_dir": "",
     "port": 3000
   },
   "enforcer_credentials": {
     "px_app_id": "PXnEpdw6lS",
-    "px_auth_token": "${{ secrets.TEST_AUTH_TOKEN }}",
+    "px_auth_token": "",
     "px_cookie_secret": ""
   },
   "enforcer_config_override": {
