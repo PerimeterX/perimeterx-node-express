@@ -1,0 +1,12 @@
+{
+    "name": "test-endpoints-utils",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cookie-parser": "^1.4.3",
+        "express": "^4.14.0"
+    },
+    "devDependencies": {}
+}
