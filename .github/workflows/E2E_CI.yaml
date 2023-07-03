@@ -32,7 +32,7 @@ jobs:
 
       - name: build local cluster
         uses: actions/checkout@v2
-      - run: ./ci_files/build_cluster.sh
+        run: ./ci_files/build_cluster.sh
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
@@ -50,23 +50,37 @@ jobs:
           sudo apt-get install apt-transport-https --yes
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
           sudo apt-get update
-          sudo apt-get install helm
+          sudo apt-get install helm=3.12.1-1
 
-      - name: Checkout enforcer repo
-        uses: actions/checkout@v2
-
-      - name: Clone helm charts repo
+      - name: Clone helm charts repo - mock-collector
         uses: actions/checkout@v2
         with:
           repository: PerimeterX/connect-helm-charts
           token: ${{ secrets.CONNECT_PULL_TOKEN }}
-          ref: main
-          path: ./deploy_charts
+          ref: mock-collector-0.1.0
+          path: ./deploy_charts/mock-collector
+
+      - name: Clone helm charts repo - enforcer-tests
+        uses: actions/checkout@v2
+        with:
+          repository: PerimeterX/connect-helm-charts
+          token: ${{ secrets.CONNECT_PULL_TOKEN }}
+          ref:  enforcer-spec-tests-0.6.0
+          path: ./deploy_charts/enforcer-spec-tests
+
+
+      - name: Clone helm charts repo - sample-site
+        uses: actions/checkout@v2
+        with:
+          repository: PerimeterX/connect-helm-charts
+          token: ${{ secrets.CONNECT_PULL_TOKEN }}
+          ref: sample-site-0.1.0
+          path: ./deploy_charts/sample-site
 
 
       - name: deploy sample site
         run: |
-          helm install sample-site ./deploy_charts/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --set collectorURL=http://mock-collector-mock-collector:3001 --wait
+          helm install sample-site ./deploy_charts/sample-site/charts/sample-site --set image.name=localhost:5001/node-sample-site --set image.tag=1.0.0 --set imagePullPolicy=Always --set collectorURL=http://mock-collector-mock-collector:3001 --wait
 
       - name: Set up Google Cloud SDK
         id: 'auth'
@@ -87,7 +101,7 @@ jobs:
 
       - name: deploy mock collector
         run: |
-          helm install mock-collector ./deploy_charts/charts/mock-collector --set image.repository=localhost:5001/mock-collector --set image.tag=1.0.2 --set imagePullPolicy=Always --wait
+          helm install mock-collector ./deploy_charts/mock-collector/charts/mock-collector --set image.repository=localhost:5001/mock-collector --set image.tag=1.0.2 --set imagePullPolicy=Always --wait
 
       - run: kubectl get pods
 
@@ -100,7 +114,7 @@ jobs:
 
       - name: run enforcer tests
         run: |
-          helm install enforcer-spec-tests ./deploy_charts/charts/enforcer-spec-tests --set image.repository=localhost:5001/enforcer-spec-tests --set image.tag=1.1.0 --set imagePullPolicy=Always \
+          helm install enforcer-spec-tests ./deploy_charts/enforcer-spec-tests/charts/enforcer-spec-tests --set image.repository=localhost:5001/enforcer-spec-tests --set image.tag=1.1.0 --set imagePullPolicy=Always \
           --set internalMockCollectorURL=http://mock-collector-mock-collector:3001  \
           --set appID=PXnEpdw6lS \
           --set siteURL=http://sample-site-sample-site:3000 \
@@ -114,8 +128,5 @@ jobs:
           JOB_NAME: enforcer-spec-tests
 
       - name: get tests results
-        if: ${{ failure() }}
-        run: kubectl logs job/enforcer-spec-tests
-
-      - name: get tests results
+        if: ${{ always() }}
         run: kubectl logs job/enforcer-spec-tests
