@@ -30,8 +30,10 @@ jobs:
 
     steps:
 
-      - name: build local cluster
+      - name: Checkout Repo
         uses: actions/checkout@v2
+
+      - name: Build local cluster
         run: ./ci_files/build_cluster.sh
 
       - name: Set up Docker
