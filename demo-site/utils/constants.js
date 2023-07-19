@@ -4,7 +4,7 @@ const path = require('path');
 
 const JSON_SPACING = 4;
 
-const SERVER_CONFIG_FILE_NAME = 'config.json';
+const SERVER_CONFIG_FILE_NAME = 'px_config.json';
 const SERVER_CONFIG_INC_FILE_NAME = "config.inc.json";
 const PX_ENFORCER_CONFIG_FILE_NAME = 'px_config.json';
 
