@@ -10,8 +10,6 @@ COPY ./demo-site/servers/nodejs/package.json servers/nodejs/package.json
 RUN cd servers/nodejs && npm install
 COPY ./demo-site/servers/nodejs servers/nodejs
 
-RUN node scripts/create_static_files.js
-
 WORKDIR /workspace/servers/nodejs
 
 COPY ./ perimeterx-node-express
