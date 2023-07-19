@@ -3,7 +3,6 @@ FROM node:16-slim
 
 WORKDIR /workspace
 COPY ./demo-site/shared_config.json .
-COPY ./demo-site/scripts scripts
 COPY ./demo-site/templates templates
 COPY ./demo-site/utils utils
 COPY ./demo-site/servers/nodejs/package.json servers/nodejs/package.json
