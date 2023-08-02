@@ -48,7 +48,7 @@
         - [JWT](#JWT)
         - [CORS support](#px_cors_support)
 -   [Code Defender Middleware - cdMiddleware](#cdMiddleware)
--   [Advanced Blocking Response](#advancedBlockingResponse)
+-   [Advanced Blocking EnforcerResponse](#advancedBlockingResponse)
 -   [Multiple App Support](#multipleAppSupport)
 -   [Additional Information](#additionalInformation)
 
@@ -984,9 +984,9 @@ perimeterx.addNonce(response, 'rAnd0mNon6e');
 > For further explanation, refer to the official documentation of [CSP nonce](https://content-security-policy.com/nonce/).
 
 
-## <a name="advancedBlockingResponse"></a> Advanced Blocking Response
+## <a name="advancedBlockingResponse"></a> Advanced Blocking EnforcerResponse
 
-In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking Response returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking Response occurs when a request contains the _Accept_ header with the value of `application/json`. A sample JSON response appears as follows:
+In special cases, (such as XHR post requests) a full Captcha page render might not be an option. In such cases, using the Advanced Blocking EnforcerResponse returns a JSON object continaing all the information needed to render your own Captcha challenge implementation, be it a popup modal, a section on the page, etc. The Advanced Blocking EnforcerResponse occurs when a request contains the _Accept_ header with the value of `application/json`. A sample JSON response appears as follows:
 
 ```javascript
 {

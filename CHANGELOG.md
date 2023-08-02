@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.0.0] - YYYY-MM-DD
+
+
 ## [7.8.0] - 2023-05-16
 
 ### Changed
@@ -230,7 +233,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 -   Support for loading configuration from a file.
--   Advanced Blocking Response
+-   Advanced Blocking EnforcerResponse
 
 ### Changed
 
@@ -311,7 +314,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
--   Added support for Advanced Blocking Response
+-   Added support for Advanced Blocking EnforcerResponse
 
 ## [3.2.1] - 2018-02-28
 
