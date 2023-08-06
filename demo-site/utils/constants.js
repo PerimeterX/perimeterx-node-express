@@ -7,6 +7,7 @@ const JSON_SPACING = 4;
 const SERVER_CONFIG_FILE_NAME = 'px_config.json';
 const SERVER_CONFIG_INC_FILE_NAME = "config.inc.json";
 const PX_ENFORCER_CONFIG_FILE_NAME = 'px_config.json';
+const CONFIG_FILE_NAME = 'px_config.json';
 
 const SERVERS_DIRECTORY_NAME = "servers";
 const SERVERS_DIRECTORY_PATH = path.join(__dirname, `../${SERVERS_DIRECTORY_NAME}`);
@@ -25,6 +26,7 @@ const EXPECTED_PASSWORD = "1234";
 
 module.exports = {
     JSON_SPACING,
+    CONFIG_FILE_NAME,
     SERVER_CONFIG_FILE_NAME,
     SERVER_CONFIG_INC_FILE_NAME,
     PX_ENFORCER_CONFIG_FILE_NAME,
