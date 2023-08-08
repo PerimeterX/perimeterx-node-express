@@ -4,9 +4,9 @@ const path = require('path');
 
 const JSON_SPACING = 4;
 
-const SERVER_CONFIG_FILE_NAME = 'config.json';
+const SERVER_CONFIG_FILE_NAME = 'px_config.json';
 const SERVER_CONFIG_INC_FILE_NAME = "config.inc.json";
-const PX_ENFORCER_CONFIG_FILE_NAME = 'px_config.json';
+const CONFIG_FILE_NAME = 'px_config.json';
 
 const SERVERS_DIRECTORY_NAME = "servers";
 const SERVERS_DIRECTORY_PATH = path.join(__dirname, `../${SERVERS_DIRECTORY_NAME}`);
@@ -14,15 +14,7 @@ const SERVERS_DIRECTORY_PATH = path.join(__dirname, `../${SERVERS_DIRECTORY_NAME
 const FIRST_PARTY_STATIC_FILE_SUFFIX = ".firstparty";
 const THIRD_PARTY_STATIC_FILE_SUFFIX = "";
 
-const CDN_DEPLOY_TOOL_CONFIG_FILE_NAME = "cliConfig.json";
-const CDN_DEPLOY_TOOL_RUN_CLI_COMMAND = "npm run cli";
-const CDN_DEPLOY_TOOL_BUILD_COMMAND = "npm run build";
-
 const PX_METADATA_FILE_NAME = "px_metadata.json";
-
-const TEST_APP_CREDENTIALS_ENDPOINT = "/test-app-credentials";
-const SUPPORTED_FEATURES_ENDPOINT = "/supported-features";
-const CONFIG_ENDPOINT = "/config";
 
 const INDEX_ROUTE = "/";
 const LOGIN_ROUTE = "/login";
@@ -33,20 +25,14 @@ const EXPECTED_PASSWORD = "1234";
 
 module.exports = {
     JSON_SPACING,
+    CONFIG_FILE_NAME,
     SERVER_CONFIG_FILE_NAME,
     SERVER_CONFIG_INC_FILE_NAME,
-    PX_ENFORCER_CONFIG_FILE_NAME,
     SERVERS_DIRECTORY_NAME,
     SERVERS_DIRECTORY_PATH,
     FIRST_PARTY_STATIC_FILE_SUFFIX,
     THIRD_PARTY_STATIC_FILE_SUFFIX,
-    CDN_DEPLOY_TOOL_CONFIG_FILE_NAME,
-    CDN_DEPLOY_TOOL_RUN_CLI_COMMAND,
-    CDN_DEPLOY_TOOL_BUILD_COMMAND,
     PX_METADATA_FILE_NAME,
-    TEST_APP_CREDENTIALS_ENDPOINT,
-    SUPPORTED_FEATURES_ENDPOINT,
-    CONFIG_ENDPOINT,
     INDEX_ROUTE,
     LOGIN_ROUTE,
     LOGOUT_ROUTE,
