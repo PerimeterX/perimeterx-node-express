@@ -1,0 +1,16 @@
+{
+    "site_config": {
+        "public_output_dir": "public",
+        "local_enforcer_dir": "",
+        "local_core_enforcer_dir": "",
+        "port": 3000
+    },
+    "enforcer_credentials": {
+        "px_app_id": "PXZ7wl3dvS",
+        "px_auth_token": "",
+        "px_cookie_secret": ""
+    },
+    "enforcer_config_override": {
+
+    }
+}
