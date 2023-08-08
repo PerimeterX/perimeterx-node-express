@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+   	<head>
+      	<title>PerimeterX ${enforcer_name} SDK Sample</title>
+      	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      	<link href="style.css" rel="stylesheet" type="text/css">
+      	<script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+   	</head>
+   	<body>
+      	<div class="container">
+    		<div class="row">
+        		<div class="col-sm-4 col-sm-offset-4">
+        			<div class="login-box">
+            			<h1 class="text-center login-title">Welcome to PerimeterX ${enforcer_name} Sample</h1>
+            			<div class="account-wall">
+                			<img id="logo-global" src="https://d33wubrfki0l68.cloudfront.net/01fd73d62a06a98fef9632d73ad9ff2dbba47a19/76105/img/logo.svg" alt="" style="width:200px;"><br>
+                			<h3 style="color:white; text-align:center"> Login</h3>
+                			<form class="form-signin" method="post" action="/login">
+				                <input type="text" class="form-control" name="username" id="name" placeholder="Username" required autofocus>
+				                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+				                <button class="btn btn-lg btn-danger btn-block" type="submit" name="submit" style="background-color:#ED1C24">
+				                    Sign in</button>
+			                    <span id="error" style="color:#ED1C24"></span><br>
+			                    <span style="color:white; font-size:11px;">Username: pxUser, Password: 1234</span>
+		                	</form>
+			            </div>
+		            </div>
+        		</div>
+    		</div>
+		</div>
+   	</body>
+<script type="text/javascript">
+    (function(){
+        window._pxAppId = '${app_id}';
+        // Custom parameters
+        // window._pxParam1 = "<param1>";
+        var p = document.getElementsByTagName('script')[0],
+            s = document.createElement('script');
+        s.async = 1;
+        s.src = '${sensor_src_url}';
+        p.parentNode.insertBefore(s,p);
+    }());
+</script>
+</html>

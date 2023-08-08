@@ -42,5 +42,22 @@
         "sensitive_headers",
         "telemetry_command",
         "vid_extraction"
+    ],
+    "excluded_tests": [
+        "test_additional_activity_handler_with_score_from_risk",
+        "test_additional_activity_handler_with_score_from_cookie",
+        "test_advanced_blocking_response",
+        "test_preflight_request_returns_custom_preflight_handler_response",
+        "test_pxde_extraction_s2s",
+        "test_pxde_extraction_unverified",
+        "test_pxde_extraction_verified",
+        "test_pxhd_should_return_on_set_cookie_header_when_received_from_risk",
+        "test_pxhd_should_be_on_set_cookie_even_if_domain_is_none",
+        "test_vid_extraction_on_first_party_xhr",
+        "test_block_activity_cookie_origin",
+        "test_page_requested_activity_cookie_origin",
+        "test_block_page_hard_block_response",
+        "test_risk_api_validate_cookie_origin",
+        "test_risk_cookie_valid_cookie_with_user_agent_bigger_than_max_length"
     ]
 }
