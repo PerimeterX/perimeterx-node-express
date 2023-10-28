@@ -29,7 +29,7 @@
     },
     "homepage": "https://github.com/PerimeterX/perimeterx-node-express#readme",
     "dependencies": {
-        "axios": "^0.21.1",
+        "axios": "^1.6.0",
         "cookie-parser": "^1.4.1",
         "perimeterx-node-core": "^3.11.0"
     },
