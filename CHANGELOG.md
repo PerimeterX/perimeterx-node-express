@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Support for header-based logger
+- Added `sending_risk_timestamp` and `start_enforcer_timestamp` fields to enforcer activities.
 
 ## [7.8.0] - 2023-05-16
 
