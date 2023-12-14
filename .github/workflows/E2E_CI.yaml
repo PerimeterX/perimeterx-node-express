@@ -67,7 +67,7 @@ jobs:
         with:
           repository: PerimeterX/connect-helm-charts
           token: ${{ secrets.CONNECT_PULL_TOKEN }}
-          ref:  enforcer-spec-tests-1.6.0
+          ref:  enforcer-spec-tests-0.6.7
           path: ./deploy_charts/enforcer-spec-tests
 
 
