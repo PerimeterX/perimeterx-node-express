@@ -60,13 +60,9 @@
         "test_block_page_hard_block_response",
         "test_risk_api_validate_cookie_origin",
         "test_risk_cookie_valid_cookie_with_user_agent_bigger_than_max_length",
-        "test_risk_api_schema",
-        "test_block_activity_schema",
-        "test_page_requested_activity_schema",
+        "test_(risk_api|block_activity|page_requested_activity)_schema",
         "test_risk_cookie_validate_client_uuid_in_risk_api",
-        "test_block_activity_headers",
-        "test_page_requested_activity_headers",
-        "test_sensitive_headers_removed_from_page_requested",
-        "test_sensitive_headers_removed_from_block"
+        "test_(block|page_requested)_activity_headers",
+        "test_sensitive_headers_removed_from_(block|page_requestd)"
     ]
 }
