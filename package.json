@@ -1,6 +1,6 @@
 {
     "name": "perimeterx-node-express",
-    "version": "7.8.0",
+    "version": "7.9.0",
     "description": "PerimeterX Express.js middleware to monitor and block traffic according to PerimeterX risk score",
     "main": "index.js",
     "directories": {
@@ -31,7 +31,7 @@
     "dependencies": {
         "axios": "^0.21.1",
         "cookie-parser": "^1.4.1",
-        "perimeterx-node-core": "^3.12.0"
+        "perimeterx-node-core": "^3.13.0"
     },
     "devDependencies": {
         "chai": "^4.3.6",
