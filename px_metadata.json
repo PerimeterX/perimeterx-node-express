@@ -1,5 +1,5 @@
 {
-    "version": "7.8.0",
+    "version": "7.9.0",
     "supported_features": [
         "additional_activity_handler",
         "advanced_blocking_response",
@@ -12,6 +12,7 @@
         "bypass_monitor_header",
         "client_ip_extraction",
         "cors_support",
+        "credentials_intelligence",
         "csp_support",
         "css_ref",
         "cookie_v3",
@@ -27,9 +28,9 @@
         "filter_by_user_agent",
         "filter_by_extension",
         "first_party",
+        "header_based_logger",
         "js_ref",
         "logger",
-        "credentials_intelligence",
         "mobile_support",
         "module_enable",
         "module_mode",
@@ -58,6 +59,14 @@
         "test_page_requested_activity_cookie_origin",
         "test_block_page_hard_block_response",
         "test_risk_api_validate_cookie_origin",
-        "test_risk_cookie_valid_cookie_with_user_agent_bigger_than_max_length"
+        "test_block_activity_headers",
+        "test_page_requested_activity_headers",
+        "test_sensitive_headers_removed_from_page_requested",
+        "test_sensitive_headers_removed_from_block",
+        "test_risk_api_schema",
+        "test_block_activity_schema",
+        "test_page_requested_activity_schema",
+        "test_risk_cookie_valid_cookie_with_user_agent_bigger_than_max_length",
+        "test_risk_cookie_validate_client_uuid_in_risk_api"
     ]
 }

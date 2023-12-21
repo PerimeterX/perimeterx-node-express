@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.9.0] - 2023-12-21
+
+### Added
+
+- Support for header-based logger
+- Added `risk_start_time` and `enforcer_start_time` fields to enforcer activities.
+- Added `failOnEmptyBody` flag for `callServer` to specify weather or not a request should fail if it has no body.
+- Updated the configuration of PX first-party requests to include a connection timeout
+
+### Changed
+- Updated the captcha template to handle empty captcha responses
+
 ## [7.8.0] - 2023-05-16
 
 ### Changed
