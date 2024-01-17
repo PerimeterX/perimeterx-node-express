@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Support for header-based logger
 - Added `risk_start_time` and `enforcer_start_time` fields to enforcer activities.
 - Added `failOnEmptyBody` flag for `callServer` to specify weather or not a request should fail if it has no body.
 - Updated the configuration of PX first-party requests to include a connection timeout
